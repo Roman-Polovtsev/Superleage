@@ -1,0 +1,5 @@
+18.10.20
+1. Добавить Readme в гитхаб через баш
+2. Описать методы классов 
+3. Разобраться со списками List, ArrayList, LinkedList, Set, HashSet, Map, HashMap 
+ 
