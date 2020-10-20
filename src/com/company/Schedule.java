@@ -9,4 +9,6 @@ public class Schedule {
     Address gameAddress;
     Result gameResult;
 
+    
+
 }
