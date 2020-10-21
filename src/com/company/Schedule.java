@@ -10,7 +10,7 @@ public class Schedule {
     Result gameResult;
 
     void lookAtResult (Team home, Team guest) {
-        System.out.println("Результат игры команды " + " и команды "+":"+ home,guest,gameResult.show() );
+        System.out.println("Результат игры команды " + home" и команды "+ guest":"+ gameResult.show() );
     }
 
 }
