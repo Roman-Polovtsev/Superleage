@@ -10,7 +10,11 @@ public class Schedule {
     Result gameResult;
 
     void lookAtResult (Team home, Team guest) {
-        System.out.println("Результат игры команды " + home" и команды "+ guest":"+ gameResult.show() );
+        System.out.println("Результат игры команды " + home.name + " и команды "+ guest.name +":"+ gameResult.show() );
+    }
+
+    void lookAtHall (Address gameAddress, LocalDateTime gameTime) {
+        System.out.println("Игра проводилась в городе" + gameAddress.city + "по адресу "+ gameAddress.street +"дом"+ gameAddress.buildingNumber );
     }
 
 }
