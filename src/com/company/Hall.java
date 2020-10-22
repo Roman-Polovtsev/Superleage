@@ -1,13 +1,41 @@
 package com.company;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class Hall {
-    Address address;
-    EnableGameTime gameTime;
+    private Address address;
+    //private Set<Address> addressSet = new HashSet<Address>();
+    private EnableGameTime gameTime;
 
     //making constrictor
-    Hall( Address address, EnableGameTime gameTime){
-       this.address = address;
-       this.gameTime = gameTime;
+    Hall( ){
+       // Address address = new Address(String city, String )
+
     }
 
+//    public Set<Address> getAddressSet() {
+//        return addressSet;
+//    }
+//
+//    public void setAddressSet(Set<Address> addressSet) {
+//        Hall.addressSet = addressSet;
+//    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public EnableGameTime getGameTime() {
+        return gameTime;
+    }
+
+    public void setGameTime(EnableGameTime gameTime) {
+        this.gameTime = gameTime;
+    }
 }
