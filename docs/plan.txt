@@ -1,0 +1,7 @@
+1) Java SE *
+2) Maven (Gradle)
+3) JUnit *
+4) Spring + SpringBoot
+5) SpringData + native sql
+6) Jira *
+7) Git/Github *
