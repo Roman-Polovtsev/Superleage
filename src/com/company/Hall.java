@@ -10,8 +10,8 @@ public class Hall {
     private EnableGameTime gameTime;
 
     //making constrictor
-    Hall( ){
-       // Address address = new Address(String city, String )
+    Hall( Address address ){
+       main.addHallAddr(this.Hall, address );
 
     }
 

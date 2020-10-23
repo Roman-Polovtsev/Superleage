@@ -1,22 +1,23 @@
 package com.company;
 
 public class Result {
-    byte homeTeam;
-    byte guestTeam;
+    private byte homeTeam;
+    private byte guestTeam;
     
     //making constructor
-    Result(byte homeTeam, byte guestTeam ){
+    Result(byte homeTeam, byte guestTeam , Team home, Team guest){
       this.homeTeam = homeTeam;
       this.guestTeam = guestTeam;
+      main.addResult( this );
     }
 
-    public String toString(){
-        return homeTeam + ":" + guestTeam;
-    } 
-    
-
-    public String show () {
-        String result = homeTeam + ":" + guestTeam;
-        return result;
+    public Result getResult(Team home, Team guest){
+        return Result;
     }
+
+    public String getScore (Team home, Team guest){
+        Result
+    }
+
+
 }

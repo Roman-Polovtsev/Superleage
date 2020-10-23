@@ -4,12 +4,14 @@ public class Address {
     private String city;
     private String street;
     private String buildingNumber;
+    
 
     //creating constructor
     public Address( String city, String street, String numberOfBuilding ){
         setCity( city);
         setStreet( street);
         setBuildingNumber( numberOfBuilding);
+        main.addAddr(this.Address);
 
     }
 
