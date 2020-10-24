@@ -11,8 +11,7 @@ public class Address {
         setCity( city);
         setStreet( street);
         setBuildingNumber( numberOfBuilding);
-        main.addAddr(this.Address);
-
+        Main.addAddr(this);
     }
 
     public String getCity() {

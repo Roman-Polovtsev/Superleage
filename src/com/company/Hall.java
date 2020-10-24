@@ -6,22 +6,13 @@ import java.util.Set;
 
 public class Hall {
     private Address address;
-    //private Set<Address> addressSet = new HashSet<Address>();
     private EnableGameTime gameTime;
 
     //making constrictor
     Hall( Address address ){
-       main.addHallAddr(this.Hall, address );
+       Main.addHallAddr(this, address );
 
     }
-
-//    public Set<Address> getAddressSet() {
-//        return addressSet;
-//    }
-//
-//    public void setAddressSet(Set<Address> addressSet) {
-//        Hall.addressSet = addressSet;
-//    }
 
     public Address getAddress() {
         return address;

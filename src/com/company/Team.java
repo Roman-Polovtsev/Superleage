@@ -13,7 +13,7 @@ public class Team {
     public Team(String nameOfTeam, Hall hall) {
       //  this.name = name;
         name.add(nameOfTeam);
-        Main.teamHallMap.put(/*nameOfTeam*/this, hall);
+        Main.addTeamHall.put(this, hall);
     }
 
     static public void show (){

@@ -8,7 +8,7 @@ public class Result {
     Result(byte homeTeam, byte guestTeam , Team home, Team guest){
       this.homeTeam = homeTeam;
       this.guestTeam = guestTeam;
-      main.addResult( this );
+      Main.addResult( this );
     }
 
     public Result getResult(Team home, Team guest){

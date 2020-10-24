@@ -14,7 +14,7 @@ public class Schedule {
      this.home = home;
      this.guest = guest;
      this.gameAddress = Main.getHallAddr(Main.getTeamHall);
-     main.addScheduleResultMap( this, Result.getResult( home, guest) );
+     Main.addScheduleResultMap( this, Result.getResult( home, guest) );
      //this.gameTime    = home.getHall().getGameTime();
      this.gameResult = gameResult.getResult(home, guest);
    }
@@ -28,12 +28,12 @@ public class Schedule {
    }
 
    public Result getResult (Schedule schedule){
-       return main.getScheduleResultMap(schedule);
+       return Main.getScheduleResultMap(schedule);
    }
    
-   public String getScore ( Schedule schedule ){
-       schedule.getResult
-   }
+//   public String getScore ( Schedule schedule ){
+//       schedule.getResult
+//   }
 //    void lookAtResult (Team home, Team guest) {
 //        System.out.println("Результат игры команды " + home.getName() + " и команды "+ guest.getName() +":"+ gameResult.show() );
 //    }
