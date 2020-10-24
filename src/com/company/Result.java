@@ -5,18 +5,18 @@ public class Result {
     private byte guestTeam;
     
     //making constructor
-    Result(byte homeTeam, byte guestTeam , Team home, Team guest){
+    public Result(byte homeTeam, byte guestTeam ){
       this.homeTeam = homeTeam;
       this.guestTeam = guestTeam;
-      Main.addResult( this );
     }
 
-    public Result getResult(Team home, Team guest){
-        return Result;
+
+    public byte getHomescore(){
+        return homeTeam;
     }
 
-    public String getScore (Team home, Team guest){
-        Result
+    public byte getGuestScore(){
+        return guestTeam;
     }
 
 

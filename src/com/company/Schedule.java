@@ -13,10 +13,9 @@ public class Schedule {
    public Schedule (Team home, Team guest ){
      this.home = home;
      this.guest = guest;
-     this.gameAddress = Main.getHallAddr(Main.getTeamHall);
-     Main.addScheduleResultMap( this, Result.getResult( home, guest) );
+     this.gameAddress = Main.getHallAddr(home.getHall());
      //this.gameTime    = home.getHall().getGameTime();
-     this.gameResult = gameResult.getResult(home, guest);
+     this.gameResult = Main.getGameResult(this);
    }
 
    public Team getHome (Schedule schedule){
@@ -27,19 +26,18 @@ public class Schedule {
        return guest;
    }
 
-   public Result getResult (Schedule schedule){
-       return Main.getScheduleResultMap(schedule);
+   public Result getGameResult (){
+       return gameResult;
    }
-   
-//   public String getScore ( Schedule schedule ){
-//       schedule.getResult
-//   }
-//    void lookAtResult (Team home, Team guest) {
-//        System.out.println("Результат игры команды " + home.getName() + " и команды "+ guest.getName() +":"+ gameResult.show() );
-//    }
-//
-//    void lookAtHall (Address gameAddress, LocalDateTime gameTime) {
-//        System.out.println("Игра проводилась в городе" + gameAddress.getCity() + "по адресу "+ gameAddress.getStreet() +"дом"+ gameAddress.getBuildingNumber() );
-//    }
+
+
+   public void setResult (byte home, byte guest){
+       for (Result i: re
+            ) {
+           
+       }
+       Main.addGameResult()
+   };
+
 
 }

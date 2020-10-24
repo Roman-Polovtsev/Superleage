@@ -8,18 +8,13 @@ public class Hall {
     private Address address;
     private EnableGameTime gameTime;
 
-    //making constrictor
-    Hall( Address address ){
-       Main.addHallAddr(this, address );
-
-    }
-
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
+        Main.addHallAddr(this,address);
     }
 
     public EnableGameTime getGameTime() {
