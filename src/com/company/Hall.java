@@ -2,8 +2,12 @@ package com.company;
 
 public class Hall {
 
-    private Address address;
+    private final Address address;
     private EnableGameTime gameTime;
+
+    public Hall(){
+        this(Address address);
+    }
 
 
     public Hall(Address address) {

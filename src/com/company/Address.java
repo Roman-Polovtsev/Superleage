@@ -1,9 +1,9 @@
 package com.company;
 
 public class Address {
-    private String city;
-    private String street;
-    private String buildingNumber;
+    private final String city;
+    private final String street;
+    private final String buildingNumber;
 
 
     public Address() {
@@ -16,6 +16,7 @@ public class Address {
         this.buildingNumber = numberOfBuilding;
     }
 
+    @Override
     public String toString() {
         return getCity() + " " + getStreet() + " " + getBuildingNumber();
     }
@@ -24,25 +25,15 @@ public class Address {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public String getStreet() {
         return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
     }
 
     public String getBuildingNumber() {
         return buildingNumber;
     }
 
-    public void setBuildingNumber(String buildingNumber) {
-        this.buildingNumber = buildingNumber;
-    }
 
 
 

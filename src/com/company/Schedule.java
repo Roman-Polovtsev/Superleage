@@ -21,6 +21,10 @@ public class Schedule {
     private Result gameResult;
 
     //creating constructor
+    public Schedule(){
+        this()
+    }
+
     public Schedule(Team home, Team guest) {
         this.home = home;
         this.guest = guest;
