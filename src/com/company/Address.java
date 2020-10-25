@@ -4,14 +4,20 @@ public class Address {
     private String city;
     private String street;
     private String buildingNumber;
-    
 
-    //creating constructor
-    public Address( String city, String street, String numberOfBuilding ){
-        setCity( city);
-        setStreet( street);
-        setBuildingNumber( numberOfBuilding);
-        Main.addAddr(this);
+
+    public Address() {
+        this("Undefined", "Undefined", "Undefined");
+    }
+
+    public Address(String city, String street, String numberOfBuilding) {
+        this.city = city;
+        this.street = street;
+        this.buildingNumber = numberOfBuilding;
+    }
+
+    public String toString() {
+        return getCity() + " " + getStreet() + " " + getBuildingNumber();
     }
 
     public String getCity() {
@@ -37,4 +43,8 @@ public class Address {
     public void setBuildingNumber(String buildingNumber) {
         this.buildingNumber = buildingNumber;
     }
+
+
+
+
 }

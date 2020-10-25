@@ -1,12 +1,15 @@
 package com.company;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class Hall {
+
     private Address address;
     private EnableGameTime gameTime;
+
+
+    public Hall(Address address) {
+        this.address = address;
+    }
+
 
     public Address getAddress() {
         return address;
@@ -14,7 +17,7 @@ public class Hall {
 
     public void setAddress(Address address) {
         this.address = address;
-        Main.addHallAddr(this,address);
+        Main.addHallAddr(this, address);
     }
 
     public EnableGameTime getGameTime() {
@@ -23,5 +26,14 @@ public class Hall {
 
     public void setGameTime(EnableGameTime gameTime) {
         this.gameTime = gameTime;
+    }
+
+    public void print() {
+        System.out.println("Hall " + this + "\nAddress: " + address);
+    }
+
+    @Override
+    public String toString() {
+        return "The best hall ever";
     }
 }

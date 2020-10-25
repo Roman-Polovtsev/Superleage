@@ -1,31 +1,48 @@
 package com.company;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 public class Team {
-    private Hall hall;
-    private String name;
+    private final Hall hall;
+    private final String name;
+
+    public Team() {
+        this("");
+    }
+
+    public Team(String name) {
+        this(null, name);
+    }
+
+    public Team(Hall hall, String name) {
+        this.hall = hall;
+        this.name = name;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        Main.addTeamName(this,name);
     }
 
     public Hall getHall() {
         return hall;
     }
 
-    public void setHall(Hall hall) {
-        this.hall = hall;
-        Main.addTeamHall(this,hall);
+    @Override
+    public String toString(){
+        return name + " " + hall;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(hall, team.hall) &&
+                Objects.equals(name, team.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(hall, name);
+    }
 }
