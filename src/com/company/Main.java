@@ -63,7 +63,7 @@ public class Main {
         return teamNameMap.get(team);
     }
 
-    ;
+
 
     public static void addScheduleResultMap(Schedule schedule, Result result) {
         scheduleResultMap.put(schedule, result);
@@ -123,6 +123,17 @@ public class Main {
         System.out.println(gameTime3);
     }
 
+    private void testHall (){
+       // Address address = new Address();
+       // EnableGameTime gameTime = new EnableGameTime();
+        Hall hall = new Hall();
+       // System.out.println(hall);
+        hall.print();
+       // System.out.println(hall.print());
+
+    //    System.out.println(hall);
+    }
+
 
     private void testList() {
         int number = 10_000_000;
@@ -141,6 +152,7 @@ public class Main {
     public static void main(String[] args) {
         Main object = new Main();
         object.testEnableGameTime();
+        object.testHall();
 //        long start = System.currentTimeMillis();
 //        object.testList();
 //        long end = System.currentTimeMillis();

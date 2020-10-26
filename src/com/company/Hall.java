@@ -6,37 +6,31 @@ public class Hall {
     private EnableGameTime gameTime;
 
     public Hall(){
-        this( new Address() );
+        this( new Address(), new EnableGameTime() );
     }
 
-    public Hall( Address address) {
+    public Hall( Address address, EnableGameTime gameTime) {
         this.address = address;
+        this.gameTime = gameTime;
     }
-
 
     public Address getAddress() {
         return address;
     }
 
-//    public void setAddress(Address address) {
-//        this.address = address;
-//        Main.addHallAddr(this, address);
-//    }
-
     public EnableGameTime getGameTime() {
         return gameTime;
     }
 
-    public void setGameTime(EnableGameTime gameTime) {
-        this.gameTime = gameTime;
-    }
 
     public void print() {
-        System.out.println("Hall " + this + "\nAddress: " + address);
+        System.out.println(this);
     }
 
     @Override
     public String toString() {
-        return "The best hall ever";
+        return "Hall :" +  "\nAddress: " + address + "\nGameTime: " + gameTime;
     }
+
+
 }
