@@ -6,11 +6,10 @@ public class Hall {
     private EnableGameTime gameTime;
 
     public Hall(){
-        this(Address address);
+        this( new Address() );
     }
 
-
-    public Hall(Address address) {
+    public Hall( Address address) {
         this.address = address;
     }
 
@@ -19,10 +18,10 @@ public class Hall {
         return address;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
-        Main.addHallAddr(this, address);
-    }
+//    public void setAddress(Address address) {
+//        this.address = address;
+//        Main.addHallAddr(this, address);
+//    }
 
     public EnableGameTime getGameTime() {
         return gameTime;

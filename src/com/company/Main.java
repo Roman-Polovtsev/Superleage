@@ -2,6 +2,7 @@ package com.company;
 
 import javax.crypto.Mac;
 import javax.xml.crypto.Data;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
@@ -98,6 +99,28 @@ public class Main {
             System.out.println("Schedule not found");
         else
             System.out.println(schedule);
+
+
+    }
+
+    public void testEnableGameTime (){
+        EnableGameTime gameTime1 = new EnableGameTime();
+        System.out.println(gameTime1);
+        gameTime1.addDayOfWeek(DayOfWeek.MONDAY);
+        gameTime1.addDayOfWeek(DayOfWeek.SUNDAY);
+        System.out.println(gameTime1);
+
+        List<DayOfWeek> days2 = new ArrayList<>();
+        for (int day= 2; day < 4 ; day++)
+            days2.add(DayOfWeek.of(day));
+        System.out.println(days2.toString());
+        EnableGameTime gameTime2 = new EnableGameTime(days2);
+        System.out.println(gameTime2);
+        gameTime2.addDayOfWeek(DayOfWeek.THURSDAY);
+        System.out.println(gameTime2);
+
+        EnableGameTime gameTime3 = new EnableGameTime();
+        System.out.println(gameTime3);
     }
 
 
@@ -117,60 +140,13 @@ public class Main {
 
     public static void main(String[] args) {
         Main object = new Main();
-        long start = System.currentTimeMillis();
-        object.testList();
-        long end = System.currentTimeMillis();
-        System.out.println("Test time: " + (end - start) + " ms");
-
-//        Result res30 = new Result((byte) 3, (byte) 0);
-//        Result res31 = new Result((byte) 3, (byte) 1);
-//        Result res32 = new Result((byte) 3, (byte) 2);
-//        Result res03 = new Result((byte) 0, (byte) 3);
-//        Result res13 = new Result((byte) 1, (byte) 3);
-//        Result res23 = new Result((byte) 2, (byte) 3);
-//        Main.addResult(res30);
-//        Main.addResult(res31);
-//        Main.addResult(res32);
-//        Main.addResult(res03);
-//        Main.addResult(res13);
-//        Main.addResult(res23);
-//
-//        Address addr1 = new Address("spb", "petrovsky", "27");
-//        Address addr2 = new Address("spb", "nevsky", "135 C");
-//
-//        Hall hall1 = new Hall();
-//        hall1.setAddress(addr1);
-//
-//        Hall hall2 = new Hall();
-//        hall2.setAddress(addr2);
-//
-//        Team lmgt = new Team();//("lmgt", hall1 );
-//        lmgt.setHall(hall1);
-//        lmgt.setName("Ленметрогипротранс");
-//
-//        Team lenenergo = new Team();//("lenenergo", hall2);
-//        lenenergo.setName("Ленэнерго");
-//        lenenergo.setHall(hall2);
-//
-//        Team abc = new Team();
-//
-//        EnableGameTime fri2022 = new EnableGameTime();
-//
-//        fri2022.setBegin(LocalTime.of(20, 0));
-//        fri2022.setEnd(LocalTime.of(22, 0));
-//        fri2022.setDaysOfWeek();
-//
-//        Schedule lmgtLenenergo = new Schedule(lmgt, lenenergo);
-//
-//        showGameInfo(lmgt, lenenergo);
-//        showGameInfo(abc, lmgt);
-//        System.out.println(fri2022.getBegin());
-//        System.out.println(LocalTime.of(20, 0));
-
-        // Result lmgtLenenergoRes = new Result ( 3,0);
+        object.testEnableGameTime();
+//        long start = System.currentTimeMillis();
+//        object.testList();
+//        long end = System.currentTimeMillis();
+//        System.out.println("Test time: " + (end - start) + " ms");
 
 
-        // System.out.println((lmgtLenenergo.getGameAddress()).getCity() + " " + (lmgtLenenergo.getGameAddress()).getStreet() +  " " + (lmgtLenenergo.getGameAddress()).getBuildingNumber());
 
 
     }

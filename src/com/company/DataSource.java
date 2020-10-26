@@ -8,6 +8,7 @@ public class DataSource {
     private final List<Schedule> schedules;
 
     public DataSource() {
+
         this(new ArrayList<Schedule>() );
     }
 
