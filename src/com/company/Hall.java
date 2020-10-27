@@ -37,7 +37,7 @@ public class Hall {
 
     @Override
     public String toString() {
-        return "Hall :" +  "\nAddress: " + address + "\nGameTime: " + gameTime;
+        return "Hall :" +  "\n\tAddress: " + address + "\n\tGameTime: " + gameTime;
     }
 
 

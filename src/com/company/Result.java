@@ -1,7 +1,7 @@
 package com.company;
 
 public class Result {
-    private final byte  homeTeam;
+    private final byte homeTeam;
     private final byte guestTeam;
     
     //making constructor
@@ -16,12 +16,12 @@ public class Result {
 
     @Override
     public String toString() {
-        return "Результат игры" +
+        return "Result" +
                 " " + homeTeam +
-                ": " + guestTeam;
+                ":" + guestTeam;
     }
 
-    public byte getHomescore(){
+    public byte getHomeScore(){
         return homeTeam;
     }
 

@@ -132,6 +132,22 @@ public class Main {
        // System.out.println(hall.print());
 
     //    System.out.println(hall);
+
+
+    }
+
+    private void testTeam (){
+        Team team1 = new Team();
+        System.out.println(team1);
+    }
+
+    public void testSchedule (){
+        Schedule schedule1 = new Schedule();
+       // System.out.println(schedule1);
+       // schedule1.setGameResult(3,1);
+       // System.out.println(schedule1);
+        schedule1.setGameTime();
+        System.out.println(schedule1);
     }
 
 
@@ -151,8 +167,13 @@ public class Main {
 
     public static void main(String[] args) {
         Main object = new Main();
-        object.testEnableGameTime();
-        object.testHall();
+       // object.testEnableGameTime();
+      //  object.testHall();
+       // object.testTeam();
+        object.testSchedule();
+
+
+
 //        long start = System.currentTimeMillis();
 //        object.testList();
 //        long end = System.currentTimeMillis();

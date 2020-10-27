@@ -25,7 +25,6 @@ public class Address {
         return city;
     }
 
-
     public String getStreet() {
         return street;
     }

@@ -7,12 +7,13 @@ public class Team {
     private final String name;
 
     public Team() {
-        this("");
+        this("unnamed");
     }
 
     public Team(String name) {
 
-        this(null, name);
+       // this(null, name);
+        this(new Hall(), name);
     }
 
     public Team(Hall hall, String name) {
@@ -30,7 +31,8 @@ public class Team {
 
     @Override
     public String toString(){
-        return name + " " + hall;
+
+        return "Team \"" + name + "\" information:\n\t"  + hall;
     }
 
     @Override
