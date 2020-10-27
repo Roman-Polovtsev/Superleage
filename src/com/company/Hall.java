@@ -9,6 +9,14 @@ public class Hall {
         this( new Address(), new EnableGameTime() );
     }
 
+    public Hall ( Address address){
+        this( address, new EnableGameTime() );
+    }
+
+    public Hall ( EnableGameTime gameTime ){
+        this( new Address(), gameTime );
+    }
+
     public Hall( Address address, EnableGameTime gameTime) {
         this.address = address;
         this.gameTime = gameTime;
