@@ -79,25 +79,29 @@ public class Schedule {
        this.gameResult = new Result((byte)homeScore, (byte)guestScore);
     }
 
-    public void setGameTime() {
-       EnableGameTime gameTime1 =  home.getHall().getGameTime() ;
-       int iterator = 0;
-       DayOfWeek[] days = new DayOfWeek[7];
-        LocalDate dateTemp = LocalDate.now();
+    // public void setGameTime() {
+    //    EnableGameTime gameTime1 =  home.getHall().getGameTime() ;
+    //    int iterator = 0;
+    //    DayOfWeek[] days = new DayOfWeek[7];
+    //     LocalDate dateTemp = LocalDate.now();
 
-       while(!gameTime1.getDays().isEmpty()) {
-           days[iterator] = gameTime1.getDays().get(iterator);
-           iterator++;
-       }
-        DayOfWeek day_compare = dateTemp.plusDays(0).getDayOfWeek();
-       while ( days.length > 1 ) {
-           if (dateTemp.getDayOfWeek().equals(days[1]))
-               break;
-           else
-               dateTemp.plusDays(1);
-       }
+    //    while(!gameTime1.getDays().isEmpty()) {
+    //        days[iterator] = gameTime1.getDays().get(iterator);
+    //        iterator++;
+    //    }
+    //     DayOfWeek day_compare = dateTemp.plusDays(0).getDayOfWeek();
+    //    while ( days.length > 1 ) {
+    //        if (dateTemp.getDayOfWeek().equals(days[1]))
+    //            break;
+    //        else
+    //            dateTemp.plusDays(1);
+    //    }
 
-        this.gameTime = LocalDateTime.of(dateTemp,gameTime1.getBegin());
+    //     this.gameTime = LocalDateTime.of(dateTemp,gameTime1.getBegin());
+    // }
+
+    public void setGameTime ( LocalDateTime dateTemp, DayOfWeek day ){
+        this.gameTime = dateTemp.with(TemporalAdjusters.next(day));
     }
 
     @Override

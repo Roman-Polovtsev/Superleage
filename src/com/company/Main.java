@@ -146,7 +146,15 @@ public class Main {
        // System.out.println(schedule1);
        // schedule1.setGameResult(3,1);
        // System.out.println(schedule1);
-        schedule1.setGameTime();
+
+       //getting list of enable day of week
+        List<DayOfWeek> enableDaysForGame = new ArrayList<DayOfWeek>();
+        enableDaysForGame = schedule1.getHome().getHall().getGameTime().getDays();
+        LocalDateTime tempDate =  LocalDateTime.now();
+
+        // setting new date as temp.date goes to next day of week from list 
+        schedule1.setGameTime(tempDate, enableDaysForGame.get(1));
+
         System.out.println(schedule1);
     }
 
