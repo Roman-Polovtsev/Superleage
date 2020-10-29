@@ -8,66 +8,6 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Main {
-    private static Set<Address> addrList = new HashSet<Address>();
-    private static Map<Hall, Address> hallAddrMap = new HashMap<Hall, Address>();
-    private static Map<Team, Hall> teamHallMap = new HashMap<Team, Hall>();
-    private static Map<Team, String> teamNameMap = new HashMap<Team, String>();
-    private static Map<Schedule, Result> scheduleResultMap = new HashMap<Schedule, Result>();
-    private static Set<Result> resultSet = new HashSet<Result>();
-    //Admin methods
-
-    public static void addAddr(Address newAddr) {
-        addrList.add(newAddr);
-    }
-
-    ;
-
-    public static void addHallAddr(Hall hall, Address addr) {
-        hallAddrMap.put(hall, addr);
-    }
-
-    ;
-
-    public static void addTeamHall(Team team, Hall hall) {
-        teamHallMap.put(team, hall);
-    }
-
-    ;
-
-    public static void addTeamName(Team team, String name) {
-        teamNameMap.put(team, name);
-    }
-
-    ;
-
-    //Service methods
-
-    public static Address getHallAddr(Hall hall) {
-        return hallAddrMap.get(hall);
-    }
-
-    ;
-
-
-//    public static Result getGameResult(Schedule schedule) {
-//    }
-
-    public Hall getTeamHall(Team team) {
-        return teamHallMap.get(team);
-    }
-
-    ;
-
-
-    public String getTeamName(Team team) {
-        return teamNameMap.get(team);
-    }
-
-
-
-    public static void addScheduleResultMap(Schedule schedule, Result result) {
-        scheduleResultMap.put(schedule, result);
-    }
 
 
     public static void addResult(Result result) {
@@ -158,6 +98,17 @@ public class Main {
         System.out.println(schedule1);
     }
 
+    private void scheduleCreating ( Schedule schedule ) {
+        Address homeAddr = schedule.getHome().getHall().getAddress();
+        schedule.setAddr( homeAddr );
+    }
+
+  //Method`s overloading
+    private void scheduleCreating ( Team home, Team guest ) {
+        Schedule  schedule = new Schedule(home, guest);
+        Address homeAddr = schedule.getHome().getHall().getAddress();
+        schedule.setAddr( homeAddr );
+    }
 
     private void testList() {
         int number = 10_000_000;

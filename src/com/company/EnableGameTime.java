@@ -47,6 +47,8 @@ public class EnableGameTime {
         return begin;
     }
 
+    //WHY NOT JUST return LIST with daysOfWeek?? Check it out!
+
     public List<DayOfWeek> getDays (){
         List<DayOfWeek> weekDaysForGame = new ArrayList<DayOfWeek>();
         for(DayOfWeek day : daysOfWeek)

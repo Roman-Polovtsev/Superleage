@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 public class Schedule {
-    private static Set<Schedule> scheduleSet = new HashSet<Schedule>();
+  //  private static Set<Schedule> scheduleSet = new HashSet<Schedule>();
 
     private final Team home;
     private final Team guest;
@@ -26,38 +26,22 @@ public class Schedule {
     public Schedule(Team home, Team guest) {
         this.home = home;
         this.guest = guest;
-        this.gameAddress = home.getHall().getAddress();
+     //   this.gameAddress = home.getHall().getAddress();
         this.gameResult = new Result();
      //   this.gameTime = home.getHall().getGameTime().;
     }
 
 
-    public static Schedule getSchedule(Team home, Team guest) {
-        Schedule currentSchedule = null;
-        for (Schedule item : scheduleSet)
-            if ((item.home.equals(home)) && (item.guest.equals(guest))) {
-                currentSchedule = item;
-                break;
-            }
-        return currentSchedule;
-    }
+    // public static Schedule getSchedule(Team home, Team guest) {
+    //     Schedule currentSchedule = null;
+    //     for (Schedule item : scheduleSet)
+    //         if ((item.home.equals(home)) && (item.guest.equals(guest))) {
+    //             currentSchedule = item;
+    //             break;
+    //         }
+    //     return currentSchedule;
+    // }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Schedule schedule = (Schedule) o;
-//        return Objects.equals(home, schedule.home) &&
-//                Objects.equals(guest, schedule.guest) &&
-//                Objects.equals(gameTime, schedule.gameTime) &&
-//                Objects.equals(gameAddress, schedule.gameAddress) &&
-//                Objects.equals(gameResult, schedule.gameResult);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(home, guest, gameTime, gameAddress, gameResult);
-//    }
 
     public Address getGameAddress() {
         return gameAddress;
@@ -77,6 +61,10 @@ public class Schedule {
 
     public void setGameResult (int homeScore, int guestScore ){
        this.gameResult = new Result((byte)homeScore, (byte)guestScore);
+    }
+
+    public void setAddr (Address address){
+        this.gameAddress = address;
     }
 
     // public void setGameTime() {
