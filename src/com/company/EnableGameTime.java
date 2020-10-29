@@ -34,8 +34,10 @@ public class EnableGameTime {
     }
 
 
-    public void addDayOfWeek (DayOfWeek dayOfWeek){
-          daysOfWeek.add(dayOfWeek);
+    public void addDayOfWeek (DayOfWeek... dayOfWeek){
+       if (dayOfWeek != null )
+           for (DayOfWeek day: dayOfWeek)
+              daysOfWeek.add(day);
     }
 
 
@@ -48,13 +50,15 @@ public class EnableGameTime {
     }
 
     //WHY NOT JUST return LIST with daysOfWeek?? Check it out!
-
-    public List<DayOfWeek> getDays (){
-        List<DayOfWeek> weekDaysForGame = new ArrayList<DayOfWeek>();
-        for(DayOfWeek day : daysOfWeek)
-            weekDaysForGame.add(day);
-        return weekDaysForGame;
-    }
+     public List<DayOfWeek> getDays(){
+        return daysOfWeek;
+     }
+//    public List<DayOfWeek> getDays (){
+//        List<DayOfWeek> weekDaysForGame = new ArrayList<DayOfWeek>();
+//        for(DayOfWeek day : daysOfWeek)
+//            weekDaysForGame.add(day);
+//        return weekDaysForGame;
+//    }
 
     /*
     *

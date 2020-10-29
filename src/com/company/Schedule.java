@@ -1,17 +1,11 @@
 package com.company;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.Set;
+import java.time.temporal.TemporalAdjusters;
 
 
 public class Schedule {
-  //  private static Set<Schedule> scheduleSet = new HashSet<Schedule>();
 
     private final Team home;
     private final Team guest;
@@ -27,21 +21,9 @@ public class Schedule {
         this.home = home;
         this.guest = guest;
      //   this.gameAddress = home.getHall().getAddress();
-        this.gameResult = new Result();
-     //   this.gameTime = home.getHall().getGameTime().;
+     //   this.gameResult = new Result();
+     //  this.gameTime = home.getHall().getGameTime().;
     }
-
-
-    // public static Schedule getSchedule(Team home, Team guest) {
-    //     Schedule currentSchedule = null;
-    //     for (Schedule item : scheduleSet)
-    //         if ((item.home.equals(home)) && (item.guest.equals(guest))) {
-    //             currentSchedule = item;
-    //             break;
-    //         }
-    //     return currentSchedule;
-    // }
-
 
     public Address getGameAddress() {
         return gameAddress;
@@ -63,7 +45,7 @@ public class Schedule {
        this.gameResult = new Result((byte)homeScore, (byte)guestScore);
     }
 
-    public void setAddr (Address address){
+    public void setGameAddress (Address address){
         this.gameAddress = address;
     }
 
@@ -89,13 +71,20 @@ public class Schedule {
     // }
 
     public void setGameTime ( LocalDateTime dateTemp, DayOfWeek day ){
-        this.gameTime = dateTemp.with(TemporalAdjusters.next(day));
+        this.gameTime = dateTemp.with(TemporalAdjusters.nextOrSame(day));
     }
+
+    public LocalDateTime getGameTime(){
+        return gameTime;
+    }
+
+
 
     @Override
     public String toString() {
-        return "Game between \"" + home.getName() +"\" and \"" + guest.getName() + "\" is held " + gameTime.getDayOfWeek() +
-                "\n\t" + gameResult;
+        return "Game between \"" + home.getName() +"\" and \"" + guest.getName() + "\" is held \n" + gameTime.getDayOfWeek() +
+                " " + gameTime.getDayOfMonth() + " " + gameTime.getMonth()+ " at " + gameTime.getHour() + " a.m.\nin " +
+                gameAddress + "\n\tGame result: " + gameResult;
     }
 
 

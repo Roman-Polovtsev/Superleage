@@ -2,25 +2,23 @@ package com.company;
 
 import javax.crypto.Mac;
 import javax.xml.crypto.Data;
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.*;
 
 public class Main {
 
 
-    public static void addResult(Result result) {
-        resultSet.add(result);
-    }
+//    public static void addResult(Result result) {
+//        resultSet.add(result);
+//    }
 
-    //Users methods
-    static void showGameInfo(Team teamHome, Team teamGuest) {
-        if (Schedule.getSchedule(teamHome, teamGuest) != null)//(teamHome.getName() == null) || (teamGuest.getName() == null))
-            System.out.println("Игра между командой " + teamHome.getName() + " и командой " + teamGuest.getName() + " пройдет по адресу: " + teamHome.getHall().getAddress().toString());
-        else
-            System.out.println("Информация об игре не найдена!");
-    }
+//    //Users methods
+//    static void showGameInfo(Team teamHome, Team teamGuest) {
+//        if (Schedule.getSchedule(teamHome, teamGuest) != null)//(teamHome.getName() == null) || (teamGuest.getName() == null))
+//            System.out.println("Игра между командой " + teamHome.getName() + " и командой " + teamGuest.getName() + " пройдет по адресу: " + teamHome.getHall().getAddress().toString());
+//        else
+//            System.out.println("Информация об игре не найдена!");
+//    }
 
 
     public void startProgram() {
@@ -76,38 +74,61 @@ public class Main {
 
     }
 
-    private void testTeam (){
+    private Team testTeam (){
         Team team1 = new Team();
         System.out.println(team1);
+        return team1;
     }
 
-    public void testSchedule (){
+    public Schedule testSchedule (){
         Schedule schedule1 = new Schedule();
+
        // System.out.println(schedule1);
        // schedule1.setGameResult(3,1);
        // System.out.println(schedule1);
 
        //getting list of enable day of week
-        List<DayOfWeek> enableDaysForGame = new ArrayList<DayOfWeek>();
+        List<DayOfWeek> enableDaysForGame; //= new ArrayList<DayOfWeek>();
         enableDaysForGame = schedule1.getHome().getHall().getGameTime().getDays();
+        System.out.println(enableDaysForGame);
+        schedule1.getHome().getHall().getGameTime().addDayOfWeek();
+        System.out.println(enableDaysForGame);
         LocalDateTime tempDate =  LocalDateTime.now();
 
-        // setting new date as temp.date goes to next day of week from list 
-        schedule1.setGameTime(tempDate, enableDaysForGame.get(1));
+        // setting new date as temp.date goes to next day of week from list
+        try {
+            schedule1.setGameTime(tempDate, enableDaysForGame.get(0));
+        }
+        catch (IndexOutOfBoundsException indexOutOfBoundsException){
+            schedule1.getHome().getHall().getGameTime().addDayOfWeek(DayOfWeek.FRIDAY);
+            System.out.println(enableDaysForGame);
+        }
+        System.out.println(schedule1.getGameTime());
+        System.out.println(schedule1.getGameResult());
 
-        System.out.println(schedule1);
+       try {
+           System.out.println(schedule1);
+       }
+       catch (NullPointerException nullPointerException){
+           schedule1.setGameTime(LocalDateTime.now(),DayOfWeek.MONDAY);
+       }
+       return schedule1;
     }
 
     private void scheduleCreating ( Schedule schedule ) {
         Address homeAddr = schedule.getHome().getHall().getAddress();
-        schedule.setAddr( homeAddr );
+        schedule.setGameAddress( homeAddr );
+        System.out.println(schedule);
     }
 
   //Method`s overloading
-    private void scheduleCreating ( Team home, Team guest ) {
+    private Schedule scheduleCreating ( Team home, Team guest ) {
         Schedule  schedule = new Schedule(home, guest);
         Address homeAddr = schedule.getHome().getHall().getAddress();
-        schedule.setAddr( homeAddr );
+        schedule.setGameAddress( homeAddr );
+        schedule.setGameTime(LocalDateTime.of(2020,10,30,1,2),DayOfWeek.MONDAY);
+        System.out.println(schedule);
+        return schedule;
     }
 
     private void testList() {
@@ -128,8 +149,14 @@ public class Main {
         Main object = new Main();
        // object.testEnableGameTime();
       //  object.testHall();
-       // object.testTeam();
-        object.testSchedule();
+        Team home = object.testTeam();
+        Team guest = object.testTeam();
+        Schedule schedule = object.testSchedule();
+        Schedule schedule1 = object.scheduleCreating( guest,home );
+        System.out.println(schedule1);
+        System.out.println(schedule);
+
+
 
 
 
