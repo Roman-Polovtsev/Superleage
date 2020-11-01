@@ -95,7 +95,8 @@ public class EnableGameTime {
                 if ( cnt_days < daysOfWeek.size()-1)
                     days.append(" " + dayOfWeek.toString() + ",");
                 else
-                    days.append(" " + dayOfWeek.toString());
+                   // days.append(" " + dayOfWeek.toString());
+                   days.append(" ").append(dayOfWeek);
                 cnt_days++;
             }
             return days.toString();

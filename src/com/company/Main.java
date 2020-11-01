@@ -1,28 +1,15 @@
 package com.company;
 
-import javax.crypto.Mac;
-import javax.xml.crypto.Data;
+
+
 import java.time.*;
 import java.util.*;
 
 public class Main {
 
 
-//    public static void addResult(Result result) {
-//        resultSet.add(result);
-//    }
-
-//    //Users methods
-//    static void showGameInfo(Team teamHome, Team teamGuest) {
-//        if (Schedule.getSchedule(teamHome, teamGuest) != null)//(teamHome.getName() == null) || (teamGuest.getName() == null))
-//            System.out.println("Игра между командой " + teamHome.getName() + " и командой " + teamGuest.getName() + " пройдет по адресу: " + teamHome.getHall().getAddress().toString());
-//        else
-//            System.out.println("Информация об игре не найдена!");
-//    }
-
-
     public void startProgram() {
-        Team first = new Team("fisrt");
+        Team first = new Team("first");
         Team second = new Team("second");
         Team third = new Team("third");
         DataSource DB = new DataSource();
@@ -44,7 +31,7 @@ public class Main {
     public void testEnableGameTime (){
         EnableGameTime gameTime1 = new EnableGameTime();
         System.out.println(gameTime1);
-        gameTime1.addDayOfWeek(DayOfWeek.MONDAY);
+        gameTime1.addDayOfWeek(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
         gameTime1.addDayOfWeek(DayOfWeek.SUNDAY);
         System.out.println(gameTime1);
 
@@ -100,6 +87,7 @@ public class Main {
             schedule1.setGameTime(tempDate, enableDaysForGame.get(0));
         }
         catch (IndexOutOfBoundsException indexOutOfBoundsException){
+            System.out.println("You`re trying to set game in day that not supported");
             schedule1.getHome().getHall().getGameTime().addDayOfWeek(DayOfWeek.FRIDAY);
             System.out.println(enableDaysForGame);
         }
@@ -131,41 +119,16 @@ public class Main {
         return schedule;
     }
 
-    private void testList() {
-        int number = 10_000_000;
-        List<Integer> integers = new LinkedList<>();
-        for (int i = 0; i < number; i++) {
-            integers.add(i, new Random().nextInt());
-        }
-        integers.remove(5_345_525);
-        integers.remove(6_345_525);
-        integers.remove(8_748_225);
-    }
-
-    //arrayList = 749 | 858
-    //linkedList = 2376 | 2758
-
     public static void main(String[] args) {
         Main object = new Main();
-       // object.testEnableGameTime();
-      //  object.testHall();
+        object.testEnableGameTime();
+        object.testHall();
         Team home = object.testTeam();
         Team guest = object.testTeam();
         Schedule schedule = object.testSchedule();
         Schedule schedule1 = object.scheduleCreating( guest,home );
         System.out.println(schedule1);
         System.out.println(schedule);
-
-
-
-
-
-//        long start = System.currentTimeMillis();
-//        object.testList();
-//        long end = System.currentTimeMillis();
-//        System.out.println("Test time: " + (end - start) + " ms");
-
-
 
 
     }
