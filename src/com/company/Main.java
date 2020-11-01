@@ -151,35 +151,50 @@ public class Main {
     }
 
 
-    private void testList() {
+    private List<Integer> testList() {
         int number = 10_000_000;
-        List<Integer> integers = new LinkedList<>();
+        List<Integer> integers = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             integers.add(i, new Random().nextInt());
         }
-        integers.remove(5_345_525);
-        integers.remove(6_345_525);
-        integers.remove(8_748_225);
+//        integers.remove(5_345_525);
+//        integers.remove(6_345_525);
+//        integers.remove(8_748_225);
+        return integers;
     }
 
-    //arrayList = 749 | 858
-    //linkedList = 2376 | 2758
+    private void getFromList (List<Integer> integers, int index ){
+        integers.get(index);
+    }
+
+    private void removeFromList (List<Integer> integers, int index ){
+        integers.remove(index);
+    }
+
+    private void addToList(List<Integer> integers, int index){
+        integers.add(index,new Random().nextInt());
+    }
+
 
     public static void main(String[] args) {
         Main object = new Main();
        // object.testEnableGameTime();
       //  object.testHall();
        // object.testTeam();
-        object.testSchedule();
+     //   object.testSchedule();
 
 
 
-//        long start = System.currentTimeMillis();
-//        object.testList();
-//        long end = System.currentTimeMillis();
-//        System.out.println("Test time: " + (end - start) + " ms");
+        //long start = System.nanoTime();
+        List<Integer> testList = object.testList();
+        long start = System.nanoTime();//currentTimeMillis();
+        object.getFromList(testList,325612);
+        long end = System.nanoTime();
+        System.out.println("Test time: " + (end - start) + " ms");
 
-
+        //synopsys   =  add       | remove      | get 1    | remove 1 |  add 1
+        //arrayList  =  996501000 | 1063985300  |   29600  | 20971100 |  18861200
+        //linkedList = 2461123300 | 2479292400  | 4217000  |  4064500 |   4409900
 
 
     }
