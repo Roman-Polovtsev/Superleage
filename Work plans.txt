@@ -2,4 +2,17 @@
 1. Добавить Readme в гитхаб через баш. Done (добавлен в github командой "push origin master"и клонирован на desktop)
 2. Описать методы классов 
 3. Разобраться со списками List, ArrayList, LinkedList, Set, HashSet, Map, HashMap 
+01.11.20
+1)разобраться с исключениями ниже, постараться словить их в своем коде
+//      NumberFormatException
+//      ArithmeticException
+//      IllegalArgumentException 
+//      ArrayIndexOutOfBoundsException
+//      IOException
+//      FileNotFoundException 
+//      StackOverflowError
+//      OutOfMemoryError
+2) Разобраться как именно устроенны структуры данных коллекций
+3) Разобраться с полиморфизмом, наслдеованием
+4) Разобраться с базовыми структурами данных и алгоритмами
  
