@@ -18,19 +18,31 @@ public class Schedule {
     private LocalDateTime gameTime;
     private Address gameAddress;
     private Result gameResult;
+    private Referee gameReferee;
+    private int [] refereeMarks;
 
     public  Schedule (){
         this(new Team(), new Team());
     }
+
 
     public Schedule(Team home, Team guest) {
         this.home = home;
         this.guest = guest;
         this.gameAddress = home.getHall().getAddress();
         this.gameResult = new Result();
+        this.gameReferee = new Referee();
+        this.refereeMarks = new int[2];
      //   this.gameTime = home.getHall().getGameTime().;
     }
 
+    public Referee getGameReferee() {
+        return gameReferee;
+    }
+
+    public int[] getRefereeMarks() {
+        return refereeMarks;
+    }
 
     public static Schedule getSchedule(Team home, Team guest) {
         Schedule currentSchedule = null;

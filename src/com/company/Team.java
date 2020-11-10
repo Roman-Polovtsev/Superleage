@@ -1,10 +1,13 @@
 package com.company;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Team {
     private final Hall hall;
     private final String name;
+    private Player captain;
+    private Set <? extends Person> members;
 
     public Team() {
         this("unnamed");
