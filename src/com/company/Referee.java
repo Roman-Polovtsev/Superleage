@@ -1,16 +1,41 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Referee extends Person implements Averagable{
     private float averageMark;
     private List<Schedule> gamesList;
+    private Map<Schedule,int[]> marksMap;
+
     public Referee (){
         super("John Doe",1990);
         this.averageMark = (float)0;
         this.gamesList = new ArrayList<Schedule>();
+        this.marksMap = new HashMap<>();
     }
+
+    public Referee (Schedule game){
+        this();
+        gamesList.add(game);
+        int [] marksDefault = new int[2];
+       // marksDefault = {0,0};
+        marksMap.put(game, marksDefault);
+    }
+
+    public void addGame (Schedule game){
+        int [] marksDefault = new int[2];
+        marksMap.put(game, marksDefault);
+    }
+
+    public Set<Schedule> getGames (){
+        return marksMap.keySet();
+    }
+
+    public int[] getMarks (Schedule game) {
+        return marksMap.get(game);
+    }
+
+
 
 
 

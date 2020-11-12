@@ -16,7 +16,7 @@ public class Schedule {
     private final Team home;
     private final Team guest;
     private LocalDateTime gameTime;
-    private Address gameAddress;
+    private final Address gameAddress;
     private Result gameResult;
     private Referee gameReferee;
     private int [] refereeMarks;
@@ -30,10 +30,24 @@ public class Schedule {
         this.home = home;
         this.guest = guest;
         this.gameAddress = home.getHall().getAddress();
-        this.gameResult = new Result();
-        this.gameReferee = new Referee();
-        this.refereeMarks = new int[2];
+      //  this.gameResult = new Result();
+      //  this.gameReferee = new Referee();
+       // this.refereeMarks = new int[2];
      //   this.gameTime = home.getHall().getGameTime().;
+    }
+
+    public void setGameResult (byte home, byte guest, Referee ref) {
+
+    }
+
+    public void setGameReferee (Referee gameReferee){
+        this.gameReferee = gameReferee;
+        gameReferee.addGame(this);
+    }
+
+    public void setGameReferee (){
+        this.gameReferee = new Referee();
+        gameReferee.addGame(this);
     }
 
     public Referee getGameReferee() {
@@ -114,7 +128,7 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return "Game between \"" + home.getName() +"\" and \"" + guest.getName() + "\" is held " + gameTime.getDayOfWeek() +
+        return "Game between \"" + home.getName() +"\" and \"" + guest.getName() + "\" is held " + /*gameTime.getDayOfWeek() +*/
                 "\n\t" + gameResult;
     }
 

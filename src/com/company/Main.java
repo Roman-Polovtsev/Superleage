@@ -150,6 +150,15 @@ public class Main {
         System.out.println(schedule1);
     }
 
+    public void testReferee (){
+        Schedule game1 = new Schedule();
+        Referee ref1 = new Referee();
+        game1.setGameReferee(ref1);
+        Set<Schedule> games = game1.getGameReferee().getGames();
+        System.out.println(games);
+        //  System.out.println(game1.getGameReferee().getMarks(game1));
+    }
+
 
     private void testList() {
         int number = 10_000_000;
@@ -170,7 +179,8 @@ public class Main {
        // object.testEnableGameTime();
       //  object.testHall();
        // object.testTeam();
-        object.testSchedule();
+        //object.testSchedule();
+        object.testReferee();
 
 
 
