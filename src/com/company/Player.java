@@ -1,11 +1,11 @@
 package com.company;
 
-public class Player extends Person{
+public class Player extends Person {
     private final String level;
     private final String position;
     private final int height;
 
-    Player(){
+    public Player(){
         super("John Doe",1990);
         this.level = "amateur";
         this.position = "not stated";
@@ -39,5 +39,13 @@ public class Player extends Person{
     @Override
     public String getName() {
         return super.getName();
+    }
+
+    @Override
+    public String toString() {
+        return  " " + super.getName() + "\n Year of Birth: "+ super.getYearOfBirth() +
+                "\n level: " + level +
+                "\n position: " + position  +
+                "\n height: " + height + "\n";
     }
 }

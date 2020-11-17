@@ -150,29 +150,54 @@ public class Main {
         System.out.println(schedule1);
     }
 
+    public void testPlayer(){
+        Player play1 = new Player();
+        Player play2 = new Player("abc", 1995,"KMS","middle blocker",202);
+        Team team1 = new Team();
+        team1.addPlayer(play1);
+        System.out.println( team1.average());
+        Player play3 = new Player("",1998,"","",213);
+        List<Player> list1 = new ArrayList();
+        list1.add(play3);
+        list1.add(play2);
+        System.out.println(team1.addPlayer(list1));
+        System.out.println(team1.average());
+        System.out.println(team1.setAverageAge());
+       // System.out.println(team1.addPlayer(play2));
+       // System.out.println(team1.getMembers() );
+        System.out.println(team1.getAverageAge());
+        System.out.println(team1.getAverageHeight());
+        Player newPlay = new Player("unnamed",1953,"amateur","setter",170);
+        team1.addPlayer(newPlay);
+        System.out.println(team1.getAverageAge());
+        System.out.println(team1.getAverageHeight());
+        System.out.println(team1.deletePlayer(play1));
+        System.out.println(team1.getAverageAge());
+        System.out.println(team1.getAverageHeight());
+    }
+
     public void testReferee (){
-        Schedule game1 = new Schedule();
+        Team team1 = new Team();
+        Team team2 = new Team();
+        Game game1 = new Game(team1, team2);
         Referee ref1 = new Referee();
-        game1.setGameReferee(ref1);
-        Set<Schedule> games = game1.getGameReferee().getGames();
-        System.out.println(games);
+       // float average = ref1.average();
+        //System.out.println(average);
+        Result result = new Result();
+        game1.setGameResult(result,ref1,5,3);
+        System.out.println(game1.getGameAddress());
+        System.out.println(game1.getGameReferee());
+        System.out.println(game1.getGameResult());
+        System.out.println(game1.getGameTime());
+        System.out.println(game1.getRefereeMarks());
+        System.out.println(ref1.average());
+    //    Set<Game> games = game1.getGameReferee().getGames();
+     //   System.out.println(games);
         //  System.out.println(game1.getGameReferee().getMarks(game1));
     }
 
 
-    private void testList() {
-        int number = 10_000_000;
-        List<Integer> integers = new LinkedList<>();
-        for (int i = 0; i < number; i++) {
-            integers.add(i, new Random().nextInt());
-        }
-        integers.remove(5_345_525);
-        integers.remove(6_345_525);
-        integers.remove(8_748_225);
-    }
 
-    //arrayList = 749 | 858
-    //linkedList = 2376 | 2758
 
     public static void main(String[] args) {
         Main object = new Main();
@@ -180,16 +205,8 @@ public class Main {
       //  object.testHall();
        // object.testTeam();
         //object.testSchedule();
-        object.testReferee();
-
-
-
-//        long start = System.currentTimeMillis();
-//        object.testList();
-//        long end = System.currentTimeMillis();
-//        System.out.println("Test time: " + (end - start) + " ms");
-
-
+       // object.testReferee();
+        object.testPlayer();
 
 
     }

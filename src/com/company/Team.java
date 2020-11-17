@@ -1,27 +1,33 @@
 package com.company;
 
-import java.util.Objects;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.Year;
+import java.util.*;
 
-public class Team {
+public class Team implements Averagable{
     private final Hall hall;
     private final String name;
     private Player captain;
-    private Set <? extends Person> members;
+    private Set <Player > members;
+    private float averageHeight;
+    private float averageAge;
 
     public Team() {
         this("unnamed");
     }
 
-    public Team(String name) {
 
-       // this(null, name);
+    public Team(String name) {
         this(new Hall(), name);
     }
 
     public Team(Hall hall, String name) {
         this.hall = hall;
         this.name = name;
+        this.members = new HashSet<>();
+        this.captain = null;
+        this.averageHeight = average();
+        this.averageAge = setAverageAge();
     }
 
     public String getName() {
@@ -30,6 +36,42 @@ public class Team {
 
     public Hall getHall() {
         return hall;
+    }
+
+    public boolean addPlayer(Player player){
+        if (members.add(player)) {
+            this.averageAge = setAverageAge();
+            this.averageHeight = average();
+            return true;
+        }
+        else return false;
+    }
+
+    public boolean addPlayer (List<Player> playerList){
+        if (members.addAll(playerList)) {
+            this.averageAge = setAverageAge();
+            this.averageHeight = average();
+            return true;
+        } else return false;
+    }
+
+    public boolean deletePlayer (Player player){
+        boolean remove = members.remove(player);
+        averageHeight = average();
+        averageAge = setAverageAge();
+        return remove;
+    }
+
+    public float getAverageHeight() {
+        return averageHeight;
+    }
+
+    public float getAverageAge() {
+        return averageAge;
+    }
+
+    public Set<Player> getMembers() {
+        return members;
     }
 
     @Override
@@ -51,4 +93,32 @@ public class Team {
     public int hashCode() {
         return Objects.hash(hall, name);
     }
+
+
+    @Override
+    public float average() {
+        float averageHeight;
+        int height = 0;
+        if (members.isEmpty()) return 0;
+        else {
+            for (Player player : members)
+                height = height + player.getHeight();
+            return averageHeight = ((float) height) / ((float) members.size());
+        }
+    }
+
+    public float setAverageAge(){
+        if (members.isEmpty()) return 0;
+        else{
+            Year currentYear = Year.now();
+            float averageAge = 0;
+            for (Player player : members)
+               averageAge += currentYear.getValue() - player.getYearOfBirth();
+            return (float)averageAge/members.size();
+        }
+    }
+
+
+
+
 }

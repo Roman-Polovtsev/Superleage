@@ -40,15 +40,15 @@ public class Schedule {
 
     }
 
-    public void setGameReferee (Referee gameReferee){
-        this.gameReferee = gameReferee;
-        gameReferee.addGame(this);
-    }
-
-    public void setGameReferee (){
-        this.gameReferee = new Referee();
-        gameReferee.addGame(this);
-    }
+//    public void setGameReferee (Referee gameReferee){
+//        this.gameReferee = gameReferee;
+//        gameReferee.addGame(this);
+//    }
+//
+//    public void setGameReferee (){
+//        this.gameReferee = new Referee();
+//        gameReferee.addGame(this);
+//    }
 
     public Referee getGameReferee() {
         return gameReferee;

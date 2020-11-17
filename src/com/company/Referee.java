@@ -1,33 +1,29 @@
 package com.company;
 
+import java.sql.Ref;
 import java.util.*;
 
 public class Referee extends Person implements Averagable{
     private float averageMark;
-    private List<Schedule> gamesList;
-    private Map<Schedule,int[]> marksMap;
+    private Map<Game,int[]> marksMap;
 
     public Referee (){
         super("John Doe",1990);
         this.averageMark = (float)0;
-        this.gamesList = new ArrayList<Schedule>();
         this.marksMap = new HashMap<>();
     }
 
-    public Referee (Schedule game){
-        this();
-        gamesList.add(game);
-        int [] marksDefault = new int[2];
-       // marksDefault = {0,0};
-        marksMap.put(game, marksDefault);
+    public Referee (String name){
+        super(name);
+        this.marksMap = new HashMap<>();
     }
 
-    public void addGame (Schedule game){
+    public void addGame (Game game){
         int [] marksDefault = new int[2];
-        marksMap.put(game, marksDefault);
+        marksMap.put(game, game.getRefereeMarks());
     }
 
-    public Set<Schedule> getGames (){
+    public Set<Game> getGames (){
         return marksMap.keySet();
     }
 
@@ -36,20 +32,25 @@ public class Referee extends Person implements Averagable{
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return "Referee{" +
+                "marksMap=" + marksMap +
+                '}';
+    }
 
     @Override
      public float average(){
-        if (gamesList.isEmpty()) throw new NullPointerException("There`s nothing to average");
+        if (marksMap.isEmpty()) throw new NullPointerException("There`s nothing to average");
         else {
             int sum = 0;
             int gamesCnt = 0;
-            for (Schedule game : gamesList ) {
+            Set<Game> games = marksMap.keySet();
+            for (Game game : games ) {
                 sum = game.getRefereeMarks()[0] + game.getRefereeMarks()[1];
                 gamesCnt++;
             }
-            return (float)sum/(float)gamesCnt;
+            return (float)sum/((float)gamesCnt*2);
             }
         }
     }
