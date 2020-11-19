@@ -3,7 +3,7 @@ package com.company;
 import java.sql.Ref;
 import java.util.*;
 
-public class Referee extends Person implements Averagable{
+public class Referee extends Person implements Averageble{
     private float averageMark;
     private Map<Game,int[]> marksMap;
 
@@ -19,15 +19,16 @@ public class Referee extends Person implements Averagable{
     }
 
     public void addGame (Game game){
-        int [] marksDefault = new int[2];
+       // int [] marksDefault = new int[2];
         marksMap.put(game, game.getRefereeMarks());
+        average();
     }
 
     public Set<Game> getGames (){
         return marksMap.keySet();
     }
 
-    public int[] getMarks (Schedule game) {
+    public int[] getMarks (Game game) {
         return marksMap.get(game);
     }
 
@@ -50,6 +51,7 @@ public class Referee extends Person implements Averagable{
                 sum = game.getRefereeMarks()[0] + game.getRefereeMarks()[1];
                 gamesCnt++;
             }
+            this.averageMark = (float)sum/((float)gamesCnt*2);
             return (float)sum/((float)gamesCnt*2);
             }
         }

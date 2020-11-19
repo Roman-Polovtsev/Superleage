@@ -1,13 +1,14 @@
 package com.company;
 
-import java.time.LocalDate;
 import java.time.Year;
 import java.util.*;
 
-public class Team implements Averagable{
+public class Team implements Averageble  {
     private final Hall hall;
     private final String name;
-    private Player captain;
+
+
+    private Captain captain;
     private Set <Player > members;
     private float averageHeight;
     private float averageAge;
@@ -74,10 +75,33 @@ public class Team implements Averagable{
         return members;
     }
 
+    public Captain getCaptain() {
+        return captain;
+    }
+    
+    
+    public void setCaptain (String number, String email){
+        if (members.isEmpty()) throw new NullPointerException("There's no players in team to set captain");
+        else {
+            Set<Player> members = this.getMembers();
+            Player captain = members.iterator().next();
+            this.captain = new Captain(captain, number,email);
+        }
+    }
+
+    public void setCaptain (){
+        if (members.isEmpty()) throw new NullPointerException("There's no players in team to set captain");
+        else {
+            Set<Player> members = this.getMembers();
+            Player captain = members.iterator().next();
+            this.captain = new Captain(captain);
+        }
+    }
+
     @Override
     public String toString(){
 
-        return "Team \"" + name + "\" information:\n\t"  + hall;
+        return "Team \"" + name + "\" information:\n\t"  + hall + "\n" + captain;
     }
 
     @Override
@@ -106,6 +130,8 @@ public class Team implements Averagable{
             return averageHeight = ((float) height) / ((float) members.size());
         }
     }
+    
+    
 
     public float setAverageAge(){
         if (members.isEmpty()) return 0;

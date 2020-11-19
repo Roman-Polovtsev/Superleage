@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Game {
@@ -30,6 +32,27 @@ public class Game {
         this.gameResult = gameResult;
         this.refereeMarks = new int[]{homeMark,guestMark};
         gameReferee.addGame(this);
+    }
+
+    public void setGameTime() {
+        EnableGameTime gameTime1 =  home.getHall().getGameTime() ;
+        int iterator = 0;
+        DayOfWeek[] days = new DayOfWeek[7];
+        LocalDate dateTemp = LocalDate.now();
+
+        while(!gameTime1.getDays().isEmpty()) {
+            days[iterator] = gameTime1.getDays().get(iterator);
+            iterator++;
+        }
+        DayOfWeek day_compare = dateTemp.plusDays(0).getDayOfWeek();
+        while ( days.length > 1 ) {
+            if (dateTemp.getDayOfWeek().equals(days[1]))
+                break;
+            else
+                dateTemp.plusDays(1);
+        }
+
+        this.gameTime = LocalDateTime.of(dateTemp,gameTime1.getBegin());
     }
 
     public Team getHome() {

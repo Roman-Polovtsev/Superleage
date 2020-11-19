@@ -154,6 +154,7 @@ public class Main {
         Player play1 = new Player();
         Player play2 = new Player("abc", 1995,"KMS","middle blocker",202);
         Team team1 = new Team();
+        team1.setCaptain();
         team1.addPlayer(play1);
         System.out.println( team1.average());
         Player play3 = new Player("",1998,"","",213);
@@ -174,6 +175,8 @@ public class Main {
         System.out.println(team1.deletePlayer(play1));
         System.out.println(team1.getAverageAge());
         System.out.println(team1.getAverageHeight());
+        team1.setCaptain();
+        System.out.println(team1.getCaptain());
     }
 
     public void testReferee (){

@@ -3,8 +3,8 @@ package com.company;
 
 
 public class Person {
-    private String name;
-    private int yearOfBirth;
+    private final String name;
+    private final int yearOfBirth;
 
     public Person (String name) {
         this.name = name;
@@ -15,7 +15,6 @@ public class Person {
         this.name = "Unnamed";
         this.yearOfBirth = yearOfBirth;
     }
-
 
     public Person(String name, int yearOfBirth) {
         this.name = name;
@@ -28,5 +27,15 @@ public class Person {
 
     public int getYearOfBirth() {
         return yearOfBirth;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }
