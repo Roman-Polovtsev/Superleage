@@ -1,7 +1,7 @@
 package com.company;
 
-import java.sql.Ref;
 import java.util.*;
+
 
 public class Referee extends Person implements Averageble{
     private float averageMark;
@@ -32,6 +32,20 @@ public class Referee extends Person implements Averageble{
         return marksMap.get(game);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Referee referee = (Referee) o;
+        return Float.compare(referee.averageMark, averageMark) == 0 &&
+                marksMap.equals(referee.marksMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), averageMark, marksMap);
+    }
 
     @Override
     public String toString() {

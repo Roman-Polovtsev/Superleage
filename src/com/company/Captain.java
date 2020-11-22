@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Captain extends Player {
     private String number;
     private String email;
@@ -45,12 +47,17 @@ public class Captain extends Player {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Captain captain = (Captain) o;
+        return Objects.equals(number, captain.number) &&
+                Objects.equals(email, captain.email);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), number, email);
     }
 }

@@ -132,5 +132,9 @@ public class Schedule {
                 "\n\t" + gameResult;
     }
 
+<<<<<<< HEAD
+=======
+    Schedule 
+>>>>>>> master
 
 }

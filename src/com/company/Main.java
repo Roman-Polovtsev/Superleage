@@ -150,6 +150,18 @@ public class Main {
         System.out.println(schedule1);
     }
 
+    public void testGame (){
+        Game game1 = new Game();
+        // System.out.println(schedule1);
+        // schedule1.setGameResult(3,1);
+        // System.out.println(schedule1);
+        game1.getHome().getHall().getGameTime().addDayOfWeek(DayOfWeek.MONDAY);
+        game1.getHome().getHall().getGameTime().addDayOfWeek(DayOfWeek.THURSDAY);
+        game1.setGameTime();
+        System.out.println(game1);
+    }
+
+
     public void testPlayer(){
         Player play1 = new Player();
         Player play2 = new Player("abc", 1995,"KMS","middle blocker",202);
@@ -209,7 +221,8 @@ public class Main {
        // object.testTeam();
         //object.testSchedule();
        // object.testReferee();
-        object.testPlayer();
+       // object.testPlayer();
+        object.testGame();
 
 
     }

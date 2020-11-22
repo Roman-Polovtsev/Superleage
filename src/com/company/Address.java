@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Address {
     private final String city;
     private final String street;
@@ -33,8 +35,18 @@ public class Address {
         return buildingNumber;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(city, address.city) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(buildingNumber, address.buildingNumber);
+    }
 
-
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, street, buildingNumber);
+    }
 }

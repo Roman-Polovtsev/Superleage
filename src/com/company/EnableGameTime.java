@@ -38,7 +38,6 @@ public class EnableGameTime {
           daysOfWeek.add(dayOfWeek);
     }
 
-
     public LocalTime getEnd() {
         return end;
     }
@@ -79,7 +78,7 @@ public class EnableGameTime {
 //        return days;
 //    }
 
-    public  String getDaysOfWeek(){
+    public String getDaysOfWeek(){
         StringBuilder days = new StringBuilder();
         int cnt_days = 0;
         if (daysOfWeek.isEmpty())

@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Result {
     private final byte homeTeam;
     private final byte guestTeam;
@@ -12,6 +14,20 @@ public class Result {
     public Result(byte homeTeam, byte guestTeam ){
       this.homeTeam = homeTeam;
       this.guestTeam = guestTeam;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Result result = (Result) o;
+        return homeTeam == result.homeTeam &&
+                guestTeam == result.guestTeam;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(homeTeam, guestTeam);
     }
 
     @Override

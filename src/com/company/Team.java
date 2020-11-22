@@ -6,17 +6,14 @@ import java.util.*;
 public class Team implements Averageble  {
     private final Hall hall;
     private final String name;
-
-
     private Captain captain;
-    private Set <Player > members;
+    private final Set <Player > members;
     private float averageHeight;
     private float averageAge;
 
     public Team() {
         this("unnamed");
     }
-
 
     public Team(String name) {
         this(new Hall(), name);
@@ -79,7 +76,6 @@ public class Team implements Averageble  {
         return captain;
     }
     
-    
     public void setCaptain (String number, String email){
         if (members.isEmpty()) throw new NullPointerException("There's no players in team to set captain");
         else {
@@ -130,8 +126,6 @@ public class Team implements Averageble  {
             return averageHeight = ((float) height) / ((float) members.size());
         }
     }
-    
-    
 
     public float setAverageAge(){
         if (members.isEmpty()) return 0;
