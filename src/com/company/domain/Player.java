@@ -1,4 +1,4 @@
-package com.company;
+package com.company.domain;
 
 public class Player extends Person {
     private final String level;

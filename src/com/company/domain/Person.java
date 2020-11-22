@@ -1,10 +1,14 @@
-package com.company;
+package com.company.domain;
 
 
 
 public class Person {
     private final String name;
     private final int yearOfBirth;
+
+    public Person() {
+        this("noname");
+    }
 
     public Person (String name) {
         this.name = name;
