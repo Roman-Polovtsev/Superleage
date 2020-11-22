@@ -1,11 +1,11 @@
-package com.company;
+package com.company.domain;
 
 import java.util.*;
 
 
 public class Referee extends Person implements Averageble{
     private float averageMark;
-    private Map<Game,int[]> marksMap;
+    private Map<StartedGame,int[]> marksMap;
 
     public Referee (){
         super("John Doe",1990);
@@ -18,19 +18,35 @@ public class Referee extends Person implements Averageble{
         this.marksMap = new HashMap<>();
     }
 
-    public void addGame (Game game){
+    public void addGame (StartedGame game){
        // int [] marksDefault = new int[2];
         marksMap.put(game, game.getRefereeMarks());
         average();
     }
 
-    public Set<Game> getGames (){
+    public Set<StartedGame> getGames (){
         return marksMap.keySet();
     }
 
-    public int[] getMarks (Game game) {
+    public int[] getMarks (StartedGame game) {
         return marksMap.get(game);
     }
+
+    @Override
+    public float average() {
+        if (marksMap.isEmpty()) throw new NullPointerException("There`s nothing to average");
+        else {
+            int sum = 0;
+            int gamesCnt = 0;
+            Set<StartedGame> games = marksMap.keySet();
+            for (StartedGame game : games) {
+                sum = game.getRefereeMarks()[0] + game.getRefereeMarks()[1];
+                gamesCnt++;
+            }
+            this.averageMark = (float)sum/((float)gamesCnt*2);
+            return (float)sum/((float)gamesCnt*2);
+            }
+        }
 
     @Override
     public boolean equals(Object o) {
@@ -53,21 +69,5 @@ public class Referee extends Person implements Averageble{
                 "marksMap=" + marksMap +
                 '}';
     }
-
-    @Override
-     public float average(){
-        if (marksMap.isEmpty()) throw new NullPointerException("There`s nothing to average");
-        else {
-            int sum = 0;
-            int gamesCnt = 0;
-            Set<Game> games = marksMap.keySet();
-            for (Game game : games ) {
-                sum = game.getRefereeMarks()[0] + game.getRefereeMarks()[1];
-                gamesCnt++;
-            }
-            this.averageMark = (float)sum/((float)gamesCnt*2);
-            return (float)sum/((float)gamesCnt*2);
-            }
-        }
-    }
+}
 

@@ -1,12 +1,9 @@
-package com.company;
+package com.company.domain;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashSet;
-import java.util.Objects;
-import java.util.Scanner;
 import java.util.Set;
 
 
@@ -132,9 +129,5 @@ public class Schedule {
                 "\n\t" + gameResult;
     }
 
-<<<<<<< HEAD
-=======
-    Schedule 
->>>>>>> master
 
 }

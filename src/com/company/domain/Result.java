@@ -1,19 +1,23 @@
-package com.company;
+package com.company.domain;
 
 import java.util.Objects;
 
 public class Result {
     private final byte homeTeam;
     private final byte guestTeam;
-    
+
     //making constructor
-    public Result (){
-        this((byte)0,(byte)0);
+    public Result() {
+        this((byte) 0, (byte) 0);
     }
 
-    public Result(byte homeTeam, byte guestTeam ){
-      this.homeTeam = homeTeam;
-      this.guestTeam = guestTeam;
+    public Result(byte homeTeam, byte guestTeam) {
+        this.homeTeam = homeTeam;
+        this.guestTeam = guestTeam;
+    }
+
+    public Result incrementGuestPoint() {
+        return new Result(homeTeam, (byte) (guestTeam + 1));
     }
 
     @Override
@@ -37,13 +41,12 @@ public class Result {
                 ":" + guestTeam;
     }
 
-    public byte getHomeScore(){
+    public byte getHomeScore() {
         return homeTeam;
     }
 
-    public byte getGuestScore(){
+    public byte getGuestScore() {
         return guestTeam;
     }
-
 
 }

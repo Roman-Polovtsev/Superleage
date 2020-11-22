@@ -1,4 +1,4 @@
-package com.company;
+package com.company.domain;
 
 import java.util.List;
 import java.util.ArrayList;
