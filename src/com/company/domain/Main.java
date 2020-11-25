@@ -1,5 +1,6 @@
 package com.company.domain;
 
+
 import com.company.repository.person.DbPersonRepository;
 import com.company.repository.person.FilePersonRepository;
 import com.company.repository.person.PersonRepository;
@@ -8,99 +9,10 @@ import java.time.DayOfWeek;
 import java.util.*;
 
 public class Main {
-    private static Set<Address> addrList = new HashSet<Address>();
-    private static Map<Hall, Address> hallAddrMap = new HashMap<Hall, Address>();
-    private static Map<Team, Hall> teamHallMap = new HashMap<Team, Hall>();
-    private static Map<Team, String> teamNameMap = new HashMap<Team, String>();
-    private static Map<Schedule, Result> scheduleResultMap = new HashMap<Schedule, Result>();
-    private static Set<Result> resultSet = new HashSet<Result>();
-    //Admin methods
-
-    public static void addAddr(Address newAddr) {
-        addrList.add(newAddr);
-    }
-
-    ;
-
-    public static void addHallAddr(Hall hall, Address addr) {
-        hallAddrMap.put(hall, addr);
-    }
-
-    ;
-
-    public static void addTeamHall(Team team, Hall hall) {
-        teamHallMap.put(team, hall);
-    }
-
-    ;
-
-    public static void addTeamName(Team team, String name) {
-        teamNameMap.put(team, name);
-    }
-
-    ;
-
-    //Service methods
-
-    public static Address getHallAddr(Hall hall) {
-        return hallAddrMap.get(hall);
-    }
-
-    ;
 
 
-//    public static Result getGameResult(Schedule schedule) {
-//    }
-
-    public Hall getTeamHall(Team team) {
-        return teamHallMap.get(team);
-    }
-
-    ;
 
 
-    public String getTeamName(Team team) {
-        return teamNameMap.get(team);
-    }
-
-
-    public static void addScheduleResultMap(Schedule schedule, Result result) {
-        scheduleResultMap.put(schedule, result);
-    }
-
-
-    public static void addResult(Result result) {
-        resultSet.add(result);
-    }
-
-    //Users methods
-    static void showGameInfo(Team teamHome, Team teamGuest) {
-        if (Schedule.getSchedule(teamHome, teamGuest) != null)//(teamHome.getName() == null) || (teamGuest.getName() == null))
-            System.out.println("Игра между командой " + teamHome.getName() + " и командой " + teamGuest.getName() + " пройдет по адресу: " + teamHome.getHall().getAddress().toString());
-        else
-            System.out.println("Информация об игре не найдена!");
-    }
-
-
-    public void startProgram() {
-        Team first = new Team("fisrt");
-        Team second = new Team("second");
-        Team third = new Team("third");
-        DataSource DB = new DataSource();
-
-        Schedule monday = new Schedule(first, second);
-        Schedule sunday = new Schedule(second, third);
-        DB.save(monday);
-        DB.save(sunday);
-
-        Schedule schedule = DB.getSchedule(first, new Team("second"));
-        if (schedule == null)
-            System.out.println("Schedule not found");
-        else
-            System.out.println(schedule);
-
-
-    }
 
     public void testEnableGameTime() {
         EnableGameTime gameTime1 = new EnableGameTime();
