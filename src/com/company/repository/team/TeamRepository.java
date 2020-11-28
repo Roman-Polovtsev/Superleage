@@ -1,4 +1,4 @@
-package com.company.team;
+package com.company.repository.team;
 
 import com.company.domain.Team;
 

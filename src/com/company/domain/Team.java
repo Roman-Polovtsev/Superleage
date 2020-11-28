@@ -3,7 +3,7 @@ package com.company.domain;
 import java.time.Year;
 import java.util.*;
 
-public class Team implements Averageble  {
+public class Team  {
     private final Hall hall;
     private final String name;
     private Captain captain;
@@ -24,7 +24,7 @@ public class Team implements Averageble  {
         this.name = name;
         this.members = new HashSet<>();
         this.captain = null;
-        this.averageHeight = average();
+        this.averageHeight = averageHeight();
         this.averageAge = setAverageAge();
     }
 
@@ -39,7 +39,7 @@ public class Team implements Averageble  {
     public boolean addPlayer(Player player){
         if (members.add(player)) {
             this.averageAge = setAverageAge();
-            this.averageHeight = average();
+            this.averageHeight = averageHeight();
             return true;
         }
         else return false;
@@ -48,14 +48,14 @@ public class Team implements Averageble  {
     public boolean addPlayer (List<Player> playerList){
         if (members.addAll(playerList)) {
             this.averageAge = setAverageAge();
-            this.averageHeight = average();
+            this.averageHeight = averageHeight();
             return true;
         } else return false;
     }
 
     public boolean deletePlayer (Player player){
         boolean remove = members.remove(player);
-        averageHeight = average();
+        averageHeight = averageHeight();
         averageAge = setAverageAge();
         return remove;
     }
@@ -115,8 +115,8 @@ public class Team implements Averageble  {
     }
 
 
-    @Override
-    public float average() {
+
+    public float averageHeight() {
         float averageHeight;
         int height = 0;
         if (members.isEmpty()) return 0;

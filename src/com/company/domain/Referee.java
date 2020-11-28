@@ -3,7 +3,7 @@ package com.company.domain;
 import java.util.*;
 
 
-public class Referee extends Person implements Averageble{
+public class Referee extends Person {
     private float averageMark;
     private Map<StartedGame,int[]> marksMap;
 
@@ -21,7 +21,7 @@ public class Referee extends Person implements Averageble{
     public void addGame (StartedGame game){
        // int [] marksDefault = new int[2];
         marksMap.put(game, game.getRefereeMarks());
-        average();
+        averageMark();
     }
 
     public Set<StartedGame> getGames (){
@@ -32,8 +32,8 @@ public class Referee extends Person implements Averageble{
         return marksMap.get(game);
     }
 
-    @Override
-    public float average() {
+
+    public float averageMark() {
         if (marksMap.isEmpty()) throw new NullPointerException("There`s nothing to average");
         else {
             int sum = 0;

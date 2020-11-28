@@ -20,16 +20,16 @@ public class ResultTest {
     public static void main(String[] args) {
         Properties props = new Properties();
 
-        try{props.load(new FileInputStream("C:\\Users\\Public\\Documents\\log4j.xml"));}
+        try{props.load(new FileInputStream("C:\\Users\\Public\\Documents\\log4j.properties"));}
         catch (Exception exception){
             System.out.println("exception");
         }
         PropertyConfigurator.configure(props);
 
-        String log4jConfPath = "C:\\\\Users\\\\Роман\\\\IdeaProjects\\\\Superleage\\\\src\\\\com\\\\company\\\\domain\\\\log4j.xml";
+        String log4jConfPath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\resources\\log4j.properties";
         PropertyConfigurator.configure(log4jConfPath);
 
-       // PropertyConfigurator.configure("C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\com\\company\\domain\\resources\\log4j.xml");
+       // PropertyConfigurator.configure("C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\com\\company\\domain\\resources\\log4j.properties");
         logger.info("кулебяка");
         logger.debug("debug");
         logger.error("error");

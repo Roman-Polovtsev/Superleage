@@ -2,7 +2,6 @@ package com.company.domain;
 
 
 import com.company.repository.person.DbPersonRepository;
-import com.company.repository.person.FilePersonRepository;
 import com.company.repository.person.PersonRepository;
 
 import java.time.DayOfWeek;
@@ -78,13 +77,13 @@ public class Main {
         Team team1 = new Team();
         team1.setCaptain();
         team1.addPlayer(play1);
-        System.out.println(team1.average());
+        System.out.println(team1.averageHeight());
         Player play3 = new Player("", 1998, "", "", 213);
         List<Player> list1 = new ArrayList();
         list1.add(play3);
         list1.add(play2);
         System.out.println(team1.addPlayer(list1));
-        System.out.println(team1.average());
+        System.out.println(team1.averageHeight());
         System.out.println(team1.setAverageAge());
         // System.out.println(team1.addPlayer(play2));
         // System.out.println(team1.getMembers() );
@@ -114,7 +113,7 @@ public class Main {
         System.out.println(game1.getGameResult());
         System.out.println(game1.getGameTime());
         System.out.println(game1.getRefereeMarks());
-        System.out.println(ref1.average());
+        System.out.println(ref1.averageMark());
         //    Set<Game> games = game1.getGameReferee().getGames();
         //   System.out.println(games);
         //  System.out.println(game1.getGameReferee().getMarks(game1));
