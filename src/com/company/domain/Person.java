@@ -1,10 +1,13 @@
 package com.company.domain;
 
 
+import java.io.*;
 
-public class Person {
+public class Person implements Serializable {
+    //private static final long serialVersionUID__ = 8110083672197200937L;
     private final String name;
     private final int yearOfBirth;
+
 
     public Person() {
         this("noname");
@@ -33,7 +36,27 @@ public class Person {
         return yearOfBirth;
     }
 
+    public byte[] serialize(Object obj) throws IOException {
 
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ObjectOutputStream os = new ObjectOutputStream(out);
+        os.writeObject(obj);
+        return out.toByteArray();
+    }
+
+    public  Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream in = new ByteArrayInputStream(data);
+        ObjectInputStream is = new ObjectInputStream(in);
+        return is.readObject();
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                '}';
+    }
 
     @Override
     public int hashCode() {

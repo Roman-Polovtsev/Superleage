@@ -26,7 +26,7 @@ public class ResultTest {
         }
         PropertyConfigurator.configure(props);
 
-        String log4jConfPath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\resources\\log4j.properties";
+        String log4jConfPath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\resources\\log4j.xml";
         PropertyConfigurator.configure(log4jConfPath);
 
        // PropertyConfigurator.configure("C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\com\\company\\domain\\resources\\log4j.properties");
@@ -36,7 +36,7 @@ public class ResultTest {
         logger.trace("trace");
         Result start = new Result();
         start = start.incrementGuestPoint();
-        System.out.println(start);
+        logger.info(start.toString());
     }
 
 
