@@ -1,49 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true" name="XMLConfigTest"
-               packages="org.apache.logging.log4j.test">
-    <Properties>
-        <Property name="filename">target/test.log</Property>
-    </Properties>
-    <Filter type="ThresholdFilter" level="trace"/>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+                     debug="false">
 
-    <Appenders>
-        <Appender type="Console" name="STDOUT">
-            <Layout type="PatternLayout" pattern="%m MDC%X%n"/>
-            <Filters>
-                <Filter type="MarkerFilter" marker="FLOW" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <Filter type="MarkerFilter" marker="EXCEPTION" onMatch="DENY" onMismatch="ACCEPT"/>
-            </Filters>
-        </Appender>
-        <Appender type="Console" name="FLOW">
-            <Layout type="PatternLayout" pattern="%C{1}.%M %m %ex%n"/><!-- class and line number -->
-            <Filters>
-                <Filter type="MarkerFilter" marker="FLOW" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
-                <Filter type="MarkerFilter" marker="EXCEPTION" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-        </Appender>
-        <Appender type="File" name="File" fileName="${filename}">
-            <Layout type="PatternLayout">
-                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
-            </Layout>
-        </Appender>
-    </Appenders>
+    <!-- console appender -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="INFO" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+    </appender>
 
-    <Loggers>
-        <Logger name="org.apache.logging.log4j.test1" level="debug" additivity="false">
-            <Filter type="ThreadContextMapFilter">
-                <KeyValuePair key="test" value="123"/>
-            </Filter>
-            <AppenderRef ref="STDOUT"/>
-        </Logger>
 
-        <Logger name="org.apache.logging.log4j.test2" level="debug" additivity="false">
-            <AppenderRef ref="File"/>
-        </Logger>
+    <logger name="com.journaldev.log4j" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="console" />
+    </logger>
 
-        <Root level="trace">
-            <AppenderRef ref="STDOUT"/>
-        </Root>
-    </Loggers>
+    <root>
+        <priority value="DEBUG" />
+        <appender-ref ref="console" />
+    </root>
+
+</log4j:configuration>
 
 <!--</Configuration>-->
 
