@@ -1,0 +1,2 @@
+1) https://stackoverflow.com/questions/10941922/when-is-it-necessary-to-call-domconfigurator-configure-to-read-a-log4j-xml-file
+   Ref for log4j configuration problem that i encountered during configuration with configure.xml
