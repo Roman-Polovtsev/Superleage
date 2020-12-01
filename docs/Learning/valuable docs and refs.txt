@@ -1,4 +1,5 @@
 1) https://stackoverflow.com/questions/10941922/when-is-it-necessary-to-call-domconfigurator-configure-to-read-a-log4j-xml-file
    Ref for log4j configuration problem that i encountered during configuration with configure.xml
 2) https://stackoverflow.com/questions/7826834/de-serializing-objects-from-a-file-in-java
+   https://stackoverflow.com/questions/8379326/deserializing-multiple-objects-from-a-single-file
    Ref that resolve problems with reading bytes from file (writing with appending, and reading just first one object)
