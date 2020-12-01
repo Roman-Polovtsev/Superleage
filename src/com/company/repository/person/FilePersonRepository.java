@@ -2,6 +2,8 @@ package com.company.repository.person;
 
 import com.company.domain.Person;
 import com.company.domain.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +13,8 @@ import java.util.List;
 //todo: implement this + repositories for all domain objects
 public class FilePersonRepository implements PersonRepository {
 
+    private static final Logger logger = LoggerFactory.getLogger(FilePersonRepository.class);
+
     private final String repoFilePath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\personRepo";
     private final Path personPathDir = Paths.get(repoFilePath);
     private final Path filePersonPath = Paths.get(repoFilePath).resolve("persons.txt");
@@ -19,7 +23,7 @@ public class FilePersonRepository implements PersonRepository {
         try{Files.deleteIfExists(filePersonPath);}
         catch (IOException io){
             io.printStackTrace();
-            System.out.println("cannot delete file");
+            logger.error("{}","cannot delete file");
         }
     }
 
@@ -32,37 +36,37 @@ public class FilePersonRepository implements PersonRepository {
         try {
             if (!Files.exists(personPathDir)){
                 Files.createDirectories(personPathDir);
-                System.out.println("Created directory");
+                logger.info("{}","Created directory");
             }
         } catch (IOException e){
             e.printStackTrace();
-            System.out.println("cannot create directory");
+            logger.error("{}","cannot create directory");
         }
         try {
             if (!Files.exists(filePersonPath)){
                 Files.createFile(filePersonPath);
-                System.out.println("created file");}
+                logger.info("{}","created file");}
         } catch (IOException e){
             e.printStackTrace();
-            System.out.println("cannot create file");
+            logger.error("{}","cannot create file");
         }
         try{
             //Files.size(filePersonPath) = (byte)0;
             //if(Files.readAllBytes(filePersonPath) == null)
            if(Files.size(filePersonPath) == 0 ){
                Files.write(filePersonPath,person.serialize(person));
-               System.out.println("file was empty");
+               logger.info("{}","file was empty");
            }
            else {
               // Files.write(filePersonPath,System.getProperty("line.separator").getBytes(),StandardOpenOption.APPEND);
                Files.write(filePersonPath, person.serialize(person), StandardOpenOption.APPEND);
-               System.out.println("file was not empty, just  added in file");
+               logger.info("{}","file was not empty, just  added in file");
               // Files.
            }
         }
         catch (IOException e){
             e.printStackTrace();
-            System.out.println("cannot write to file");
+            logger.error("{}","cannot write to file");
         }
         //throw new UnsupportedOperationException();
     }
@@ -81,7 +85,7 @@ public class FilePersonRepository implements PersonRepository {
         }
         catch (IOException e){
             e.printStackTrace();
-            System.out.println("cannot find file size");
+            logger.error("{}","cannot find file size");
         }
         while ( sizeFile < 100L)
             persons.save(person1);
@@ -96,9 +100,9 @@ public class FilePersonRepository implements PersonRepository {
         try{
             byte[] readedBytes = Files.readAllBytes(filePersonPath);
             Object deserialize = person.deserialize(readedBytes);
-            System.out.println(person.deserialize(readedBytes)+"readed all data for removing");
+            logger.info("{}",person.deserialize(readedBytes)+"readed all data for removing");
             byte[] bytes2 = Files.readAllBytes(filePersonPath);
-            System.out.println(person.deserialize(bytes2));
+            logger.info("{}",person.deserialize(bytes2));
 
 //            for(int i =0 ; i<readedBytes.length;i++){
 //                if( person.equals(readedBytes[i]) )
@@ -108,11 +112,11 @@ public class FilePersonRepository implements PersonRepository {
 //            }
         }
         catch (IOException e){
-            System.out.println("ioexc");
+            logger.error("{}","ioexc");
             e.printStackTrace();
         }
         catch (ClassNotFoundException classexc){
-            System.out.println("classnotfound");
+            logger.error("{}","classnotfound");
             classexc.printStackTrace();
         }
         //throw new UnsupportedOperationException();
@@ -134,23 +138,23 @@ public class FilePersonRepository implements PersonRepository {
         try{
              readBytes = Files.readAllBytes(filePersonPath);
              //List<String> readlines = Files.readAllLines(filePersonPath,StandardCharsets.UTF_8);
-            System.out.println(readBytes);
+            logger.info("{}",readBytes);
             persons = (Person) persons.deserialize(readBytes);
-            System.out.println(persons);
+            logger.info("{}",persons);
             Person desPerson = new Person("петя", persons.getYearOfBirth());
             this.save(desPerson);
-            System.out.println(desPerson);
-            //System.out.println(readlines);
+            logger.info("{}",desPerson);
+            //logger.info("{}",readlines);
         }
         catch (IOException e){
             e.printStackTrace();
         }
         catch (ClassNotFoundException clas){
-            System.out.println("smth wrong with class");
+            logger.error("{}","smth wrong with class");
         }
 
 
-       // System.out.println();
+       // logger.info("{}",);
     return strings;
        // throw new UnsupportedOperationException();
     }

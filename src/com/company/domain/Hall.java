@@ -2,7 +2,12 @@ package com.company.domain;
 
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Hall {
+
+    private static final Logger logger = LoggerFactory.getLogger(Hall.class);
 
     private final Address address;
     private EnableGameTime gameTime;
@@ -34,7 +39,8 @@ public class Hall {
 
 
     public void print() {
-        System.out.println(this);
+
+        logger.info("{}","Printing Hall information: \n{}",this);
     }
 
     @Override

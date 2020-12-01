@@ -1,6 +1,8 @@
 package com.company.repository.team;
 
 import com.company.domain.Team;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.nio.file.*;
 //todo: implement this + repositories for all domain objects
 public class FileTeamRepository implements TeamRepository {
 
+    private static final Logger logger = LoggerFactory.getLogger(FileTeamRepository.class);
 
     @Override
     public void save( Team team ) {
@@ -43,13 +46,13 @@ public class FileTeamRepository implements TeamRepository {
         try{
              file = Files.deleteIfExists(Paths.get("E:\\Polovtsev\\git\\Projects\\newFile.txt"));}
 //        catch (NoSuchFileException notFound){
-//            System.out.println("huevo");
+//            logger.info("{}","huevo");
 //        }
         catch (IOException er){
             er.printStackTrace();
         }
         finally {
-            System.out.println(file);
+            logger.info("{}",file);
         }
         //throw new UnsupportedOperationException();
 

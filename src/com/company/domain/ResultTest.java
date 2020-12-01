@@ -24,7 +24,7 @@ public class ResultTest {
 
 //        try{props.load(new FileInputStream("C:\\Users\\Public\\Documents\\log4j.properties"));}
 //        catch (Exception exception){
-//            System.out.println("exception");
+//            logger.info("{}","exception");
 //        }
 //        PropertyConfigurator.configure(props);
 
@@ -32,13 +32,13 @@ public class ResultTest {
         DOMConfigurator.configure(log4jConfPath);
 
        // PropertyConfigurator.configure("C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\com\\company\\domain\\resources\\log4j.properties");
-        logger.info("кулебяка");
+        logger.info("{}","кулебяка");
         logger.debug("debug");
         logger.error("error");
         logger.trace("trace");
         Result start = new Result();
         start = start.incrementGuestPoint();
-        logger.info("Home score: {} \n\t\t Guest score: {} \n{}",start.getHomeScore(),start.getGuestScore(), start);
+        logger.info("{}","Home score: {} \n\t\t Guest score: {} \n{}",start.getHomeScore(),start.getGuestScore(), start);
     }
 
 

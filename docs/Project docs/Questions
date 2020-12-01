@@ -8,7 +8,7 @@
 8)Kак инициализировать массив данными при инициализации
 //9) Две функции ниже при вызове второй стек переполняется, верно ли, что это из-за того, что метод toString пытаясь привести все аргументы к строке и видя this вызывает для него как раз сам себя?
 public void print() {
-        System.out.println("Hall " + this + "\nAddress: " + address + "\nGameTime: " + gameTime);
+        logger.info("{}","Hall " + this + "\nAddress: " + address + "\nGameTime: " + gameTime);
     }
 
     @Override
