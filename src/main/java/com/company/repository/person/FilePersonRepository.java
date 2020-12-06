@@ -2,12 +2,14 @@ package com.company.repository.person;
 
 import com.company.domain.Person;
 import com.company.domain.Player;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.List;
 
 //todo: implement this + repositories for all domain objects
@@ -18,6 +20,7 @@ public class FilePersonRepository implements PersonRepository {
     private final String repoFilePath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\personRepo";
     private final Path personPathDir = Paths.get(repoFilePath);
     private final Path filePersonPath = Paths.get(repoFilePath).resolve("persons.txt");
+    private final List<Person> personList = new ArrayList<>();
 
     public void deleteFile (){
         try{Files.deleteIfExists(filePersonPath);}
@@ -53,13 +56,14 @@ public class FilePersonRepository implements PersonRepository {
         try{
             //Files.size(filePersonPath) = (byte)0;
             //if(Files.readAllBytes(filePersonPath) == null)
+            personList.add(person);
            if(Files.size(filePersonPath) == 0 ){
-               Files.write(filePersonPath,person.serialize(person));
+               Files.write(filePersonPath,person.serialize(personList));
                logger.info("{}","file was empty");
            }
            else {
               // Files.write(filePersonPath,System.getProperty("line.separator").getBytes(),StandardOpenOption.APPEND);
-               Files.write(filePersonPath, person.serialize(person), StandardOpenOption.APPEND);
+               Files.write(filePersonPath, person.serialize(personList));
                logger.info("{}","file was not empty, just  added in file");
               // Files.
            }
@@ -74,6 +78,8 @@ public class FilePersonRepository implements PersonRepository {
     public static void main(String[] args) {
         PersonRepository persons = new FilePersonRepository();
         FilePersonRepository file = new FilePersonRepository();
+        String log4jConfPath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\main\\java\\resources\\log4j.xml";
+        DOMConfigurator.configure(log4jConfPath);
       // file.deleteFile();
         Person person1 = new Person(2000);
        // persons.save(person);
@@ -82,15 +88,16 @@ public class FilePersonRepository implements PersonRepository {
         long sizeFile = 0;
         try{
             sizeFile = Files.size(file.getFilePersonPath());
+            logger.info("{}",sizeFile);
         }
         catch (IOException e){
             e.printStackTrace();
             logger.error("{}","cannot find file size");
         }
-        while ( sizeFile < 100L)
-            persons.save(person1);
-        persons.findAll();
-        persons.remove(person);
+//        while ( sizeFile < 100L)
+        persons.save(person1);
+       persons.findAll();
+    //    persons.remove(person);
        // file.deleteFile();
     }
 
@@ -134,16 +141,18 @@ public class FilePersonRepository implements PersonRepository {
         List<Person> strings = null;
         Person persons = new Person();
         byte[] readBytes;
-        byte[] readBytes1;
         try{
              readBytes = Files.readAllBytes(filePersonPath);
              //List<String> readlines = Files.readAllLines(filePersonPath,StandardCharsets.UTF_8);
-            logger.info("{}",readBytes);
-            persons = (Person) persons.deserialize(readBytes);
-            logger.info("{}",persons);
-            Person desPerson = new Person("петя", persons.getYearOfBirth());
-            this.save(desPerson);
-            logger.info("{}",desPerson);
+          //  logger.info("{}",readBytes);
+            ByteArrayInputStream is = new ByteArrayInputStream(readBytes);
+            ObjectInputStream in = new ObjectInputStream(is);
+            List<Person> people = (List<Person>) in.readObject();
+            //strings = (List<Person>) strings.(readBytes);
+            logger.info("{}" + " after reading",people);
+//            Person desPerson = new Person("петя", persons.getYearOfBirth());
+//            this.save(desPerson);
+//            logger.info("{}",desPerson);
             //logger.info("{}",readlines);
         }
         catch (IOException e){
