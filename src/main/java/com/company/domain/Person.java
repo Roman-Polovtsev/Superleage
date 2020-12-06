@@ -44,7 +44,7 @@ public class Person implements Serializable {
         return out.toByteArray();
     }
 
-    public  Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
+    public Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
         ObjectInputStream is = new ObjectInputStream(in);
         return is.readObject();

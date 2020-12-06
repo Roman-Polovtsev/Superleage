@@ -28,7 +28,7 @@ public class ResultTest {
 //        }
 //        PropertyConfigurator.configure(props);
 
-        String log4jConfPath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\resources\\log4j.xml";
+        String log4jConfPath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\main\\java\\resources\\log4j.xml";
         DOMConfigurator.configure(log4jConfPath);
 
        // PropertyConfigurator.configure("C:\\Users\\Роман\\IdeaProjects\\Superleage\\src\\com\\company\\domain\\resources\\log4j.properties");
