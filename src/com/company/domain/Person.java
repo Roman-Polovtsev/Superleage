@@ -4,7 +4,7 @@ package com.company.domain;
 import java.io.*;
 
 public class Person implements Serializable {
-    //private static final long serialVersionUID__ = 8110083672197200937L;
+    private static final long serialVersionUID = -7313374892150962630L;
     private final String name;
     private final int yearOfBirth;
 

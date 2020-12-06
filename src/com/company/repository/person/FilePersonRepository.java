@@ -93,8 +93,9 @@ public class FilePersonRepository implements PersonRepository {
 //        }
 //        while ( sizeFile < 100L)
             persons.save(person1);
-            persons.findByName(person.getName());
-       // persons.findAll();
+        Person byName = persons.findByName(person.getName());
+        logger.info(byName.toString());
+        // persons.findAll();
        // persons.remove(person);
        // file.deleteFile();
     }
@@ -138,7 +139,16 @@ public class FilePersonRepository implements PersonRepository {
        } catch (IOException e){
            logger.error("IOex");
        }
-       Person newPerson = newPerson.deserialize(Files.readAllBytes(personPathDir.resolve(personName)));
+       Person newPerson = new Person();
+       try {
+            newPerson = (Person) newPerson.deserialize(Files.readAllBytes(personPathDir.resolve(personName+".txt")));
+       } catch (IOException e){
+           logger.error("IOexception"+e.getStackTrace().toString());
+           e.printStackTrace();
+       } catch (ClassNotFoundException claas){
+           logger.error("ClassNotFound"+claas.getStackTrace().toString());
+       }
+       return newPerson;
 
     }
 

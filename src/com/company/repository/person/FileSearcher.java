@@ -13,6 +13,7 @@ public class FileSearcher extends SimpleFileVisitor<Path> {
 
     private static final Logger logger = LoggerFactory.getLogger(FileSearcher.class);
 
+
     FileSearcher(String fileName){
         matcher = FileSystems.getDefault().getPathMatcher("glob:"+fileName);
     }
@@ -22,6 +23,12 @@ public class FileSearcher extends SimpleFileVisitor<Path> {
         logger.debug(name.toString());
         if (name != null && matcher.matches(name)) {
             logger.info(file.toString()+" this file is here");
+            try{
+                (Files.readAllBytes(name));
+            }
+            catch (IOException e){
+
+            }
 
         }
         else logger.error("there`s no such file in this directory");
