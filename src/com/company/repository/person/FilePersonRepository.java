@@ -14,7 +14,6 @@ public class FilePersonRepository implements PersonRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(FilePersonRepository.class);
 
-
     private final String repoFilePath = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\personRepo";
     private final Path personPathDir = Paths.get(repoFilePath);
     private final Path filePersonPath = Paths.get(repoFilePath).resolve("persons.txt");
