@@ -11,7 +11,7 @@ public interface PersonRepository {
 
     void remove(Person person);
 
-    Person findById(long personId);
+    Person findByName(String personName);
 
     List<Person> findAll();
 

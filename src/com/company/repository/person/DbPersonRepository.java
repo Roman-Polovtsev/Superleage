@@ -22,7 +22,7 @@ public class DbPersonRepository implements PersonRepository{
     }
 
     @Override
-    public Person findById(long personId) {
+    public Person findByName(String personId) {
         throw new UnsupportedOperationException();
     }
 
