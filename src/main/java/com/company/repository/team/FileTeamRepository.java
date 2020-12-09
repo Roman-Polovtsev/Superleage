@@ -99,12 +99,29 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     @Override
-    public Team findById(long personId) throws NullPointerException {
+    public Team findById(long teamId) throws NullPointerException {
         if (teamList.isEmpty())
             throw new NullPointerException("There`s no Teams");
-        else
-            return teamList.get((int)personId);
-    }
+        else {
+            List<Team> deserializedTeam = null;
+            try {
+                deserializedTeam = (List<Team>) serializer.deserialize(Files.readAllBytes(this.fileTeamsPath));
+            } catch (IOException z) {
+                logger.error("fail ", z);
+            } catch (ClassNotFoundException c) {
+                logger.error("fail class ", c);
+            }
+            logger.debug("{}", deserializedTeam);
+            for (Team team : deserializedTeam)
+                if (team.hashCode() == teamId){
+                    logger.info("Here is searching team");
+                    return team;
+            }
+            logger.info("Team with such ID not found");
+            throw new NullPointerException();
+            }
+
+        }
 
     @Override
     public List<Team> getAll() {
@@ -121,10 +138,6 @@ public class FileTeamRepository implements TeamRepository {
         logger.debug("{}",deserializedTeam);
         return deserializedTeam;
     }
-
-    @Override
-    public Team findByName (String name){ throw new UnsupportedOperationException(); }
-
 
 
 }

@@ -10,9 +10,7 @@ public interface TeamRepository {
 
     void remove(Team team);
 
-    Team findByName( String name);
-
-    Team findById ( long id );
+    Team findById ( long teamId );
 
     List<Team> getAll();
 

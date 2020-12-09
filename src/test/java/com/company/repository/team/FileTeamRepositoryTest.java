@@ -1,5 +1,7 @@
 package com.company.repository.team;
 
+import com.company.domain.EnableGameTime;
+import com.company.domain.Hall;
 import com.company.domain.Team;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.junit.Before;
@@ -98,6 +100,18 @@ public class FileTeamRepositoryTest {
 
     @Test
     public void findById() {
+        repository.save(new Team(new Hall(),"1"));
+        repository.save(new Team(new Hall(),"2"));
+        repository.save(new Team(new Hall(),"3"));
+        repository.save(new Team(new Hall(),"4"));
+        Team team = new Team();
+        int i = team.hashCode();
+        repository.save(team);
+        System.out.println(repository.findById(i));
+        Team team1 = new Team(new Hall(),"1");
+        int i1 = team1.hashCode();
+        System.out.println(repository.findById(i1));
+        repository.findById(12);
     }
 
     @Test
