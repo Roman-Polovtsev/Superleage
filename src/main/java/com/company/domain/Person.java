@@ -4,7 +4,7 @@ package com.company.domain;
 import java.io.*;
 
 public class Person implements Serializable {
-    //private static final long serialVersionUID__ = 8110083672197200937L;
+    private static final long serialVersionUID = 2L;
     private final String name;
     private final int yearOfBirth;
 
@@ -37,7 +37,6 @@ public class Person implements Serializable {
     }
 
     public byte[] serialize(Object obj) throws IOException {
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ObjectOutputStream os = new ObjectOutputStream(out);
         os.writeObject(obj);

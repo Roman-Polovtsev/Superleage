@@ -1,11 +1,14 @@
 package com.company.domain;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class EnableGameTime {
+public class EnableGameTime implements Serializable {
+    private static final long serialVersionUID = 1L;
     private LocalTime begin;
     private LocalTime end;
     private final List<DayOfWeek> daysOfWeek;
@@ -78,6 +81,7 @@ public class EnableGameTime {
 //        return days;
 //    }
 
+
     public String getDaysOfWeek(){
         StringBuilder days = new StringBuilder();
         int cnt_days = 0;
@@ -94,4 +98,18 @@ public class EnableGameTime {
             return days.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EnableGameTime that = (EnableGameTime) o;
+        return Objects.equals(begin, that.begin) &&
+                Objects.equals(end, that.end) &&
+                Objects.equals(daysOfWeek, that.daysOfWeek);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(begin, end, daysOfWeek);
+    }
 }

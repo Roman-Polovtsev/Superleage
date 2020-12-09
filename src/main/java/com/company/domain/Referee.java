@@ -4,6 +4,7 @@ import java.util.*;
 
 
 public class Referee extends Person {
+    private static final long serialVersionUID = 1L;
     private float averageMark;
     private Map<StartedGame,int[]> marksMap;
 

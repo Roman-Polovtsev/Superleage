@@ -1,15 +1,18 @@
 package com.company.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Hall {
+public class Hall implements Serializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(Hall.class);
+    transient private static final Logger logger = LoggerFactory.getLogger(Hall.class);
+    private static final long serialVersionUID = 2L;
 
     private final Address address;
+
     private EnableGameTime gameTime;
 
     public Hall(){

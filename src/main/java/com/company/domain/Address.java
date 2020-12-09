@@ -1,8 +1,11 @@
 package com.company.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Address {
+public class Address implements Serializable {
+
+    private static final long serialVersionUID = 0L;
     private final String city;
     private final String street;
     private final String buildingNumber;

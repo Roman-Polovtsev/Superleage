@@ -25,8 +25,7 @@ public class FilePersonRepository implements PersonRepository {
     public void deleteFile (){
         try{Files.deleteIfExists(filePersonPath);}
         catch (IOException io){
-            io.printStackTrace();
-            logger.error("{}","cannot delete file");
+            logger.error("{}","cannot delete file",io);
         }
     }
 
@@ -42,16 +41,14 @@ public class FilePersonRepository implements PersonRepository {
                 logger.info("{}","Created directory");
             }
         } catch (IOException e){
-            e.printStackTrace();
-            logger.error("{}","cannot create directory");
+            logger.error("{}","cannot create directory",e);
         }
         try {
             if (!Files.exists(filePersonPath)){
                 Files.createFile(filePersonPath);
                 logger.info("{}","created file");}
         } catch (IOException e){
-            e.printStackTrace();
-            logger.error("{}","cannot create file");
+            logger.error("{}","cannot create file",e);
         }
         try{
             //Files.size(filePersonPath) = (byte)0;
@@ -69,8 +66,7 @@ public class FilePersonRepository implements PersonRepository {
            }
         }
         catch (IOException e){
-            e.printStackTrace();
-            logger.error("{}","cannot write to file");
+            logger.error("{}","cannot write to file", e);
         }
         //throw new UnsupportedOperationException();
     }
@@ -91,13 +87,15 @@ public class FilePersonRepository implements PersonRepository {
             logger.info("{}",sizeFile);
         }
         catch (IOException e){
-            e.printStackTrace();
-            logger.error("{}","cannot find file size");
+            logger.error("{}","cannot find file size",e);
         }
 //        while ( sizeFile < 100L)
         persons.save(person1);
-       persons.findAll();
-    //    persons.remove(person);
+
+//        List<Person> all = persons.findAll();
+//
+//        logger.info("{}",all);
+        //    persons.remove(person);
        // file.deleteFile();
     }
 
@@ -119,19 +117,25 @@ public class FilePersonRepository implements PersonRepository {
 //            }
         }
         catch (IOException e){
-            logger.error("{}","ioexc");
-            e.printStackTrace();
+            logger.error("{}","ioexc",e);
         }
         catch (ClassNotFoundException classexc){
-            logger.error("{}","classnotfound");
-            classexc.printStackTrace();
+            logger.error("{}","classnotfound", classexc);
         }
         //throw new UnsupportedOperationException();
     }
 
+    public Person findByName(String name) {
+        List<Person> all = findAll();
+        Person searchingPerson = new Person(name);
+        boolean equals = all.contains(searchingPerson);
+        logger.info("{}",equals);
+        return all.get(0);
+    }
+
     @Override
     public Person findById(long personId) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -139,6 +143,7 @@ public class FilePersonRepository implements PersonRepository {
         //Path personPathDir = Paths.get(repoFilePath);
       //  Path filePersonPath = Paths.get(repoFilePath).resolve("persons.txt");
         List<Person> strings = null;
+        List<Person> people = new ArrayList<>();
         Person persons = new Person();
         byte[] readBytes;
         try{
@@ -147,7 +152,7 @@ public class FilePersonRepository implements PersonRepository {
           //  logger.info("{}",readBytes);
             ByteArrayInputStream is = new ByteArrayInputStream(readBytes);
             ObjectInputStream in = new ObjectInputStream(is);
-            List<Person> people = (List<Person>) in.readObject();
+            people = (List<Person>) in.readObject();
             //strings = (List<Person>) strings.(readBytes);
             logger.info("{}" + " after reading",people);
 //            Person desPerson = new Person("петя", persons.getYearOfBirth());
@@ -156,7 +161,7 @@ public class FilePersonRepository implements PersonRepository {
             //logger.info("{}",readlines);
         }
         catch (IOException e){
-            e.printStackTrace();
+            logger.error("{}",e);
         }
         catch (ClassNotFoundException clas){
             logger.error("{}","smth wrong with class");
@@ -164,7 +169,7 @@ public class FilePersonRepository implements PersonRepository {
 
 
        // logger.info("{}",);
-    return strings;
+    return people;
        // throw new UnsupportedOperationException();
     }
 }

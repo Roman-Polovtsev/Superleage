@@ -1,15 +1,17 @@
 package com.company.domain;
 
+import java.io.Serializable;
 import java.time.Year;
 import java.util.*;
 
-public class Team  {
-    private final Hall hall;
-    private final String name;
-    private Captain captain;
-    private final Set <Player > members;
-    private float averageHeight;
-    private float averageAge;
+public class Team implements Serializable  {
+     private static final long serialVersionUID = 1L;
+     private final Hall hall;
+     private final String name;
+     private Captain captain;
+     private final Set <Player> members;
+    transient private float averageHeight;
+    transient private float averageAge;
 
     public Team() {
         this("unnamed");
@@ -100,21 +102,6 @@ public class Team  {
         return "Team \"" + name + "\" information:\n\t"  + hall + "\n" + captain;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return Objects.equals(hall, team.hall) &&
-                Objects.equals(name, team.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(hall, name);
-    }
-
-
 
     public float averageHeight() {
         float averageHeight;
@@ -138,7 +125,19 @@ public class Team  {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(hall, team.hall) &&
+                Objects.equals(name, team.name) &&
+                Objects.equals(captain, team.captain) &&
+                Objects.equals(members, team.members);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(hall, name, captain, members);
+    }
 }

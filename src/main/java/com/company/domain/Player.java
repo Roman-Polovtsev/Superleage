@@ -1,5 +1,7 @@
 package com.company.domain;
 
+import java.util.Objects;
+
 public class Player extends Person {
     private final String level;
     private final String position;
@@ -47,5 +49,21 @@ public class Player extends Person {
                 "\n level: " + level +
                 "\n position: " + position  +
                 "\n height: " + height + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Player player = (Player) o;
+        return height == player.height &&
+                Objects.equals(level, player.level) &&
+                Objects.equals(position, player.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), level, position, height);
     }
 }
