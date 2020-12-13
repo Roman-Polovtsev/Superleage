@@ -1,0 +1,9 @@
+1) https://stackoverflow.com/questions/10941922/when-is-it-necessary-to-call-domconfigurator-configure-to-read-a-log4j-xml-file
+   Ref for log4j configuration problem that i encountered during configuration with configure.xml
+2) https://stackoverflow.com/questions/7826834/de-serializing-objects-from-a-file-in-java
+   https://stackoverflow.com/questions/8379326/deserializing-multiple-objects-from-a-single-file
+   https://stackoverflow.com/questions/21520337/de-serialize-a-file-and-return-an-arraylist-containing-the-objects-in-the-file
+   Ref that resolve problems with reading bytes from file (writing with appending, and reading just first one object)
+3)https://superuser.com/questions/1356320/what-is-the-number-of-open-files-limits#:~:text=The%20C%20run%2Dtime%20libraries,_setmaxstdio%20to%20change%20this%20number.&text=How%20many%20Windows%20handles%20in%20use%20is%20%22too%20many%22%3F
+https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/setmaxstdio?redirectedfrom=MSDN&view=msvc-160
+Max value of open files in Windows in one process or one network session
