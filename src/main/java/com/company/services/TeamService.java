@@ -46,20 +46,8 @@ public class TeamService {
     public void addPlayer(Team team, Player player){
 
         Team byId = teamRepository.findById(team.hashCode());
-    //    logger.debug("Team before adding new player: \n {}",byId);
         byId.addPlayer(player);
-      //  logger.debug("Team after adding player \n :{}",byId);
-      //  logger.debug("\n :{}, \nteam: {}\nbyid: {}",byId.equals(team),team.hashCode(),byId.hashCode() );
-
-       //
-      //  logger.debug("Teams before updating: \n{}\n",teamRepository.getAll().toString());
-      //  teamRepository.remove(team);
-      //  teamRepository.
         playerRepository.remove(player);
         teamRepository.save(byId);
-
-        //logger.debug("Looking for updated team in file \n {}",teamRepository.findById(byId.hashCode()));
-        //logger.debug("All team list:\n {}",teamRepository.getAll());
-
     }
 }
