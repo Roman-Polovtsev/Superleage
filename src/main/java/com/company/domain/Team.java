@@ -99,7 +99,7 @@ public class Team implements Serializable  {
     @Override
     public String toString(){
 
-        return "Team \"" + name + "\" information:\n\t"  + hall + "\n" + captain;
+        return "Team \"" + name + "\" information:\n\t"  + hall + "\n captain:" + captain + "\n members: "+ this.getMembers();
     }
 
 

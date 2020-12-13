@@ -6,6 +6,8 @@ import java.util.List;
 
 
 public interface TeamRepository {
+    void createRepository();
+
     void save(Team team);
 
     void remove(Team team);

@@ -1,5 +1,6 @@
 package com.company.domain;
 
+import java.time.Year;
 import java.util.Objects;
 
 public class Player extends Person {
@@ -8,7 +9,15 @@ public class Player extends Person {
     private final int height;
 
     public Player(){
-        super("John Doe",1990);
+        this("Ivan Ivanov");
+    }
+
+    public Player(String name){
+        this(name,1990);
+    }
+
+    public Player(String name, int year){
+        super(name,year);
         this.level = "amateur";
         this.position = "not stated";
         this.height = 0;

@@ -2,6 +2,8 @@ package com.company.domain;
 
 
 import java.io.*;
+import java.time.Year;
+import java.util.Objects;
 
 public class Person implements Serializable {
     private static final long serialVersionUID = 2L;
@@ -19,13 +21,21 @@ public class Person implements Serializable {
     }
 
     public Person (int yearOfBirth){
-        this.name = "Unnamed";
-        this.yearOfBirth = yearOfBirth;
+        if(yearOfBirth > Year.now().getValue())
+            throw new IllegalArgumentException("This year is bigger than current, set less number");
+        else {
+            this.name = "Unnamed";
+            this.yearOfBirth = yearOfBirth;
+        }
     }
 
     public Person(String name, int yearOfBirth) {
-        this.name = name;
-        this.yearOfBirth = yearOfBirth;
+        if(yearOfBirth > Year.now().getValue())
+            throw new IllegalArgumentException("This year is bigger than current, set less number");
+        else {
+            this.name = name;
+            this.yearOfBirth = yearOfBirth;
+        }
     }
 
     public String getName() {
@@ -58,12 +68,16 @@ public class Person implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return yearOfBirth == person.yearOfBirth &&
+                Objects.equals(name, person.name);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return Objects.hash(name, yearOfBirth);
     }
 }
