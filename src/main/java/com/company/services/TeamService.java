@@ -6,44 +6,54 @@ import com.company.repository.player.FilePlayerRepository;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.team.FileTeamRepository;
 import com.company.repository.team.TeamRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Set;
+import java.util.function.Consumer;
 
 public class TeamService {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private TeamRepository teamRepository = new FileTeamRepository();
-    private PlayerRepository playerRepository = new FilePlayerRepository();
+    private final TeamRepository teamRepository;
+    private final PlayerRepository playerRepository;
+
+    public TeamService() {
+        this(new FileTeamRepository(), new FilePlayerRepository());
+    }
+
+    public TeamService(TeamRepository teamRepository, PlayerRepository playerRepository) {
+        this.teamRepository = teamRepository;
+        this.playerRepository = playerRepository;
+    }
 
     public TeamRepository getTeamRepository() {
         return teamRepository;
     }
 
-    public void addTeam (Team team){
+    public void addTeam(Team team) {
         teamRepository.save(team);
     }
 
-    public Team findHighest (){
-        List<Team> all = teamRepository.getAll();
+    public Team findHighest() {
         float max = 0;
+        List<Team> all = teamRepository.getAll();
         Team highestTeam = teamRepository.getAll().get(0);
-        for (Team team: all
-             ) {
-           if(team.getAverageHeight()> max) {
-               max = team.getAverageHeight();
-               highestTeam = team;
-           }
+        for (Team team : all) {
+            if (team.getAverageHeight() > max) {
+                max = team.getAverageHeight();
+                highestTeam = team;
+            }
         }
+        //todo: stream API
         return highestTeam;
+    }
+
+    private void someMethod(Team team) {
+
     }
 
     public PlayerRepository getPlayerRepository() {
         return playerRepository;
     }
 
-    public void addPlayer(Team team, Player player){
+    public void addPlayer(Team team, Player player) {
 
         Team byId = teamRepository.findById(team.hashCode());
         byId.addPlayer(player);
