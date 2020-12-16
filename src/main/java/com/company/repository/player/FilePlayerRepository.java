@@ -1,29 +1,37 @@
 package com.company.repository.player;
 
-import com.company.domain.Person;
 import com.company.domain.Player;
-import com.company.domain.Team;
 import com.company.repository.FileHandler;
-import com.company.repository.MyException;
-import com.company.repository.Serializer;
-import com.company.repository.team.FileTeamRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FilePlayerRepository implements PlayerRepository {
-    public static final Logger logger = LoggerFactory.getLogger(FilePlayerRepository.class); //todo: constructor
-    private final String repoFile = "D:\\workspace\\Roman\\Superleage\\FileRepository"; //todo: constructor
-    private final Path repoFilePath = Paths.get(repoFile);
-    private final Path filePath = repoFilePath.resolve("Players.txt"); //todo: constructor
+    public FilePlayerRepository() {
+        this(LoggerFactory.getLogger(FilePlayerRepository.class) );
+    }
+
+    public FilePlayerRepository(Logger logger){
+        this(logger, "D:\\workspace\\Roman\\Superleage\\FileRepository", "D:\\workspace\\Roman\\Superleage\\FileRepository\\players.txt");
+    }
+
+    public FilePlayerRepository(Logger logger,String pathRepository, String pathFile){
+       this.filePath = Paths.get(pathFile);
+       this.repoFilePath = Paths.get(pathRepository);
+       this.fileHandler = new FileHandler(filePath,repoFilePath);
+
+    }
+
+    private final Logger logger = LoggerFactory.getLogger(FilePlayerRepository.class); //todo: constructor
+   // private final String repoFile = "D:\\workspace\\Roman\\Superleage\\FileRepository"; //todo: constructor
+    private final Path repoFilePath ;//= Paths.get(repoFile);
+    private final Path filePath ;//= repoFilePath.resolve("Players.txt"); //todo: constructor
     private List<Player> playerList = new ArrayList<>(); //todo: constructor
-    transient private final FileHandler fileHandler = new FileHandler(playerList, filePath, repoFilePath); //todo: constructor
+    transient private final FileHandler fileHandler;// = new FileHandler(playerList, filePath, repoFilePath); //todo: constructor
 
     @Override
     public void save(Player player) {

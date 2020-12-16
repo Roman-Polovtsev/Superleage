@@ -12,16 +12,17 @@ import java.util.List;
 
 public class FileHandler {
     transient private final Serializer serializer = new Serializer();
-    transient private List<?> collection;
     transient private final Path pathToFile;
     transient private final Path pathToDirectory;
 
     public FileHandler() {
-        this.collection = null;
         this.pathToFile = null;
         this.pathToDirectory = null;
     }
-
+    public FileHandler(Path pathToFile, Path pathToDirectory) {
+        this.pathToFile = pathToFile;
+        this.pathToDirectory = pathToDirectory;
+    }
     ;
 
     public Serializer getSerializer() {
@@ -29,7 +30,6 @@ public class FileHandler {
     }
 
     public FileHandler(List<?> collection, Path pathToFile, Path pathToDirectory) {
-        this.collection = collection;
         this.pathToFile = pathToFile;
         this.pathToDirectory = pathToDirectory;
     }

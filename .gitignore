@@ -3,3 +3,4 @@ Superleage.iml
 out/*
 ./src/com/company/services/.idea/*
 Projects.iml
+target/*
