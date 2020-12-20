@@ -1,135 +1,92 @@
 package com.company.repository.team;
 
-import com.company.domain.EnableGameTime;
-import com.company.domain.Hall;
 import com.company.domain.Team;
-import org.apache.log4j.xml.DOMConfigurator;
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class FileTeamRepositoryTest {
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    FileTeamRepository repository =new FileTeamRepository();
+    FileTeamRepository repository = new FileTeamRepository();
 
     @Test
     public void save() {
-//        List<Team> teamList1 = null, teamList2 = null;
-//        try{ teamList1 = (List<Team>)repository.deserialize(Files.readAllBytes(repository.getFileTeamsPath()));}
-//        catch (IOException exception){
-//            exception.printStackTrace();
-//        }
-//        catch (ClassNotFoundException c){
-//            c.printStackTrace();
-//        }
-        if(!Files.exists(repository.getFileTeamsPath()))
-            repository.getFileHandler().fileCreating(repository.getRepoFilePath(),repository.getFileTeamsPath());
-            List<Team> testTeam = new ArrayList<>();
-            //testTeam.addAll(0,repository.getTeamList());
-           // testTeam.add(new Team());
-            testTeam.add(new Team());
-            Object[] objects = testTeam.toArray();
-            repository.save(new Team());
+        Team team = new Team();
+        Team team1 = new Team(123);
+        repository.save(team);
+        repository.save(team1);
 
-            Object[] objects1 = repository.getTeamList().toArray();
-            assertEquals(testTeam.size(),repository.getTeamList().size());
-            logger.info("arrays sizes are equal");
-            assertArrayEquals(objects, objects1);
-        logger.info("arrays are equal");
-            try{
-            testTeam = (List<Team>) repository.getSerializer().deserialize(Files.readAllBytes(repository.getFileTeamsPath()));}
-            catch (IOException e)
-            {
-                logger.error("{}",e);
-            }
-            catch (ClassNotFoundException c){
-                logger.error("{}",c);
-            }
-            objects = testTeam.toArray();
-        assertEquals(testTeam, repository.getTeamList());
+        List<Team> all = repository.getAll();
 
+        assertEquals(2, all.size());
+        assertTrue(all.contains(team));
+        assertTrue(all.contains(team1));
     }
 
     @Test
     public void remove() {
-        repository.save(new Team());
+        Team team = new Team(123);
+        Team team1 = new Team(12);
+        repository.save(team);
+        repository.save(team1);
+
+        repository.remove(team1);
         List<Team> all = repository.getAll();
-        repository.remove(new Team());
-        List<Team> all1 = repository.getAll();
-        assertSame(all,all1);
+
+        assertEquals(1, all.size());
+        assertTrue(all.contains(team));
+        assertFalse(all.contains(team1));
     }
 
     @Test
-    public void compare(){
+    public void addSameObj() {
+        Team team = new Team(112);
+        Team team1 = new Team(112);
+        repository.save(team);
+        repository.save(team1);
 
-        List<Team> teamBefore = null;
-        List<Team> teamAfter = null;
-        repository.save(new Team());
-        repository.save(new Team("b"));
-        try{
-            teamBefore = (List<Team>) repository.getSerializer().deserialize(Files.readAllBytes(repository.getFileTeamsPath()));}
-        catch (IOException e)
-        {
-            logger.error("{}",e);
-        }
-        catch (ClassNotFoundException c){
-            logger.error("{}",c);
-        }
-        repository.save(new Team("b"));
-        try{
-            teamAfter = (List<Team>) repository.getSerializer().deserialize(Files.readAllBytes(repository.getFileTeamsPath()));}
-        catch (IOException e)
-        {
-            logger.error("{}",e);
-        }
-        catch (ClassNotFoundException c){
-            logger.error("{}",c);
-        }
-        assertEquals(teamBefore,teamAfter);
+        List<Team> all = repository.getAll();
 
+        assertEquals(team, team1);
+        assertFalse(all.isEmpty());
+        assertEquals(1, all.size());
+        assertTrue(all.contains(team));
+        assertTrue(all.contains(team1));
     }
 
     @Test
     public void findById() {
-        repository.save(new Team(new Hall(),"1"));
-        repository.save(new Team(new Hall(),"2"));
-        repository.save(new Team(new Hall(),"3"));
-        repository.save(new Team(new Hall(),"4"));
         Team team = new Team();
-        int i = team.hashCode();
         repository.save(team);
-        System.out.println(repository.findById(i));
-        Team team1 = new Team(new Hall(),"1");
-        int i1 = team1.hashCode();
-        System.out.println(repository.findById(i1));
-        repository.findById(12);
+
+        Team byId = repository.findById(team.getID());
+
+        assertEquals(team, byId);
     }
 
     @Test
     public void getAll() {
+        Team team = new Team(112);
+        Team team1 = new Team(321);
+        repository.save(team);
+        repository.save(team1);
+
+        List<Team> all = repository.getAll();
+
+        assertFalse(all.isEmpty());
+        assertEquals(2, all.size());
+        assertTrue(all.contains(team));
+        assertTrue(all.contains(team1));
+    }
+
+    @After
+    public void tearDown() {
+        repository.getAll().forEach(repository::remove);
     }
 
 
-    @Test
-    public void deletingFile() {
-        repository.getFileHandler().deletingFile(repository.getRepoFilePath(),repository.getFileTeamsPath());
-        assertTrue(Files.exists(repository.getRepoFilePath()));
-        assertFalse(Files.exists(repository.getFileTeamsPath()));
-    }
-
-    @Test
-    public void testFileCreating() {
-        repository.getFileHandler().fileCreating(repository.getRepoFilePath(),repository.getFileTeamsPath());
-        assertTrue(Files.exists(repository.getRepoFilePath()));
-        assertTrue(Files.exists(repository.getFileTeamsPath()));
-    }
 }

@@ -1,143 +1,113 @@
 package com.company.repository.team;
 
+import com.company.domain.Player;
 import com.company.domain.Team;
 import com.company.repository.FileHandler;
-import com.company.repository.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.nio.file.*;
+import java.util.Set;
 
 
 //todo: implement this + repositories for all domain objects
 public class FileTeamRepository implements TeamRepository {
+    public final Logger logger;
+    transient private final FileHandler<Team> fileHandler;
+    private final Path repoFilePath;
+    private final Path filePath;
 
-    public static final Logger logger = LoggerFactory.getLogger(FileTeamRepository.class);
-    transient private final FileHandler fileHandler = new FileHandler();
-    transient private final Serializer serializer = new Serializer();
-    private final String repoFile = "C:\\Users\\Роман\\IdeaProjects\\Superleage\\FileRepository";
-    private final Path repoFilePath = Paths.get(repoFile);
-    private final Path fileTeamsPath = repoFilePath.resolve("Teams.txt");
-    private  List<Team> teamList = new ArrayList<>();
-
-    public Path getFileTeamsPath() {
-        return fileTeamsPath;
+    public FileTeamRepository() {
+        this(LoggerFactory.getLogger(FileTeamRepository.class));
     }
-    public FileHandler getFileHandler() {
+
+    public FileTeamRepository(Logger logger) {
+        this(logger, "C:\\Users\\Роман\\IdeaProjects\\Superleague_new\\repository", "C:\\Users\\Роман\\IdeaProjects\\Superleague_new\\repository\\teams.txt");
+    }
+
+    public FileTeamRepository(String pathRepository) {
+        this(LoggerFactory.getLogger(FileTeamRepository.class), pathRepository, pathRepository + "\\teams.txt");
+    }
+
+    public FileTeamRepository(Logger logger, String pathRepository, String pathFile) {
+        this.logger = logger;
+        this.filePath = Paths.get(pathFile);
+        this.repoFilePath = Paths.get(pathRepository);
+        this.fileHandler = new FileHandler<Team>(this.filePath, this.repoFilePath);
+    }
+
+    public FileTeamRepository(Logger logger, Path pathRepository, Path pathFile) {
+        this.logger = logger;
+        this.filePath = pathFile;
+        this.repoFilePath = pathRepository;
+        this.fileHandler = new FileHandler<Team>(filePath, repoFilePath);
+    }
+
+
+    public Path getfilePath() {
+        return filePath;
+    }
+
+    public FileHandler<Team> getFileHandler() {
         return fileHandler;
     }
-    public List<Team> getTeamList() {
-        return teamList;
-    }
+
     public Path getRepoFilePath() {
         return repoFilePath;
-    }
-    public Serializer getSerializer() {
-        return serializer;
     }
 
     @Override
     public void createRepository() {
-        fileHandler.fileCreating(repoFilePath,fileTeamsPath);
+        fileHandler.fileCreating(repoFilePath, filePath);
     }
 
     @Override
-    public void save( Team team ) {
-       // /*deserializedTeam*/teamList = (List<Team>) serializer.deserialize(Files.readAllBytes(fileTeamsPath));
-
-        if(teamList.contains(team)) {
+    public void save(Team team) {
+        List<Team> teamList = fileHandler.fileDeserializer();
+        if (teamList == null)
+            teamList = new ArrayList<>();
+        if (teamList.contains(team))
             logger.info("such team already exist, updating it");
-            try {
-                Files.write(fileTeamsPath, serializer.serialize(teamList));
-                logger.info("write to file updated Team list");
-            } catch (IOException a) {
-                logger.error("IOException during writing to file {} creation, {}", fileTeamsPath, a);
-            }
-        }
-        else {
+        else
             teamList.add(team);
-            logger.debug("Adding to List team: {}",teamList);
-           // fileHandler.deletingFile(repoFilePath,fileTeamsPath);
-          //  fileHandler.fileCreating(repoFilePath,fileTeamsPath);
-            try {
-                Files.write(fileTeamsPath, serializer.serialize(teamList));
-                logger.info("write to file updated Team list");
-            } catch (IOException a) {
-                logger.error("IOException during writing to file {} creation, {}", fileTeamsPath, a);
-            }
-        }
+        fileHandler.save(teamList);
     }
 
     @Override
     public void remove(Team team) {
-        try{
-            //teamList = (List<Team>)this.deserialize(Files.readAllBytes(fileTeamsPath));
-            //logger.info("deserialized file: {}",teamList);
-             if (teamList.contains(team)) {
-                 teamList.remove(team);
-                 logger.info("Deleted team from List\nNow team list looks like: {}", teamList);
-                 if(teamList.isEmpty()){
-                     Files.delete(fileTeamsPath);
-                     logger.info("Deleted file because of its emptiness");
-                 } else {
-                     Files.write(fileTeamsPath,serializer.serialize(teamList));
-                     logger.info("deleted team and serialize anew");
-                 }
-             }
-             else
-                 logger.info("Nothing to delete, such Team doesn`t exist");
-        }
-        catch (IOException er){
-            logger.error("IOException", er);
-        }
-
+        List<Team> teamList = fileHandler.fileDeserializer();
+        if (teamList.contains(team)) {
+            teamList.remove(team);
+            logger.info("Deleted team from List\nNow team list looks like: {}", teamList);
+            if (teamList.isEmpty()) {
+                fileHandler.deletingFile();
+                logger.info("Deleted file because of its emptiness");
+            } else {
+                fileHandler.save(teamList);
+                logger.info("deleted team and serialize anew");
+            }
+        } else
+            logger.info("Nothing to delete, such Team doesn`t exist");
     }
 
     @Override
     public Team findById(long teamId) throws NullPointerException {
+        List<Team> teamList = fileHandler.fileDeserializer();
         if (teamList.isEmpty())
             throw new NullPointerException("There`s no Teams");
         else {
-           // List<Team> deserializedTeam = null;
-            try {
-                /*deserializedTeam*/teamList = (List<Team>) serializer.deserialize(Files.readAllBytes(fileTeamsPath));
-            } catch (IOException z) {
-                logger.error("IO fail ", z);
-            } catch (ClassNotFoundException c) {
-                logger.error("ClassNotFound fail ", c);
-            }
-            logger.debug("Deserialized list of teams: \n{}", /*deserializedTeam*/teamList);
-            for (Team team : /*deserializedTeam*/teamList)
-                if (team.hashCode() == teamId){
-                    logger.info("Team {} has been found in List", team.getName());
-                    return team;
-                }
-            logger.info("Team with such ID not found");
-            throw new NullPointerException();
-            }
-
+            return teamList.stream().filter((team) -> team.getID() == teamId).
+                    findFirst().orElseThrow();
         }
+    }
 
     @Override
     public List<Team> getAll() {
-      //  List<Team> deserializedTeam = null;
-        try{
-          //  deserializedTeam = (List<Team>) serializer.deserialize(Files.readAllBytes(this.fileTeamsPath));
-            teamList = (List<Team>) serializer.deserialize(Files.readAllBytes(this.fileTeamsPath));
-        }
-        catch (IOException z){
-            logger.error("IOException fail", z);
-        }
-        catch (ClassNotFoundException c){
-            logger.error("ClassNotFound fail ", c);
-        }
-      //  logger.debug("Deserialized List of teams: {}",deserializedTeam);
-        logger.debug("Deserialized List of teams: {}",teamList);
-
-        return teamList;
+        List<Team> deserializedTeams;
+        deserializedTeams = fileHandler.fileDeserializer();
+        return deserializedTeams;
     }
 
 

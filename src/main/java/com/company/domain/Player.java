@@ -12,23 +12,25 @@ public class Player extends Person {
         this("Ivan Ivanov");
     }
 
+    public Player(long ID){
+        this("name",1995,ID,"amateur","not stated",175);
+    }
+
+
     public Player(String name) {
         this(name, 1990);
     }
 
     public Player(int height) {
-        this("", 1995, "", "", height);
+        this("", 1995,1, "", "", height);
     }
 
     public Player(String name, int year) {
-        super(name, year);
-        this.level = "amateur";
-        this.position = "not stated";
-        this.height = 0;
+        this(name,year,1,"amateur","not stated",175);
     }
 
-    public Player(String name, int yearOfBirth, String level, String position, int height) {
-        super(name, yearOfBirth);
+    public Player(String name, int yearOfBirth,long ID ,String level, String position, int height) {
+        super(name, yearOfBirth,ID);
         this.level = level;
         this.position = position;
         this.height = height;

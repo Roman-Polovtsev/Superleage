@@ -1,6 +1,5 @@
 package com.company.domain;
 
-
 import java.io.*;
 import java.time.Year;
 import java.util.Objects;
@@ -9,32 +8,37 @@ public class Person implements Serializable {
     private static final long serialVersionUID = 2L;
     private final String name;
     private final int yearOfBirth;
+    private final long ID;
 
 
     public Person() {
         this("noname");
     }
 
-    public Person (String name) {
-        this.name = name;
-        this.yearOfBirth = 1900;
+    public Person(long ID) {
+        this("unnamed", 1995, ID);
     }
 
-    public Person (int yearOfBirth){
-        if(yearOfBirth > Year.now().getValue())
-            throw new IllegalArgumentException("This year is bigger than current, set less number");
-        else {
-            this.name = "Unnamed";
-            this.yearOfBirth = yearOfBirth;
-        }
+    public Person(String name) {
+        this(name, 1995, 1);
+    }
+
+    public Person(int yearOfBirth) {
+        this("unnamed", yearOfBirth, 1);
     }
 
     public Person(String name, int yearOfBirth) {
-        if(yearOfBirth > Year.now().getValue())
+        this(name, yearOfBirth, 1);
+    }
+
+
+    public Person(String name, int yearOfBirth, long ID) {
+        if (yearOfBirth > Year.now().getValue())
             throw new IllegalArgumentException("This year is bigger than current, set less number");
         else {
             this.name = name;
             this.yearOfBirth = yearOfBirth;
+            this.ID = ID;
         }
     }
 
@@ -73,11 +77,12 @@ public class Person implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
         return yearOfBirth == person.yearOfBirth &&
+                ID == person.ID &&
                 Objects.equals(name, person.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, yearOfBirth);
+        return Objects.hash(name, yearOfBirth, ID);
     }
 }

@@ -1,30 +1,30 @@
 package com.company.services;
 
+import com.company.domain.Captain;
 import com.company.domain.Player;
 import com.company.domain.Team;
-import com.company.repository.player.FilePlayerRepository;
 import com.company.repository.player.PlayerRepository;
-import com.company.repository.team.FakeTeamRepository;
-import com.company.repository.team.FileTeamRepository;
 import com.company.repository.team.TeamRepository;
-import junit.framework.TestCase;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.Transient;
+import java.io.IOException;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class TeamServiceTest {
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
     TeamService service = new TeamService();
 
     @Test
     public void addTeamTest() {
+
         service.getTeamRepository().createRepository();
         service.getTeamRepository().save(new Team("first team"));
         logger.debug("Team repository before adding Team: {}", service.getTeamRepository().getAll());
@@ -43,17 +43,63 @@ public class TeamServiceTest {
 
     @Test
     public void addPlayerTest() {
+        TeamRepository teams = Mockito.mock(TeamRepository.class);
+        PlayerRepository players = Mockito.mock(PlayerRepository.class);
+        TeamService service = new TeamService(teams,players);
         Team team = new Team("z");
-        logger.info("{}", team.getMembers());
+      //  logger.info("{}", team.getMembers());
         service.addTeam(team);
         //  logger.info("{}",team);
         Player player = new Player("zazaza");
-        logger.info("{}", player);
-        service.getPlayerRepository().save(player);
-        service.getPlayerRepository().findById(player.hashCode());
+     //   logger.info("{}", player);
+       // service.getPlayerRepository().save(player);
+       // service.getPlayerRepository().findById(player.hashCode());
         service.addPlayer(team, player);
-        //logger.info("{}",team.getMembers());
-        logger.debug("Checking team list after adding new player: {}", service.getTeamRepository().getAll());
+       // logger.debug("Checking team list after adding new player: {}", service.getTeamRepository().getAll());
+        assertTrue(team.getMembers().contains(player));
+    }
+
+    @Test
+    public void findSmallest(){
+        TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
+        PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
+        TeamService service = new TeamService(teamRepository, playerRepository);
+        Team first = new Team();
+        Team second = new Team("highest");
+        Team third = new Team("abc");
+        first.addPlayer(new Player(172));
+        first.addPlayer(new Player(165));
+        second.addPlayer(new Player(183));
+        third.addPlayer(Arrays.asList(new Player(230),new Player(320), new Player(200)));
+        when(teamRepository.getAll()).thenReturn(Arrays.asList(first, second, third));
+
+        Team smallest = service.findSmallest();
+
+        assertEquals(first, smallest);
+    }
+
+    @Test
+    public void setCaptainTest(){
+        TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
+        PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
+        TeamService service = new TeamService(teamRepository,playerRepository);
+        Team team = new Team("abc");
+        Player player1 = new Player("afsa");
+        Player player2 = new Player();
+        Player player3 = new Player("123");
+        team.addPlayer(player1,player2,player3);
+        when(teamRepository.findById(team.getID())).thenReturn(team);
+        Captain captain =new Captain(player1, "123","321");
+
+        try{service.setCaptain(team);}
+        catch (IOException e){
+            logger.error("{}",e);
+        }
+        Team byId = teamRepository.findById(team.getID());
+        Captain expectedCaptain = byId.getCaptain();
+
+
+        assertEquals(captain,expectedCaptain);
     }
 
     @Test
@@ -63,13 +109,16 @@ public class TeamServiceTest {
         TeamService service = new TeamService(teamRepository, playerRepository);
         Team first = new Team();
         Team second = new Team("highest");
+        Team third = new Team("abc");
         first.addPlayer(new Player(172));
+        first.addPlayer(new Player(250));
         second.addPlayer(new Player(183));
+        third.addPlayer(Arrays.asList(new Player(130),new Player(120), new Player(100)));
         when(teamRepository.getAll()).thenReturn(Arrays.asList(first, second));
 
         Team highest = service.findHighest();
 
-        assertEquals(second, highest);
+        assertEquals(first, highest);
     }
 }
 

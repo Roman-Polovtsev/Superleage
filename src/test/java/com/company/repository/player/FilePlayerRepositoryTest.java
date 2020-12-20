@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class FilePlayerRepositoryTest {
-    PlayerRepository repository = new FilePlayerRepository();
+    PlayerRepository repository = new FilePlayerRepository("C:\\Users\\Роман\\IdeaProjects\\Superleage_new\\repositories");
 
     @Test
     public void findAll() {

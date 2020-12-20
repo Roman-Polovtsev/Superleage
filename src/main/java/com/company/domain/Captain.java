@@ -13,13 +13,13 @@ public class Captain extends Player {
     }
 
     public Captain (Player player){
-        super(player.getName(),player.getYearOfBirth(), player.getLevel(), player.getPosition(), player.getHeight());
+        super(player.getName(),player.getYearOfBirth(),player.getId(), player.getLevel(), player.getPosition(), player.getHeight());
         this.number = "not stated";
         this.email = "not stated";
     }
 
     public Captain (Player player, String number, String email){
-        super(player.getName(),player.getYearOfBirth(), player.getLevel(), player.getPosition(), player.getHeight());
+        super(player.getName(),player.getYearOfBirth(),player.getId(), player.getLevel(), player.getPosition(), player.getHeight());
         this.number = number;
         this.email = email;
     }
