@@ -1,6 +1,6 @@
 package com.company.domain;
 
-import java.time.Year;
+import java.beans.Transient;
 import java.util.Objects;
 
 public class Player extends Person {
@@ -8,26 +8,37 @@ public class Player extends Person {
     private final String position;
     private final int height;
 
-    public Player(){
+    public Player() {
         this("Ivan Ivanov");
     }
 
-    public Player(String name){
-        this(name,1990);
+    public Player(long ID){
+        this("name",1995,ID,"amateur","not stated",175);
     }
 
-    public Player(String name, int year){
-        super(name,year);
-        this.level = "amateur";
-        this.position = "not stated";
-        this.height = 0;
+
+    public Player(String name) {
+        this(name, 1990);
     }
 
-    public Player(String name, int yearOfBirth, String level, String position, int height) {
-        super(name, yearOfBirth);
+    public Player(int height) {
+        this("", 1995,1, "", "", height);
+    }
+
+    public Player(String name, int year) {
+        this(name,year,1,"amateur","not stated",175);
+    }
+
+    public Player(String name, int yearOfBirth,long ID ,String level, String position, int height) {
+        super(name, yearOfBirth,ID);
         this.level = level;
         this.position = position;
         this.height = height;
+    }
+
+    @Transient
+    public long getId() {
+        return hashCode();
     }
 
     public String getLevel() {
@@ -54,9 +65,9 @@ public class Player extends Person {
 
     @Override
     public String toString() {
-        return  " " + super.getName() + "\n Year of Birth: "+ super.getYearOfBirth() +
+        return " " + super.getName() + "\n Year of Birth: " + super.getYearOfBirth() +
                 "\n level: " + level +
-                "\n position: " + position  +
+                "\n position: " + position +
                 "\n height: " + height + "\n";
     }
 

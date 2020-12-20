@@ -13,7 +13,7 @@ public class Hall implements Serializable {
 
     private final Address address;
 
-    private EnableGameTime gameTime;
+    private final EnableGameTime gameTime;
 
     public Hall(){
         this( new Address(), new EnableGameTime() );
