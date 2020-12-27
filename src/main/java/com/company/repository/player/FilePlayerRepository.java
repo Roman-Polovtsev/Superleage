@@ -47,7 +47,7 @@ public class FilePlayerRepository implements PlayerRepository {
     @Override
     public void save(Player player) {
         List<Player> playerList;
-        playerList = fileHandler.fileDeserializer();
+        playerList = fileHandler.deserializedFile();
         if (playerList == null)
             playerList = new ArrayList<>();
         logger.debug("Players list before adding: \n{}", playerList);
@@ -64,7 +64,7 @@ public class FilePlayerRepository implements PlayerRepository {
     @Override
     public void remove(Player player) {
         List<Player> playerList;
-        playerList = fileHandler.fileDeserializer();
+        playerList = fileHandler.deserializedFile();
 
         if (playerList.contains(player)) {
             playerList.remove(player);
@@ -78,7 +78,7 @@ public class FilePlayerRepository implements PlayerRepository {
             }
         } else
             logger.info("Nothing to delete, such player doesn`t exist");
-        logger.debug("Deserialized player list after removing: \n {}", fileHandler.fileDeserializer());
+        logger.debug("Deserialized player list after removing: \n {}", fileHandler.deserializedFile());
     }
 
     @Override
@@ -89,7 +89,7 @@ public class FilePlayerRepository implements PlayerRepository {
 //            } catch (MyException e) {
 //                throw new NullPointerException();
 //            }
-        playerList = (List<Player>) fileHandler.fileDeserializer();
+        playerList = (List<Player>) fileHandler.deserializedFile();
         if (playerList.isEmpty())
             throw new NullPointerException("There`s no players");
         logger.debug("Deserialized list of players: \n{}", /*deserializedTeam*/playerList);
@@ -105,7 +105,7 @@ public class FilePlayerRepository implements PlayerRepository {
     @Override
     public List<Player> findAll() {
         List<Player> playerList;
-        playerList = (List<Player>) fileHandler.fileDeserializer();
+        playerList = (List<Player>) fileHandler.deserializedFile();
         logger.debug("Deserialized List of players: {}", playerList);
         return playerList;
     }

@@ -60,12 +60,12 @@ public class FileTeamRepository implements TeamRepository {
 
     @Override
     public void createRepository() {
-        fileHandler.fileCreating(repoFilePath, filePath);
+      //  fileHandler.fileCreating(repoFilePath, filePath);
     }
 
     @Override
     public void save(Team team) {
-        List<Team> teamList = fileHandler.fileDeserializer();
+        List<Team> teamList = fileHandler.deserializedFile();
         if (teamList == null)
             teamList = new ArrayList<>();
         if (teamList.contains(team))
@@ -77,7 +77,7 @@ public class FileTeamRepository implements TeamRepository {
 
     @Override
     public void remove(Team team) {
-        List<Team> teamList = fileHandler.fileDeserializer();
+        List<Team> teamList = fileHandler.deserializedFile();
         if (teamList.contains(team)) {
             teamList.remove(team);
             logger.info("Deleted team from List\nNow team list looks like: {}", teamList);
@@ -94,7 +94,7 @@ public class FileTeamRepository implements TeamRepository {
 
     @Override
     public Team findById(long teamId) throws NullPointerException {
-        List<Team> teamList = fileHandler.fileDeserializer();
+        List<Team> teamList = fileHandler.deserializedFile();
         if (teamList.isEmpty())
             throw new NullPointerException("There`s no Teams");
         else {
@@ -106,7 +106,7 @@ public class FileTeamRepository implements TeamRepository {
     @Override
     public List<Team> getAll() {
         List<Team> deserializedTeams;
-        deserializedTeams = fileHandler.fileDeserializer();
+        deserializedTeams = fileHandler.deserializedFile();
         return deserializedTeams;
     }
 

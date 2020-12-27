@@ -93,7 +93,7 @@ public class TeamServiceTest {
 
         try{service.setCaptain(team);}
         catch (IOException e){
-            logger.error("{}",e);
+            logger.error("",e);
         }
         Team byId = teamRepository.findById(team.getID());
         Captain expectedCaptain = byId.getCaptain();
