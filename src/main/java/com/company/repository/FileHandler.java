@@ -1,20 +1,25 @@
 package com.company.repository;
 
+import com.company.util.FileReadException;
+import com.company.util.FileSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class FileHandler<T> {
+public class FileHandler<T extends Serializable> {
     private final Logger logger;
-    private final Serializer serializer = new Serializer();
+    private final Serializer serializer;
     private final Path pathToFile;
     private final Path pathToDirectory;
+    private final FileSystem fileSystem;
 
     public FileHandler() {
         this(LoggerFactory.getLogger(FileHandler.class), null, null);
@@ -28,41 +33,41 @@ public class FileHandler<T> {
         this.logger = logger;
         this.pathToFile = pathToFile;
         this.pathToDirectory = pathToDirectory;
+        this.serializer = new Serializer();
+        this.fileSystem = new FileSystem.Fake();
     }
 
-    public Serializer getSerializer() {
-        return serializer;
+    public FileHandler(Path pathToFile, FileSystem fileSystem, Serializer serializer) {
+        this(LoggerFactory.getLogger(FileHandler.class), serializer, pathToFile, null, fileSystem);
     }
 
-    public void save(Object object) {
+    public FileHandler(Logger logger, Serializer serializer, Path pathToFile, Path pathToDirectory, FileSystem fileSystem) {
+        this.logger = logger;
+        this.serializer = serializer;
+        this.pathToFile = pathToFile;
+        this.pathToDirectory = pathToDirectory;
+        this.fileSystem = fileSystem;
+    }
+
+    public void save(List<T> objects) {
         try {
-            Files.write(pathToFile, serializer.serialize(object));
+            fileSystem.write(pathToFile, serializer.serialize(objects));
             logger.info("write to file updated list");
         } catch (IOException a) {
             logger.error("IOException during writing to file {} creation, {}", pathToFile, a);
         }
     }
 
-    @SuppressWarnings({})
-    public List<T> fileDeserializer() {
-        List<T> castedList = new ArrayList<>();
-        Object list = null;
+    @SuppressWarnings("unchecked")
+    public List<T> deserializedFile() { //todo: throws FileReadException {
+        List<T> list = null;
         try {
-            list = serializer.deserialize(Files.readAllBytes(pathToFile));
-        } catch (NoSuchFileException z) {
-            logger.error("File does not exist");
-            fileCreating();
-        } catch (IOException z) {
-            logger.error("IOException fail", z);
-        } catch (ClassNotFoundException c) {
-            logger.error("ClassNotFound fail ", c);
+            return list = (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
+        } catch (IOException | ClassNotFoundException e) {
+          //  throw new FileReadException("List of errors in FIleHandler "+ this, e); todo : implement this
+            logger.error("List of errors in FIleHandler "+ this, e);
         }
-        List<?> notCasted = (List<?>) list;
-//        if(notCasted != null)
-//            notCasted.forEach((obj)->castedList.add((T)obj));
-//        else
-        castedList = (List<T>) notCasted;
-        return castedList;
+        return Collections.emptyList();
     }
 
     public void deletingFile(Path directory, Path file) {
@@ -93,49 +98,13 @@ public class FileHandler<T> {
         logger.info("File succesfully deleted");
     }
 
-    public void fileCreating(Path directory, Path file) {
-        Path teamFile;
-        if (!Files.exists(directory)) {
-            try {
-                Files.createDirectory(directory);
-                logger.info("created directory");
-            } catch (IOException a) {
-                logger.error("{}", a);
-            }
-        }
-        if (!Files.exists(file)) {
-            logger.trace("here if file doesn`t exist yet");
-            try {
-                logger.trace("here before file creation");
-                teamFile = Files.createFile(file);
-                logger.info("created file");
-            } catch (IOException e) {
-                logger.error("IOException during file {} creation, {}", file, e);
-            }
-        } else
-            logger.info("file already exist");
-    }
-
-    public void fileCreating() {
-        Path teamFile;
-        if (!Files.exists(pathToDirectory)) {
-            try {
-                Files.createDirectory(pathToDirectory);
-                logger.info("created directory");
-            } catch (IOException a) {
-                logger.error("cannot create directory {}", a);
-            }
-        }
-        if (!Files.exists(pathToFile)) {
-            logger.trace("here if file doesn`t exist yet");
-            try {
-                logger.trace("here before file creation");
-                teamFile = Files.createFile(pathToFile);
-                logger.info("created file");
-            } catch (IOException e) {
-                logger.error("IOException during file {} creation, {}", pathToFile, e);
-            }
-        } else
-            logger.info("file already exist");
+    @Override
+    public String toString() {
+        return "FileHandler{" +
+                "serializer=" + serializer +
+                ", pathToFile=" + pathToFile +
+                ", pathToDirectory=" + pathToDirectory +
+                ", fileSystem=" + fileSystem +
+                '}';
     }
 }

@@ -3,12 +3,14 @@ package com.company.services;
 import com.company.domain.Person;
 import com.company.repository.person.PersonRepository;
 import org.junit.Test;
-import org.mockito.Mockito;;
+import org.mockito.Mockito;
+
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
-import static org.junit.Assert.*;
 public class PersonServiceTest {
 
     @Test
