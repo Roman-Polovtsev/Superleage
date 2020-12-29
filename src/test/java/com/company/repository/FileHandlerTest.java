@@ -56,6 +56,9 @@ public class FileHandlerTest {
 
     @Test
     public void deletingFile() {
+        System.out.println(System.getProperty("java.io.tmpdir"));
+        System.out.println(System.getProperty("java.io.tmpdir"));
+
     }
 
     @Test

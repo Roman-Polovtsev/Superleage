@@ -15,6 +15,10 @@ public class Address implements Serializable {
         this("Undefined", "Undefined", "Undefined");
     }
 
+    public Address(String city) {
+        this(city, "undefined", "undefined");
+    }
+
     public Address(String city, String street, String numberOfBuilding) {
         this.city = city;
         this.street = street;

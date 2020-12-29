@@ -6,28 +6,23 @@ public class Captain extends Player {
     private String number;
     private String email;
 
-    public Captain (){
-        super();
-        this.number = "not stated";
-        this.email = "not stated";
+    public Captain() {
+        this(new Player(), "not stated", "not stated");
     }
 
-    public Captain (Player player){
-        super(player.getName(),player.getYearOfBirth(),player.getId(), player.getLevel(), player.getPosition(), player.getHeight());
-        this.number = "not stated";
-        this.email = "not stated";
+    public Captain(Player player) {
+        this(player, "not stated", "not stated");
     }
 
-    public Captain (Player player, String number, String email){
-        super(player.getName(),player.getYearOfBirth(),player.getId(), player.getLevel(), player.getPosition(), player.getHeight());
+    public Captain(Player player, String number, String email) {
+        super(player.getName(), player.getYearOfBirth(), player.getId(), player.getLevel(), player.getPosition(), player.getHeight());
         this.number = number;
         this.email = email;
     }
 
-
     @Override
     public String toString() {
-        return "Team captain: " + super.getName() + "\nContacts: " +"\nphone: "+ number + "\nemail: " + email;
+        return "Team captain: " + super.getName() + "\nContacts: " + "\nphone: " + number + "\nemail: " + email;
     }
 
     public String getNumber() {

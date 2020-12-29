@@ -1,6 +1,5 @@
 package com.company.repository;
 
-import com.company.util.FileReadException;
 import com.company.util.FileSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,8 +61,8 @@ public class FileHandler<T extends Serializable> {
         try {
             return list = (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
         } catch (IOException | ClassNotFoundException e) {
-          //  throw new FileReadException("List of errors in FIleHandler "+ this, e); todo : implement this
-            logger.error("List of errors in FIleHandler "+ this, e);
+            //  throw new FileReadException("List of errors in FIleHandler "+ this, e); todo : implement this
+            logger.error("List of errors in FIleHandler " + this, e);
         }
         return Collections.emptyList();
     }
