@@ -1,6 +1,8 @@
 package com.company.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 public class FinishedGame implements Game {
@@ -10,6 +12,10 @@ public class FinishedGame implements Game {
     private final Referee gameReferee;
     private final int[] refereeMarks;
     private final LocalDateTime gameTime;
+
+    public FinishedGame() {
+        this(new StartedGame(),new Result(),new Referee(),new int[] {0,0} ,  LocalDateTime.now());
+    }
 
     public FinishedGame(Game startedGame, Result gameResult, Referee gameReferee, int[] refereeMarks, LocalDateTime gameTime) {
         this.startedGame = startedGame;

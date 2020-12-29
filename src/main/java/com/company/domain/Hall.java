@@ -1,10 +1,10 @@
 package com.company.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 public class Hall implements Serializable {
 
@@ -15,19 +15,19 @@ public class Hall implements Serializable {
 
     private final EnableGameTime gameTime;
 
-    public Hall(){
-        this( new Address(), new EnableGameTime() );
+    public Hall() {
+        this(new Address(), new EnableGameTime());
     }
 
-    public Hall ( Address address){
-        this( address, new EnableGameTime() );
+    public Hall(Address address) {
+        this(address, new EnableGameTime());
     }
 
-    public Hall ( EnableGameTime gameTime ){
-        this( new Address(), gameTime );
+    public Hall(EnableGameTime gameTime) {
+        this(new Address(), gameTime);
     }
 
-    public Hall( Address address, EnableGameTime gameTime) {
+    public Hall(Address address, EnableGameTime gameTime) {
         this.address = address;
         this.gameTime = gameTime;
     }
@@ -43,12 +43,12 @@ public class Hall implements Serializable {
 
     public void print() {
 
-        logger.info("{}","Printing Hall information: \n{}",this);
+        logger.info("{}", "Printing Hall information: \n{}", this);
     }
 
     @Override
     public String toString() {
-        return "Hall :" +  "\n\tAddress: " + address + "\n\tGameTime: " + gameTime;
+        return "Hall :" + "\n\tAddress: " + address + "\n\tGameTime: " + gameTime;
     }
 
     @Override
