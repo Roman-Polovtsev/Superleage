@@ -51,22 +51,22 @@ public class TeamService {
         return team1.getMembers();
     }
 
-    public void setCaptain (Team team) throws IOException {
-        Set<Player> members = getMembers(team);
-        Object[] players = members.toArray();
-        logger.info("Set of team members, choose the number of one you want to set as a team`s captain:\n{}",players);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int number = reader.read();
-        Player chosenAsCaptain = (Player) players[number];
-        logger.info("Type phone number of captain:\n");
-        String phoneNumber = reader.readLine();
-        logger.info("Type email of captain:\n");
-        String email = reader.readLine();
-        Captain captain = new Captain(chosenAsCaptain,phoneNumber,email);
-        Team team1 = teamRepository.findById(team.getID());
-        Team updatedTeam = new Team(team1.getHall(),team1.getName(),team1.getID(),captain);
-        teamRepository.save(updatedTeam);
-    }
+//    public void setCaptain (Team team) throws IOException {
+//        Set<Player> members = getMembers(team);
+//        Object[] players = members.toArray();
+//        logger.info("Set of team members, choose the number of one you want to set as a team`s captain:\n{}",players);
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//        int number = reader.read();
+//        Player chosenAsCaptain = (Player) players[number];
+//        logger.info("Type phone number of captain:\n");
+//        String phoneNumber = reader.readLine();
+//        logger.info("Type email of captain:\n");
+//        String email = reader.readLine();
+//        Captain captain = new Captain(chosenAsCaptain,phoneNumber,email);
+//        Team team1 = teamRepository.findById(team.getID());
+//        Team updatedTeam = new Team(team1.getHall(),team1.getName(),team1.getID(),captain);
+//        teamRepository.save(updatedTeam);
+//    }
 
     public String getCaptainContacts(Team team){
         Team team1 = teamRepository.findById(team.getID());

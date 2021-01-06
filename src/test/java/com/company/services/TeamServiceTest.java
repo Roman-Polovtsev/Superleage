@@ -78,29 +78,29 @@ public class TeamServiceTest {
         assertEquals(first, smallest);
     }
 
-    @Test
-    public void setCaptainTest(){
-        TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
-        PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
-        TeamService service = new TeamService(teamRepository,playerRepository);
-        Team team = new Team("abc");
-        Player player1 = new Player("afsa");
-        Player player2 = new Player();
-        Player player3 = new Player("123");
-        team.addPlayer(player1,player2,player3);
-        when(teamRepository.findById(team.getID())).thenReturn(team);
-        Captain captain =new Captain(player1, "123","321");
-
-        try{service.setCaptain(team);}
-        catch (IOException e){
-            logger.error("",e);
-        }
-        Team byId = teamRepository.findById(team.getID());
-        Captain expectedCaptain = byId.getCaptain();
-
-
-        assertEquals(captain,expectedCaptain);
-    }
+//    @Test
+//    public void setCaptainTest(){
+//        TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
+//        PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
+//        TeamService service = new TeamService(teamRepository,playerRepository);
+//        Team team = new Team("abc");
+//        Player player1 = new Player("afsa");
+//        Player player2 = new Player();
+//        Player player3 = new Player("123");
+//        team.addPlayer(player1,player2,player3);
+//        when(teamRepository.findById(team.getID())).thenReturn(team);
+//        Captain captain =new Captain(player1, "123","321");
+//
+//        try{service.setCaptain(team);}
+//        catch (IOException e){
+//            logger.error("",e);
+//        }
+//        Team byId = teamRepository.findById(team.getID());
+//        Captain expectedCaptain = byId.getCaptain();
+//
+//
+//        assertEquals(captain,expectedCaptain);
+//    }
 
     @Test
     public void test() {
