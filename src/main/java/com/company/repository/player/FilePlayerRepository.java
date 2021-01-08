@@ -2,6 +2,7 @@ package com.company.repository.player;
 
 import com.company.domain.Player;
 import com.company.repository.FileHandler;
+import com.company.util.FileReadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class FilePlayerRepository implements PlayerRepository {
         this.fileHandler = new FileHandler<Player>(filePath,repoFilePath);
     }
     @Override
-    public void save(Player player) {
+    public void save(Player player)  {
         List<Player> playerList;
         playerList = fileHandler.deserializedFile();
         if (playerList == null)

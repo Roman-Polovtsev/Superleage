@@ -16,9 +16,9 @@ public class Schedule {
     private final Address gameAddress;
     private Result gameResult;
     private Referee gameReferee;
-    private int [] refereeMarks;
+    private int[] refereeMarks;
 
-    public  Schedule (){
+    public Schedule() {
         this(new Team(), new Team());
     }
 
@@ -27,13 +27,13 @@ public class Schedule {
         this.home = home;
         this.guest = guest;
         this.gameAddress = home.getHall().getAddress();
-      //  this.gameResult = new Result();
-      //  this.gameReferee = new Referee();
-       // this.refereeMarks = new int[2];
-     //   this.gameTime = home.getHall().getGameTime().;
+        //  this.gameResult = new Result();
+        //  this.gameReferee = new Referee();
+        // this.refereeMarks = new int[2];
+        //   this.gameTime = home.getHall().getGameTime().;
     }
 
-    public void setGameResult (byte home, byte guest, Referee ref) {
+    public void setGameResult(byte home, byte guest, Referee ref) {
 
     }
 
@@ -98,34 +98,34 @@ public class Schedule {
         return gameResult;
     }
 
-    public void setGameResult (int homeScore, int guestScore ){
-       this.gameResult = new Result((byte)homeScore, (byte)guestScore);
+    public void setGameResult(int homeScore, int guestScore) {
+        this.gameResult = new Result((byte) homeScore, (byte) guestScore);
     }
 
     public void setGameTime() {
-       EnableGameTime gameTime1 =  home.getHall().getGameTime() ;
-       int iterator = 0;
-       DayOfWeek[] days = new DayOfWeek[7];
+        EnableGameTime gameTime1 = home.getHall().getGameTime();
+        int iterator = 0;
+        DayOfWeek[] days = new DayOfWeek[7];
         LocalDate dateTemp = LocalDate.now();
 
-       while(!gameTime1.getDays().isEmpty()) {
-           days[iterator] = gameTime1.getDays().get(iterator);
-           iterator++;
-       }
+        while (!gameTime1.getDays().isEmpty()) {
+            days[iterator] = gameTime1.getDays().get(iterator);
+            iterator++;
+        }
         DayOfWeek day_compare = dateTemp.plusDays(0).getDayOfWeek();
-       while ( days.length > 1 ) {
-           if (dateTemp.getDayOfWeek().equals(days[1]))
-               break;
-           else
-               dateTemp.plusDays(1);
-       }
+        while (days.length > 1) {
+            if (dateTemp.getDayOfWeek().equals(days[1]))
+                break;
+            else
+                dateTemp.plusDays(1);
+        }
 
-        this.gameTime = LocalDateTime.of(dateTemp,gameTime1.getBegin());
+        this.gameTime = LocalDateTime.of(dateTemp, gameTime1.getBegin());
     }
 
     @Override
     public String toString() {
-        return "Game between \"" + home.getName() +"\" and \"" + guest.getName() + "\" is held " + /*gameTime.getDayOfWeek() +*/
+        return "Game between \"" + home.getName() + "\" and \"" + guest.getName() + "\" is held " + /*gameTime.getDayOfWeek() +*/
                 "\n\t" + gameResult;
     }
 

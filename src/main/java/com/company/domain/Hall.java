@@ -42,8 +42,7 @@ public class Hall implements Serializable {
 
 
     public void print() {
-
-        logger.info("{}", "Printing Hall information: \n{}", this);
+        logger.info("Printing Hall information: \n{}", this);
     }
 
     @Override

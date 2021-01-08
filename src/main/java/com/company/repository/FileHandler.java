@@ -1,12 +1,12 @@
 package com.company.repository;
 
+import com.company.util.FileReadException;
 import com.company.util.FileSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
@@ -56,41 +56,37 @@ public class FileHandler<T extends Serializable> {
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> deserializedFile() { //todo: throws FileReadException {
+    public List<T> deserializedFile() {//throws FileReadException {
         List<T> list = null;
         try {
             return list = (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
         } catch (IOException | ClassNotFoundException e) {
-            //  throw new FileReadException("List of errors in FIleHandler "+ this, e); todo : implement this
-            logger.error("List of errors in FIleHandler " + this, e);
+           // throw new FileReadException("List of errors in FIleHandler " + this, e);// todo : implement this
+             logger.error("List of errors in FIleHandler " + this, e);
         }
-        return Collections.emptyList();
+          return Collections.emptyList();
     }
 
-    public void deletingFile(Path directory, Path file) {
-        if (!Files.exists(directory)) {
-            logger.error("There`s no such directory");
-            throw new IllegalArgumentException();
-        } else {
-            try {
-                Files.deleteIfExists(file);
-            } catch (IOException f) {
-                logger.error("IOex during file deleting", f);
-            }
-        }
-        logger.info("File succesfully deleted");
-    }
+//    public void deletingFile(Path directory, Path file) {
+//        if (!Files.exists(directory)) {
+//            logger.error("There`s no such directory");
+//            throw new IllegalArgumentException();
+//        } else {
+//            try {
+//                Files.deleteIfExists(file);
+//            } catch (IOException f) {
+//                logger.error("IOex during file deleting", f);
+//            }
+//        }
+//        logger.info("File succesfully deleted");
+//    }
 
-    public void deletingFile() {
-        if (!Files.exists(pathToDirectory)) {
-            logger.error("There`s no such directory");
-            throw new IllegalArgumentException();
-        } else {
-            try {
-                Files.deleteIfExists(pathToFile);
-            } catch (IOException f) {
-                logger.error("IOex during file deleting", f);
-            }
+    public void deletingFile(){ // throws IOException{
+        try {
+            fileSystem.delete(pathToFile);
+        } catch (IOException e) {
+            //throw new IOException("IO exception during file deleting" + this, e);
+            logger.error("IO exception during file deleting" + this, e);
         }
         logger.info("File succesfully deleted");
     }

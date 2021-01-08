@@ -19,7 +19,7 @@ public class EnableGameTime implements Serializable {
     }
 
     public EnableGameTime(LocalTime begin, LocalTime end) {
-        this(begin, end, new ArrayList<DayOfWeek>());
+        this(begin, end, new ArrayList<>());
     }
 
     public EnableGameTime(List<DayOfWeek> daysOfWeek) {
