@@ -8,9 +8,9 @@ import java.util.List;
 public interface TeamRepository {
     void createRepository();
 
-    void save(Team team);
+    void save(Team team) throws Exception;
 
-    void remove(Team team);
+    void remove(Team team) throws Exception;
 
     Team findById ( long teamId );
 

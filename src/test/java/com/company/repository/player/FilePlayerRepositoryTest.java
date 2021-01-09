@@ -12,7 +12,7 @@ public class FilePlayerRepositoryTest {
     PlayerRepository repository = new FilePlayerRepository("C:\\Users\\Роман\\IdeaProjects\\Superleage_new\\repositories");
 
     @Test
-    public void findAll() {
+    public void findAll() throws Exception {
         Player first = new Player();
         Player second = new Player();
         repository.save(first);
@@ -27,7 +27,7 @@ public class FilePlayerRepositoryTest {
     }
 
     @Test
-    public void save() {
+    public void save() throws Exception {
         Player player = new Player();
 
         repository.save(player);
@@ -39,7 +39,7 @@ public class FilePlayerRepositoryTest {
 
 
     @Test
-    public void remove() {
+    public void remove() throws Exception {
         Player player = new Player("Petya");
         repository.save(player);
 
@@ -51,7 +51,7 @@ public class FilePlayerRepositoryTest {
     }
 
     @Test
-    public void findById() {
+    public void findById() throws Exception {
         Player player = new Player("vbcvb");
         repository.save(player);
 
@@ -61,8 +61,10 @@ public class FilePlayerRepositoryTest {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
         for (Player player : repository.findAll()) repository.remove(player);
+
+
     }
 
 

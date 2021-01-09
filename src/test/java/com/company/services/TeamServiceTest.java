@@ -23,7 +23,7 @@ public class TeamServiceTest {
     TeamService service = new TeamService();
 
     @Test
-    public void addTeamTest() {
+    public void addTeamTest() throws Exception {
 
         service.getTeamRepository().createRepository();
         service.getTeamRepository().save(new Team("first team"));
@@ -36,13 +36,13 @@ public class TeamServiceTest {
     }
 
     @Test
-    public void findHighestTest() {
+    public void findHighestTest() throws Exception {
         service.addTeam(new Team());
         assertEquals(new Team(), new TeamService().findHighest());
     }
 
     @Test
-    public void addPlayerTest() {
+    public void addPlayerTest() throws Exception {
         TeamRepository teams = Mockito.mock(TeamRepository.class);
         PlayerRepository players = Mockito.mock(PlayerRepository.class);
         TeamService service = new TeamService(teams,players);

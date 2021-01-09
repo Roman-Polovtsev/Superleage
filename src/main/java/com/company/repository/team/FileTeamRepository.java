@@ -3,6 +3,7 @@ package com.company.repository.team;
 import com.company.domain.Player;
 import com.company.domain.Team;
 import com.company.repository.FileHandler;
+import com.company.repository.FileHandlerSaveException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
@@ -64,7 +65,7 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     @Override
-    public void save(Team team) {
+    public void save(Team team) throws FileHandlerSaveException {
         List<Team> teamList = fileHandler.deserializedFile();
         if (teamList == null)
             teamList = new ArrayList<>();
@@ -76,7 +77,7 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     @Override
-    public void remove(Team team) {
+    public void remove(Team team)throws FileHandlerSaveException {
         List<Team> teamList = fileHandler.deserializedFile();
         if (teamList.contains(team)) {
             teamList.remove(team);

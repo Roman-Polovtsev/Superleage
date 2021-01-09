@@ -43,7 +43,7 @@ public class TeamService {
         return playerRepository;
     }
 
-    public void addTeam(Team team) {
+    public void addTeam(Team team) throws Exception{
         teamRepository.save(team);
     }
     public Set<Player> getMembers (Team team){
@@ -88,7 +88,7 @@ public class TeamService {
     }
 
 
-    public void addPlayer(Team team, Player player) {
+    public void addPlayer(Team team, Player player) throws Exception{
         Team byId = teamRepository.findById(team.hashCode());
         byId.addPlayer(player);
         playerRepository.remove(player);

@@ -46,12 +46,13 @@ public class FileHandler<T extends Serializable> {
         this.fileSystem = fileSystem;
     }
 
-    public void save(List<T> objects) {
+    public void save(List<T> objects) throws FileHandlerSaveException {
         try {
             fileSystem.write(pathToFile, serializer.serialize(objects));
             logger.info("write to file updated list");
-        } catch (IOException a) {
-            logger.error("IOException during writing to file {} creation, {}", pathToFile, a);
+        } catch (IOException e) {
+            throw new FileHandlerSaveException(String.format("FileHandlerSaveException during writing to file creation, {}", this.pathToFile), e);
+            // logger.error("IOException during writing to file {} creation, {}", this.pathToFile, e);
         }
     }
 
@@ -61,27 +62,14 @@ public class FileHandler<T extends Serializable> {
         try {
             return list = (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
         } catch (IOException | ClassNotFoundException e) {
-           // throw new FileReadException("List of errors in FIleHandler " + this, e);// todo : implement this
-             logger.error("List of errors in FIleHandler " + this, e);
+            // throw new FileReadException("List of errors in FIleHandler " + this, e);// todo : implement this
+            logger.error("List of errors in FIleHandler " + this, e);
         }
-          return Collections.emptyList();
+        return Collections.emptyList();
     }
 
-//    public void deletingFile(Path directory, Path file) {
-//        if (!Files.exists(directory)) {
-//            logger.error("There`s no such directory");
-//            throw new IllegalArgumentException();
-//        } else {
-//            try {
-//                Files.deleteIfExists(file);
-//            } catch (IOException f) {
-//                logger.error("IOex during file deleting", f);
-//            }
-//        }
-//        logger.info("File succesfully deleted");
-//    }
 
-    public void deletingFile(){ // throws IOException{
+    public void deletingFile() { // throws IOException{
         try {
             fileSystem.delete(pathToFile);
         } catch (IOException e) {

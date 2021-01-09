@@ -1,6 +1,7 @@
 package com.company.repository.team;
 
 import com.company.domain.Team;
+import com.company.repository.FileHandlerSaveException;
 import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ public class FileTeamRepositoryTest {
     FileTeamRepository repository = new FileTeamRepository();
 
     @Test
-    public void save() {
+    public void save() throws FileHandlerSaveException {
         Team team = new Team();
         Team team1 = new Team(123);
         repository.save(team);
@@ -28,7 +29,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void remove() {
+    public void remove() throws FileHandlerSaveException {
         Team team = new Team(123);
         Team team1 = new Team(12);
         repository.save(team);
@@ -43,7 +44,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void addSameObj() {
+    public void addSameObj() throws FileHandlerSaveException {
         Team team = new Team(112);
         Team team1 = new Team(112);
         repository.save(team);
@@ -59,7 +60,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void findById() {
+    public void findById() throws FileHandlerSaveException {
         Team team = new Team();
         repository.save(team);
 
@@ -69,7 +70,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void getAll() {
+    public void getAll() throws FileHandlerSaveException {
         Team team = new Team(112);
         Team team1 = new Team(321);
         repository.save(team);
@@ -84,8 +85,8 @@ public class FileTeamRepositoryTest {
     }
 
     @After
-    public void tearDown() {
-        repository.getAll().forEach(repository::remove);
+    public void tearDown()  {
+        //repository.getAll().forEach(repository::remove);
     }
 
 

@@ -21,7 +21,7 @@ public class FileHandlerTest {
 
 
     @Test
-    public void save() throws IOException {
+    public void save() throws FileHandlerSaveException,IOException {
         Path pathToFile = Mockito.mock(Path.class);
         FileSystem fileSystem = Mockito.mock(FileSystem.class);
         Serializer serializer = new Serializer();
@@ -38,19 +38,35 @@ public class FileHandlerTest {
     }
 
     @Test
-    public void deserializedFile() throws IOException,FileReadException {
+            (expected = FileHandlerSaveException.class)
+    public void saveException() throws FileHandlerSaveException, IOException{
+        Path pathToFile = Mockito.mock(Path.class);
+        FileSystem fileSystem = Mockito.mock(FileSystem.class);
+        Serializer serializer = new Serializer();
+        FileHandler<Player> fileHandler = new FileHandler<>(pathToFile, fileSystem, serializer);
+        Player player = new Player("neo");
+
+        List<Player> entities = Collections.singletonList(player);
+        byte[] expected = serializer.serialize(entities);
+        doThrow(new IOException("shit happens")).when(fileSystem).write(pathToFile,expected);
+
+        fileHandler.save(entities);
+
+    }
+
+    @Test
+    public void deserializedFile() throws IOException, FileReadException {
         Path pathToFile = Mockito.mock(Path.class);
         FileSystem fileSystem = Mockito.mock(FileSystem.class);
         Serializer serializer = new Serializer();
 
         FileHandler<Player> fileHandler = new FileHandler<>(pathToFile, fileSystem, serializer);
         List<Player> players = Arrays.asList(new Player("neo"), new Player("vasya"));
-       // when(fileSystem.readAllBytes(pathToFile)).thenReturn(serializer.serialize(players));
-        when(fileSystem.readAllBytes(pathToFile)).thenThrow(new ClassNotFoundException());
+        when(fileSystem.readAllBytes(pathToFile)).thenReturn(serializer.serialize(players));
+        //  when(fileSystem.readAllBytes(pathToFile)).thenThrow(new ClassNotFoundException());
         List<Player> actual = fileHandler.deserializedFile();
 
         assertEquals(players, actual);
-
     }
 
     @Test
@@ -63,11 +79,23 @@ public class FileHandlerTest {
 
         fileHandler.deletingFile();
 
-
         verify(fileSystem, times(1)).delete(pathToFile);
-//        System.out.println(System.getProperty("java.io.tmpdir"));
-//        System.out.println(System.getProperty("java.io.tmpdir"));
 
     }
 
+    @Test
+            (expected = IOException.class)
+    public void deletingFileTestException() {// throws IOException {
+        Path pathToFile = Mockito.mock(Path.class);
+        FileSystem fileSystem = Mockito.mock(FileSystem.class);
+        Serializer serializer = new Serializer();
+        FileHandler<Player> fileHandler = new FileHandler<>(pathToFile, fileSystem, serializer);
+        //  doThrow(new IOException()).when(fileSystem).delete(pathToFile);
+
+        fileHandler.deletingFile();
+
+        // verify(fileSystem, times(1)).delete(pathToFile);
+
+
+    }
 }
