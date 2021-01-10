@@ -11,7 +11,7 @@ public interface PlayerRepository {
 
     void remove(Player player) throws Exception;
 
-    Player findById(long personId);
+    Player findById(long personId) throws FileReadException;
 
-    List<Player> findAll();
+    List<Player> findAll() throws FileReadException;
 }

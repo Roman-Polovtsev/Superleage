@@ -5,6 +5,7 @@ import com.company.domain.Player;
 import com.company.domain.Team;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.team.TeamRepository;
+import com.company.util.FileReadException;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -60,7 +61,7 @@ public class TeamServiceTest {
     }
 
     @Test
-    public void findSmallest(){
+    public void findSmallest() throws FileReadException {
         TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
         PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
         TeamService service = new TeamService(teamRepository, playerRepository);
@@ -103,7 +104,7 @@ public class TeamServiceTest {
 //    }
 
     @Test
-    public void test() {
+    public void test() throws FileReadException {
         TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
         PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
         TeamService service = new TeamService(teamRepository, playerRepository);

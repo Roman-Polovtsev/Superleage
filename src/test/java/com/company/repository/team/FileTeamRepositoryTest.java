@@ -1,7 +1,9 @@
 package com.company.repository.team;
 
 import com.company.domain.Team;
-import com.company.repository.FileHandlerSaveException;
+import com.company.util.FileDeletingException;
+import com.company.util.FileHandlerSaveException;
+import com.company.util.FileReadException;
 import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -15,7 +17,7 @@ public class FileTeamRepositoryTest {
     FileTeamRepository repository = new FileTeamRepository();
 
     @Test
-    public void save() throws FileHandlerSaveException {
+    public void save() throws FileHandlerSaveException, FileReadException {
         Team team = new Team();
         Team team1 = new Team(123);
         repository.save(team);
@@ -29,7 +31,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void remove() throws FileHandlerSaveException {
+    public void remove() throws FileHandlerSaveException, FileDeletingException, FileReadException {
         Team team = new Team(123);
         Team team1 = new Team(12);
         repository.save(team);
@@ -44,7 +46,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void addSameObj() throws FileHandlerSaveException {
+    public void addSameObj() throws FileHandlerSaveException, FileReadException {
         Team team = new Team(112);
         Team team1 = new Team(112);
         repository.save(team);
@@ -60,7 +62,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void findById() throws FileHandlerSaveException {
+    public void findById() throws FileHandlerSaveException, FileReadException {
         Team team = new Team();
         repository.save(team);
 
@@ -70,7 +72,7 @@ public class FileTeamRepositoryTest {
     }
 
     @Test
-    public void getAll() throws FileHandlerSaveException {
+    public void getAll() throws FileHandlerSaveException, FileReadException {
         Team team = new Team(112);
         Team team1 = new Team(321);
         repository.save(team);

@@ -7,6 +7,7 @@ import com.company.repository.player.FilePlayerRepository;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.team.FileTeamRepository;
 import com.company.repository.team.TeamRepository;
+import com.company.util.FileReadException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -46,7 +47,7 @@ public class TeamService {
     public void addTeam(Team team) throws Exception{
         teamRepository.save(team);
     }
-    public Set<Player> getMembers (Team team){
+    public Set<Player> getMembers (Team team) throws FileReadException {
         Team team1 = teamRepository.findById(team.getID());
         return team1.getMembers();
     }
@@ -68,18 +69,18 @@ public class TeamService {
 //        teamRepository.save(updatedTeam);
 //    }
 
-    public String getCaptainContacts(Team team){
+    public String getCaptainContacts(Team team) throws FileReadException {
         Team team1 = teamRepository.findById(team.getID());
         return team1.getCaptain().getEmail()+team1.getCaptain().getNumber();
     }
 
 
-    public Team findSmallest() {
+    public Team findSmallest() throws FileReadException {
         List<Team> all = teamRepository.getAll();
         return all.stream().min(Comparator.comparing(Team::getAverageHeight)).orElseThrow();
     }
 
-    public Team findHighest() {
+    public Team findHighest() throws FileReadException {
         float max = 0;
         List<Team> all = teamRepository.getAll();
         //todo: stream API

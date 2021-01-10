@@ -1,6 +1,7 @@
 package com.company.repository.team;
 
 import com.company.domain.Team;
+import com.company.util.FileReadException;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ public interface TeamRepository {
 
     void remove(Team team) throws Exception;
 
-    Team findById ( long teamId );
+    Team findById ( long teamId ) throws FileReadException;
 
-    List<Team> getAll();
+    List<Team> getAll() throws FileReadException;
 
 }

@@ -1,16 +1,16 @@
 package com.company.repository.team;
 
-import com.company.domain.Player;
 import com.company.domain.Team;
+import com.company.util.FileDeletingException;
 import com.company.repository.FileHandler;
-import com.company.repository.FileHandlerSaveException;
+import com.company.util.FileHandlerSaveException;
+import com.company.util.FileReadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 //todo: implement this + repositories for all domain objects
@@ -36,14 +36,14 @@ public class FileTeamRepository implements TeamRepository {
         this.logger = logger;
         this.filePath = Paths.get(pathFile);
         this.repoFilePath = Paths.get(pathRepository);
-        this.fileHandler = new FileHandler<Team>(this.filePath, this.repoFilePath);
+        this.fileHandler = new FileHandler<Team>(this.filePath);
     }
 
     public FileTeamRepository(Logger logger, Path pathRepository, Path pathFile) {
         this.logger = logger;
         this.filePath = pathFile;
         this.repoFilePath = pathRepository;
-        this.fileHandler = new FileHandler<Team>(filePath, repoFilePath);
+        this.fileHandler = new FileHandler<Team>(filePath);
     }
 
 
@@ -65,7 +65,7 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     @Override
-    public void save(Team team) throws FileHandlerSaveException {
+    public void save(Team team) throws FileHandlerSaveException, FileReadException {
         List<Team> teamList = fileHandler.deserializedFile();
         if (teamList == null)
             teamList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     @Override
-    public void remove(Team team)throws FileHandlerSaveException {
+    public void remove(Team team) throws FileHandlerSaveException, FileDeletingException, FileReadException {
         List<Team> teamList = fileHandler.deserializedFile();
         if (teamList.contains(team)) {
             teamList.remove(team);
@@ -94,7 +94,7 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     @Override
-    public Team findById(long teamId) throws NullPointerException {
+    public Team findById(long teamId) throws NullPointerException, FileReadException {
         List<Team> teamList = fileHandler.deserializedFile();
         if (teamList.isEmpty())
             throw new NullPointerException("There`s no Teams");
@@ -105,7 +105,7 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     @Override
-    public List<Team> getAll() {
+    public List<Team> getAll() throws FileReadException {
         List<Team> deserializedTeams;
         deserializedTeams = fileHandler.deserializedFile();
         return deserializedTeams;

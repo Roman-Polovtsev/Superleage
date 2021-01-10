@@ -7,7 +7,6 @@ import java.io.*;
 
 public class Serializer {
     public Serializer() {
-
     }
 
     transient public static Logger logger = LoggerFactory.getLogger(Serializer.class);

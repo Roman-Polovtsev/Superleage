@@ -1,13 +1,13 @@
 package com.company.repository.player;
 
 import com.company.domain.Player;
+import com.company.util.FileDeletingException;
 import com.company.repository.FileHandler;
-import com.company.repository.FileHandlerSaveException;
+import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -37,17 +37,17 @@ public class FilePlayerRepository implements PlayerRepository {
         this.logger = logger;
         this.filePath = Paths.get(pathFile);
         this.repoFilePath = Paths.get(pathRepository);
-        this.fileHandler = new FileHandler<Player>(filePath,repoFilePath);
+        this.fileHandler = new FileHandler<Player>(filePath);
     }
 
     public FilePlayerRepository(Logger logger,Path pathRepository, Path pathFile){
         this.logger = logger;
         this.filePath = pathFile;
         this.repoFilePath = pathRepository;
-        this.fileHandler = new FileHandler<Player>(filePath,repoFilePath);
+        this.fileHandler = new FileHandler<Player>(filePath);
     }
     @Override
-    public void save(Player player) throws FileHandlerSaveException {
+    public void save(Player player) throws FileHandlerSaveException, FileReadException {
         List<Player> playerList;
         playerList = fileHandler.deserializedFile();
         if (playerList == null)
@@ -64,7 +64,7 @@ public class FilePlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public void remove(Player player) throws FileHandlerSaveException{
+    public void remove(Player player) throws FileHandlerSaveException, FileDeletingException ,FileReadException{
         List<Player> playerList;
         playerList = fileHandler.deserializedFile();
 
@@ -84,7 +84,7 @@ public class FilePlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public Player findById(long personId) {
+    public Player findById(long personId) throws FileReadException{
         List<Player> playerList;
 //            try{
 //                playerList = (List<Player>) fileHandler.fileDeserializer();
@@ -105,7 +105,7 @@ public class FilePlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public List<Player> findAll() {
+    public List<Player> findAll() throws FileReadException{
         List<Player> playerList;
         playerList = (List<Player>) fileHandler.deserializedFile();
         logger.debug("Deserialized List of players: {}", playerList);
