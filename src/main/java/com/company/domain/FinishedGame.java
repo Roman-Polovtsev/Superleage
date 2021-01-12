@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class FinishedGame implements Game {
-
     private final Game startedGame;
     private final Result gameResult;
     private final Referee gameReferee;
@@ -13,6 +12,10 @@ public class FinishedGame implements Game {
 
     public FinishedGame() {
         this(new StartedGame(), new Result(), new Referee(), new int[]{0, 0}, LocalDateTime.now());
+    }
+
+    public FinishedGame(Game startedGame, Result gameResult, Referee gameReferee) {
+        this(startedGame,gameResult,gameReferee, new int[]{0,0} , LocalDateTime.now());
     }
 
     public FinishedGame(Game startedGame, Result gameResult, Referee gameReferee, int[] refereeMarks, LocalDateTime gameTime) {

@@ -12,6 +12,7 @@ public class Schedule {
 
     private final Team home;
     private final Team guest;
+    private long ID;
     private LocalDateTime gameTime;
     private final Address gameAddress;
     private Result gameResult;
@@ -22,11 +23,23 @@ public class Schedule {
         this(new Team(), new Team());
     }
 
+    public long getID() {
+        return ID;
+    }
+
+    public Schedule(Team home, Team guest, Address gameAddress, Result gameResult, Referee gameReferee) {
+        this.home = home;
+        this.guest = guest;
+        this.gameAddress = gameAddress;
+        this.gameResult = gameResult;
+        this.gameReferee = gameReferee;
+    }
 
     public Schedule(Team home, Team guest) {
         this.home = home;
         this.guest = guest;
         this.gameAddress = home.getHall().getAddress();
+        this.ID = home.hashCode() * guest.hashCode();
         //  this.gameResult = new Result();
         //  this.gameReferee = new Referee();
         // this.refereeMarks = new int[2];
