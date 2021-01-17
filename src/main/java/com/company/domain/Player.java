@@ -16,7 +16,9 @@ public class Player extends Person {
         this("name", 1995, ID, "amateur", "not stated", 175);
     }
 
-
+    public Player(int height, int year){
+        this("unnamed",year,1,"not stated","not stated",height);
+    }
     public Player(String name) {
         this(name, 1990);
     }

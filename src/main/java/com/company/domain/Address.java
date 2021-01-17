@@ -4,22 +4,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Address implements Serializable {
-
     private static final long serialVersionUID = 0L;
+    private final long id;
     private final String city;
     private final String street;
     private final String buildingNumber;
 
 
     public Address() {
-        this("Undefined", "Undefined", "Undefined");
+        this(1, "Undefined", "Undefined", "Undefined");
     }
 
     public Address(String city) {
-        this(city, "undefined", "undefined");
+        this(1, city, "undefined", "undefined");
     }
 
-    public Address(String city, String street, String numberOfBuilding) {
+    public Address(long id, String city, String street, String numberOfBuilding) {
+        this.id = id;
         this.city = city;
         this.street = street;
         this.buildingNumber = numberOfBuilding;
@@ -42,18 +43,23 @@ public class Address implements Serializable {
         return buildingNumber;
     }
 
+    public long getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(city, address.city) &&
+        return id == address.id &&
+                Objects.equals(city, address.city) &&
                 Objects.equals(street, address.street) &&
                 Objects.equals(buildingNumber, address.buildingNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(city, street, buildingNumber);
+        return Objects.hash(id, city, street, buildingNumber);
     }
 }

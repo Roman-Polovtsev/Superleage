@@ -3,11 +3,11 @@ package com.company.domain;
 import java.util.Objects;
 
 public class Captain extends Player {
-    private String number;
-    private String email;
+    private final String number;
+    private final String email;
 
     public Captain() {
-        this(new Player(), "not stated", "not stated");
+        this(new Player());
     }
 
     public Captain(Player player) {
@@ -29,16 +29,8 @@ public class Captain extends Player {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override

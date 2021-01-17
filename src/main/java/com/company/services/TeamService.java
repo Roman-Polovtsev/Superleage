@@ -1,6 +1,5 @@
 package com.company.services;
 
-import com.company.domain.Captain;
 import com.company.domain.Player;
 import com.company.domain.Team;
 import com.company.repository.player.FilePlayerRepository;
@@ -8,10 +7,9 @@ import com.company.repository.player.PlayerRepository;
 import com.company.repository.team.FileTeamRepository;
 import com.company.repository.team.TeamRepository;
 import com.company.util.FileReadException;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -23,11 +21,11 @@ public class TeamService {
     private final PlayerRepository playerRepository;
 
     public TeamService() {
-        this(new FileTeamRepository(), new FilePlayerRepository(),LoggerFactory.getLogger(TeamService.class));
+        this(new FileTeamRepository(), new FilePlayerRepository(), LoggerFactory.getLogger(TeamService.class));
     }
 
     public TeamService(TeamRepository teamRepository, PlayerRepository playerRepository) {
-        this( teamRepository, playerRepository, LoggerFactory.getLogger(TeamService.class) );
+        this(teamRepository, playerRepository, LoggerFactory.getLogger(TeamService.class));
     }
 
     public TeamService(TeamRepository teamRepository, PlayerRepository playerRepository, Logger logger) {
@@ -44,12 +42,18 @@ public class TeamService {
         return playerRepository;
     }
 
-    public void addTeam(Team team) throws Exception{
+    public void addTeam(Team team) throws Exception {
         teamRepository.save(team);
     }
-    public Set<Player> getMembers (Team team) throws FileReadException {
+
+    public Set<Player> getMembers(Team team) throws FileReadException {
         Team team1 = teamRepository.findById(team.getID());
         return team1.getMembers();
+    }
+
+
+    public void setCaptain(Team team) {
+        team = new Team(LoggerFactory.getLogger(Team.class), team.getName(), team.)
     }
 
 //    public void setCaptain (Team team) throws IOException {
@@ -71,7 +75,7 @@ public class TeamService {
 
     public String getCaptainContacts(Team team) throws FileReadException {
         Team team1 = teamRepository.findById(team.getID());
-        return team1.getCaptain().getEmail()+team1.getCaptain().getNumber();
+        return team1.getCaptain().getEmail() + team1.getCaptain().getNumber();
     }
 
 
@@ -89,7 +93,7 @@ public class TeamService {
     }
 
 
-    public void addPlayer(Team team, Player player) throws Exception{
+    public void addPlayer(Team team, Player player) throws Exception {
         Team byId = teamRepository.findById(team.hashCode());
         byId.addPlayer(player);
         playerRepository.remove(player);

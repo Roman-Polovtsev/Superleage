@@ -2,6 +2,7 @@ package com.company.domain;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.company.domain.PlayerDecorator.Referee;
 
 import java.util.Arrays;
 import java.util.Objects;

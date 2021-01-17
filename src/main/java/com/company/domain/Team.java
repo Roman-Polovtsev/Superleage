@@ -1,47 +1,49 @@
 package com.company.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.time.Year;
 import java.util.*;
 
 public class Team implements Serializable {
+    private final Logger logger;
     private static final long serialVersionUID = 1L;
     private final long ID;
     private final Hall hall;
     private final String name;
-    private Captain captain;
+    private final Captain captain;
     private final Set<Player> members;
-    transient private float averageHeight;
-    transient private float averageAge;
 
     public Team() {
-        this("unnamed");
+        this("unnamed", serialVersionUID);
     }
 
     public Team(String name, long ID) {
-        this(new Hall(), name, ID, null);
+        this(LoggerFactory.getLogger(Team.class), new Hall(), name, ID, null);
     }
 
     public Team(String name) {
-        this(new Hall(), name, serialVersionUID, null);
+        this(LoggerFactory.getLogger(Team.class), new Hall(), name, serialVersionUID, null);
     }
 
     public Team(long ID) {
-        this(new Hall(), "unnamed", ID, null);
+        this(LoggerFactory.getLogger(Team.class), new Hall(), "unnamed", ID, null);
     }
 
-    public Team(Hall hall, String name, long ID,  Captain captain) {
+    public Team(Logger logger, Hall hall, String name, long ID, Captain captain) {
+        this.logger = logger;
         this.ID = ID;
         this.hall = hall;
         this.name = name;
         this.members = new HashSet<>();
+        members.add(captain);
         this.captain = captain;
-        this.averageHeight = averageHeight();
-        this.averageAge = setAverageAge();
     }
 
-    public Team (Captain captain){
-        this(new Hall(), "",1,captain);
+    public Team(Captain captain) {
+        this(LoggerFactory.getLogger(Team.class), new Hall(), "", 1, captain);
     }
 
     public String getName() {
@@ -59,31 +61,37 @@ public class Team implements Serializable {
     public void addPlayer(Player... players) {
         List<Player> players1 = Arrays.asList(players);
         members.addAll(players1);
-        if (members.addAll(players1)) {
-            this.averageAge = setAverageAge();
-            this.averageHeight = averageHeight();
-        }
     }
 
     public void addPlayer(List<Player> playerList) {
-        if (members.addAll(playerList)) {
-            this.averageAge = setAverageAge();
-            this.averageHeight = averageHeight();
-        }
+        members.addAll(playerList);
     }
 
-    public void deletePlayer(Player player) {
+    public void deletePlayer(Player... player) {
         members.remove(player);
-        averageHeight = averageHeight();
-        averageAge = setAverageAge();
+    }
+
+    public void deletePlayer(List<Player> players){
+        members.removeAll(players);
     }
 
     public float getAverageHeight() {
-        return averageHeight;
+        if (members.isEmpty()) {
+            return 0;
+        } else {
+            int sumHeight = members.stream().mapToInt(Player::getHeight).sum();
+            return (float) sumHeight / ((float) members.size());
+        }
     }
 
     public float getAverageAge() {
-        return averageAge;
+        int currentYear = Year.now().getValue();
+        if (members.isEmpty())
+            return 0;
+        else {
+            int sumAge = members.stream().mapToInt(player -> (currentYear - player.getYearOfBirth())).sum();
+            return (float) sumAge / ((float) members.size());
+        }
     }
 
     public Set<Player> getMembers() {
@@ -93,53 +101,14 @@ public class Team implements Serializable {
     public Captain getCaptain() {
         return captain;
     }
+// TODO: 14.01.2021  implement set/change captain methods at service level,
 
-    public void setCaptain(String number, String email) {
-        if (members.isEmpty()) throw new NullPointerException("There's no players in team to set captain");
-        else {
-            Set<Player> members = this.getMembers();
-            Player captain = members.iterator().next();
-            this.captain = new Captain(captain, number, email);
-        }
-    }
-
-    public void setCaptain() {
-        if (members.isEmpty()) throw new NullPointerException("There's no players in team to set captain");
-        else {
-            Set<Player> members = this.getMembers();
-            Player captain = members.iterator().next();
-            this.captain = new Captain(captain);
-        }
-    }
 
     @Override
     public String toString() {
-
         return "Team \"" + name + "\" information:\n\t" + hall + "\n captain:" + captain + "\n members: " + this.getMembers();
     }
 
-
-    private float averageHeight() {
-        float averageHeight;
-        int height = 0;
-        if (members.isEmpty()) return 0;
-        else {
-            for (Player player : members)
-                height = height + player.getHeight();
-            return averageHeight = ((float) height) / ((float) members.size());
-        }
-    }
-
-    private float setAverageAge() {
-        if (members.isEmpty()) return 0;
-        else {
-            Year currentYear = Year.now();
-            float averageAge = 0;
-            for (Player player : members)
-                averageAge += currentYear.getValue() - player.getYearOfBirth();
-            return (float) averageAge / members.size();
-        }
-    }
 
     @Override
     public boolean equals(Object o) {
