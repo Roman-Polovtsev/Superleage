@@ -54,7 +54,6 @@ public class EnableGameTime implements Serializable {
         return daysOfWeek;
     }
 
-
     public String getDaysOfWeek() throws NullPointerException {
         if (daysOfWeek.isEmpty()) {
             throw new NullPointerException("No days " + this);

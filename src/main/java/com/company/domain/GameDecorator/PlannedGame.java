@@ -6,6 +6,7 @@ import com.company.domain.Result;
 import com.company.domain.Team;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * This  class is game decorator
@@ -16,7 +17,7 @@ public class PlannedGame implements Game{
     private final Team home;
     private final Team guest;
     private final Address gameAddress;
-    private LocalDateTime gameTime;
+    private final LocalDateTime gameTime;
     private static final LocalDateTime defaultTime = LocalDateTime.of(2020,1,1,0,0);
 
     public PlannedGame(Team home, Team guest, Address gameAddress, LocalDateTime gameTime, long ID) {
@@ -27,17 +28,10 @@ public class PlannedGame implements Game{
         this.ID = ID;
     }
 
-    public PlannedGame(Game game,Team home, Team guest, long ID) {
-        this.game = game;
-        this.home = home;
-        this.guest = guest;
-        this.gameAddress = home.getHall().getAddress();
-        this.ID = ID;
-    }
 
-//    public PlannedGame() {
-//        this(new Team(),new Team(),new Team().getHall().getAddress(), defaultTime,);
-//    }
+    public PlannedGame() {
+        this(new Team(),new Team(),new Team().getHall().getAddress(), defaultTime,1);
+    }
 
     public PlannedGame(Team home, Team guest, long ID) {
         this(home,guest,home.getHall().getAddress(),defaultTime,ID);
@@ -64,21 +58,6 @@ public class PlannedGame implements Game{
     }
 
     @Override
-    public Result getGameResult() {
-        return null;
-    }
-
-    @Override
-    public Referee getGameReferee() {
-        return null;
-    }
-
-    @Override
-    public int[] getRefereeMarks() {
-        return null;
-    }
-
-    @Override
     public LocalDateTime getGameTime() {
         return this.gameTime;
     }
@@ -93,5 +72,23 @@ public class PlannedGame implements Game{
                 ", gameAddress=" + gameAddress +
                 ", gameTime=" + gameTime +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlannedGame that = (PlannedGame) o;
+        return ID == that.ID &&
+                Objects.equals(game, that.game) &&
+                Objects.equals(home, that.home) &&
+                Objects.equals(guest, that.guest) &&
+                Objects.equals(gameAddress, that.gameAddress) &&
+                Objects.equals(gameTime, that.gameTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(game, ID, home, guest, gameAddress, gameTime);
     }
 }

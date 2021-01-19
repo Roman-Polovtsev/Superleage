@@ -1,12 +1,13 @@
 package com.company.repository.team;
 
 import com.company.domain.Team;
-import com.company.util.FileDeletingException;
 import com.company.repository.FileHandler;
+import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,13 +40,12 @@ public class FileTeamRepository implements TeamRepository {
         this.fileHandler = new FileHandler<Team>(this.filePath);
     }
 
-    public FileTeamRepository(Logger logger, Path pathRepository, Path pathFile) {
+    public FileTeamRepository(Logger logger, Path pathRepository, Path pathFile, FileHandler<Team> fileHandler) {
         this.logger = logger;
         this.filePath = pathFile;
         this.repoFilePath = pathRepository;
-        this.fileHandler = new FileHandler<Team>(filePath);
+        this.fileHandler = fileHandler;
     }
-
 
     public Path getfilePath() {
         return filePath;
@@ -61,54 +61,69 @@ public class FileTeamRepository implements TeamRepository {
 
     @Override
     public void createRepository() {
-      //  fileHandler.fileCreating(repoFilePath, filePath);
+        //  fileHandler.fileCreating(repoFilePath, filePath);
     }
 
     @Override
-    public void save(Team team) throws FileHandlerSaveException, FileReadException {
-        List<Team> teamList = fileHandler.deserializedFile();
-        if (teamList == null)
-            teamList = new ArrayList<>();
-        if (teamList.contains(team))
-            logger.info("such team already exist, updating it");
-        else
-            teamList.add(team);
-        fileHandler.save(teamList);
-    }
-
-    @Override
-    public void remove(Team team) throws FileHandlerSaveException, FileDeletingException, FileReadException {
-        List<Team> teamList = fileHandler.deserializedFile();
-        if (teamList.contains(team)) {
-            teamList.remove(team);
-            logger.info("Deleted team from List\nNow team list looks like: {}", teamList);
-            if (teamList.isEmpty()) {
-                fileHandler.deletingFile();
-                logger.info("Deleted file because of its emptiness");
-            } else {
-                fileHandler.save(teamList);
-                logger.info("deleted team and serialize anew");
-            }
-        } else
-            logger.info("Nothing to delete, such Team doesn`t exist");
-    }
-
-    @Override
-    public Team findById(long teamId) throws NullPointerException, FileReadException {
-        List<Team> teamList = fileHandler.deserializedFile();
-        if (teamList.isEmpty())
-            throw new NullPointerException("There`s no Teams");
-        else {
-            return teamList.stream().filter((team) -> team.getID() == teamId).
-                    findFirst().orElseThrow();
+    public void save(Team team) throws FileRepositoryException {
+        try {
+            List<Team> teamList = fileHandler.deserializedFile();
+            if (teamList == null)
+                teamList = new ArrayList<>();
+            if (teamList.contains(team))
+                logger.info("such team already exist, updating it");
+            else
+                teamList.add(team);
+            fileHandler.save(teamList);
+        }catch (FileHandlerSaveException| FileReadException e){
+            throw new FileRepositoryException(String.format("An error occured during getting list of teams, file handler: %s\npath to file: %s", this.fileHandler, this.filePath), e);
         }
     }
 
     @Override
-    public List<Team> getAll() throws FileReadException {
-        List<Team> deserializedTeams;
-        deserializedTeams = fileHandler.deserializedFile();
-        return deserializedTeams;
+    public void remove(Team team) throws FileRepositoryException {
+        try {
+            List<Team> teamList = fileHandler.deserializedFile();
+
+            if (teamList.contains(team)) {
+                teamList.remove(team);
+                logger.info("Deleted team from List\nNow team list looks like: {}", teamList);
+                if (teamList.isEmpty()) {
+                    fileHandler.deletingFile();
+                    logger.info("Deleted file because of its emptiness");
+                } else {
+                    fileHandler.save(teamList);
+                    logger.info("deleted team and serialize anew");
+                }
+            } else
+                logger.info("Nothing to delete, such Team doesn`t exist");
+        }catch (FileHandlerSaveException| FileDeletingException| FileReadException e){
+            throw new FileRepositoryException(String.format("An error occured during getting list of teams, file handler: %s\npath to file: %s", this.fileHandler, this.filePath), e);
+        }
+    }
+
+    @Override
+    public Team findById(long teamId) throws FileRepositoryException {
+        try {
+            List<Team> teamList = fileHandler.deserializedFile();
+            if (teamList.isEmpty())
+                throw new NullPointerException("There`s no Teams");
+            else {
+                return teamList.stream().filter((team) -> team.getID() == teamId).
+                        findFirst().orElseThrow();
+            }
+        } catch (FileReadException e){
+            throw new FileRepositoryException(String.format("An error occured during getting list of teams, file handler: %s\npath to file: %s", this.fileHandler, this.filePath), e);
+        }
+    }
+
+    @Override
+    public List<Team> getAll() throws FileRepositoryException {
+        try {
+            return fileHandler.deserializedFile();
+        } catch (FileReadException e) {
+            throw new FileRepositoryException(String.format("An error occured during getting list of teams, file handler: %s\npath to file: %s", this.fileHandler, this.filePath), e);
+        }
     }
 
 

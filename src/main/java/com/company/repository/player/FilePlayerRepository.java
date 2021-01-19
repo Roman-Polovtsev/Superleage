@@ -1,8 +1,8 @@
 package com.company.repository.player;
 
 import com.company.domain.Player;
-import com.company.util.FileDeletingException;
 import com.company.repository.FileHandler;
+import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 import org.slf4j.Logger;
@@ -15,37 +15,38 @@ import java.util.List;
 
 public class FilePlayerRepository implements PlayerRepository {
 
-    private final Logger logger ;//= LoggerFactory.getLogger(FilePlayerRepository.class); //todo: constructor
+    private final Logger logger;//= LoggerFactory.getLogger(FilePlayerRepository.class); //todo: constructor
     // private final String repoFile = "D:\\workspace\\Roman\\Superleage\\FileRepository"; //todo: constructor
-    private final Path repoFilePath ;//= Paths.get(repoFile);
-    private final Path filePath ;//= repoFilePath.resolve("Players.txt"); //todo: constructor
-     private final FileHandler<Player> fileHandler;// = new FileHandler(playerList, filePath, repoFilePath); //todo: constructor
+    private final Path repoFilePath;
+    private final Path filePath;//= repoFilePath.resolve("Players.txt"); //todo: constructor
+    private final FileHandler<Player> fileHandler;// = new FileHandler(playerList, filePath, repoFilePath); //todo: constructor
 
     public FilePlayerRepository() {
-        this(LoggerFactory.getLogger(FilePlayerRepository.class) );
+        this(LoggerFactory.getLogger(FilePlayerRepository.class));
     }
 
-    public FilePlayerRepository(Logger logger){
+    public FilePlayerRepository(Logger logger) {
         this(logger, "D:\\workspace\\Roman\\Superleage\\FileRepository", "D:\\workspace\\Roman\\Superleage\\FileRepository\\players.txt");
     }
 
-    public FilePlayerRepository(String pathRepository){
-        this(LoggerFactory.getLogger(FilePlayerRepository.class),pathRepository,pathRepository+"\\players.txt");
+    public FilePlayerRepository(String pathRepository) {
+        this(LoggerFactory.getLogger(FilePlayerRepository.class), pathRepository, pathRepository + "\\players.txt");
     }
 
-    public FilePlayerRepository(Logger logger,String pathRepository, String pathFile){
+    public FilePlayerRepository(Logger logger, String pathRepository, String pathFile) {
         this.logger = logger;
         this.filePath = Paths.get(pathFile);
         this.repoFilePath = Paths.get(pathRepository);
         this.fileHandler = new FileHandler<Player>(filePath);
     }
 
-    public FilePlayerRepository(Logger logger,Path pathRepository, Path pathFile){
+    public FilePlayerRepository(Logger logger, Path pathRepository, Path pathFile) {
         this.logger = logger;
         this.filePath = pathFile;
         this.repoFilePath = pathRepository;
         this.fileHandler = new FileHandler<Player>(filePath);
     }
+
     @Override
     public void save(Player player) throws FileHandlerSaveException, FileReadException {
         List<Player> playerList;
@@ -64,7 +65,7 @@ public class FilePlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public void remove(Player player) throws FileHandlerSaveException, FileDeletingException ,FileReadException{
+    public void remove(Player player) throws FileHandlerSaveException, FileDeletingException, FileReadException {
         List<Player> playerList;
         playerList = fileHandler.deserializedFile();
 
@@ -84,7 +85,7 @@ public class FilePlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public Player findById(long personId) throws FileReadException{
+    public Player findById(long personId) throws FileReadException {
         List<Player> playerList;
 //            try{
 //                playerList = (List<Player>) fileHandler.fileDeserializer();
@@ -105,7 +106,7 @@ public class FilePlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public List<Player> findAll() throws FileReadException{
+    public List<Player> findAll() throws FileReadException {
         List<Player> playerList;
         playerList = (List<Player>) fileHandler.deserializedFile();
         logger.debug("Deserialized List of players: {}", playerList);

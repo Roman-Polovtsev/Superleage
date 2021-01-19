@@ -1,7 +1,7 @@
 package com.company.domain.PlayerDecorator;
 
 public class PersonDecorator implements AbstractPerson{
-    AbstractPerson abstractPerson;
+    private final AbstractPerson abstractPerson;
     private final String name;
     private final int yearOfBirth;
 

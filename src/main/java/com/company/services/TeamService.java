@@ -46,15 +46,15 @@ public class TeamService {
         teamRepository.save(team);
     }
 
-    public Set<Player> getMembers(Team team) throws FileReadException {
+    public Set<Player> getMembers(Team team) throws TeamRepository.FileRepositoryException {
         Team team1 = teamRepository.findById(team.getID());
         return team1.getMembers();
     }
 
 
-    public void setCaptain(Team team) {
-        team = new Team(LoggerFactory.getLogger(Team.class), team.getName(), team.)
-    }
+//    public void setCaptain(Team team) {
+//        team = new Team(LoggerFactory.getLogger(Team.class), team.getName(), team.)
+//    }
 
 //    public void setCaptain (Team team) throws IOException {
 //        Set<Player> members = getMembers(team);
@@ -73,21 +73,20 @@ public class TeamService {
 //        teamRepository.save(updatedTeam);
 //    }
 
-    public String getCaptainContacts(Team team) throws FileReadException {
+    public String getCaptainContacts(Team team) throws TeamRepository.FileRepositoryException {
         Team team1 = teamRepository.findById(team.getID());
         return team1.getCaptain().getEmail() + team1.getCaptain().getNumber();
     }
 
 
-    public Team findSmallest() throws FileReadException {
+    public Team findSmallest() throws FileReadException,TeamRepository.FileRepositoryException {
         List<Team> all = teamRepository.getAll();
         return all.stream().min(Comparator.comparing(Team::getAverageHeight)).orElseThrow();
     }
 
-    public Team findHighest() throws FileReadException {
+    public Team findHighest() throws TeamRepository.FileRepositoryException {
         float max = 0;
         List<Team> all = teamRepository.getAll();
-        //todo: stream API
         return all.stream().
                 max((team1, team2) -> (int) (team1.getAverageHeight() - team2.getAverageHeight())).orElseThrow();
     }

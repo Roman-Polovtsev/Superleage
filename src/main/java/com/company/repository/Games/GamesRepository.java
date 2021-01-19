@@ -1,6 +1,6 @@
 package com.company.repository.Games;
 
-import com.company.domain.Game;
+import com.company.domain.GameDecorator.*;
 
 import java.util.List;
 

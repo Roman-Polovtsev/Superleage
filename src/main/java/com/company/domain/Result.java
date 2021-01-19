@@ -11,9 +11,9 @@ public class Result {
         this((byte) 0, (byte) 0);
     }
 
-    public Result(byte homeTeam, byte guestTeam) {
-        this.homeTeam = homeTeam;
-        this.guestTeam = guestTeam;
+    public Result(Number homeTeam, Number guestTeam) {
+        this.homeTeam = (byte)homeTeam;
+        this.guestTeam = (byte)guestTeam;
     }
 
     public Result incrementGuestPoint() {

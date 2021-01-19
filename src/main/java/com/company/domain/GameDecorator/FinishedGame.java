@@ -1,27 +1,31 @@
 package com.company.domain.GameDecorator;
 
 import com.company.domain.Address;
-import com.company.domain.Referee;
+
+import com.company.domain.PlayerDecorator.ConcretePerson;
+import com.company.domain.PlayerDecorator.Referee;
 import com.company.domain.Result;
 import com.company.domain.Team;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Objects;
 
-public class FinishedGame extends PlannedGame {
-    Result result;
-    Referee referee;
-    int [] refereeMarks;
+public class FinishedGame extends GameDecorator {
+    private final Result result;
+    private final Referee referee;
+    private final int [] refereeMarks;
 
     public FinishedGame(Game game) {
-        super(game, game.getHome(), game.getGuest(),game.getID());
+        this(game, new Result(),new Referee(new ConcretePerson()),new int[]{0,0});
     }
 
     public FinishedGame(Game game, Result result, Referee referee, int[] refereeMarks) {
-        super(game, game.getHome(), game.getGuest(),game.getID());
+        super(game);
         this.result = result;
         this.referee = referee;
         this.refereeMarks = refereeMarks;
+        referee.addGame(this);
     }
 
     @Override
@@ -44,17 +48,14 @@ public class FinishedGame extends PlannedGame {
         return super.getGameAddress();
     }
 
-    @Override
     public Result getGameResult() {
         return this.result;
     }
 
-    @Override
     public Referee getGameReferee() {
         return this.referee;
     }
 
-    @Override
     public int[] getRefereeMarks() {
         return this.refereeMarks;
     }
@@ -71,5 +72,23 @@ public class FinishedGame extends PlannedGame {
                 ", referee=" + referee +
                 ", refereeMarks=" + Arrays.toString(refereeMarks) +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        FinishedGame that = (FinishedGame) o;
+        return Objects.equals(result, that.result) &&
+                Objects.equals(referee, that.referee) &&
+                Arrays.equals(refereeMarks, that.refereeMarks);
+    }
+
+    @Override
+    public int hashCode() {
+        int result1 = Objects.hash(super.hashCode(), result, referee);
+        result1 = 31 * result1 + Arrays.hashCode(refereeMarks);
+        return result1;
     }
 }

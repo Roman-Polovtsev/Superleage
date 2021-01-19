@@ -17,11 +17,5 @@ public interface Game {
 
     Address getGameAddress();
 
-    Result getGameResult();
-
-    Referee getGameReferee();
-
-    int[] getRefereeMarks();
-
     LocalDateTime getGameTime();
 }

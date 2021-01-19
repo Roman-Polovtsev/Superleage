@@ -61,7 +61,7 @@ public class TeamServiceTest {
     }
 
     @Test
-    public void findSmallest() throws FileReadException {
+    public void findSmallest() throws FileReadException, TeamRepository.FileRepositoryException {
         TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
         PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
         TeamService service = new TeamService(teamRepository, playerRepository);
@@ -104,7 +104,7 @@ public class TeamServiceTest {
 //    }
 
     @Test
-    public void test() throws FileReadException {
+    public void test() throws TeamRepository.FileRepositoryException {
         TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
         PlayerRepository playerRepository = Mockito.mock(PlayerRepository.class);
         TeamService service = new TeamService(teamRepository, playerRepository);

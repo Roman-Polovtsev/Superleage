@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Year;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +16,7 @@ import static org.junit.Assert.*;
 public class TeamTest {
     private static Team fullTeam;
     private static final Logger logger = LoggerFactory.getLogger(TeamTest.class);
-    private static final String name = "full complect team";
+    private static final String name = "full complected team";
     private static Hall hall;
     private static long ID;
     private static Captain captain;
@@ -26,10 +25,9 @@ public class TeamTest {
     private final List<Player> newPlayers = Arrays.asList(player1, player2);
     private final List<Player> allPlayers = Arrays.asList(player1, player2, captain);
 
-    // TODO: 16.01.2021 create captain as a decorator of player
     @BeforeClass
     public static void beforeSetup() {
-        hall = new Hall(new Address("spb", "nevsky", "23"));
+        hall = new Hall(new Address(1, "spb", "nevsky", "23"));
         captain = new Captain(new Player("Ivan", 1995, 1, "god", "opposite", 200));
         ID = 256;
         fullTeam = new Team(logger, hall, name, ID, captain);
@@ -77,7 +75,7 @@ public class TeamTest {
         Set<Player> members = fullTeam.getMembers();
 
         assertTrue(members.containsAll(newPlayers));
-        assertEquals(members.size(),3);
+        assertEquals(members.size(), 3);
         fullTeam.deletePlayer(newPlayers);
     }
 
@@ -92,10 +90,10 @@ public class TeamTest {
         fullTeam.addPlayer(newPlayers);
         float actual = fullTeam.getAverageHeight();
 
-        assertEquals(expected,actual,1);
-        assertEquals(fullTeam.getMembers().size(),3);
+        assertEquals(expected, actual, 1);
+        assertEquals(fullTeam.getMembers().size(), 3);
         fullTeam.deletePlayer(newPlayers);
-        assertEquals(fullTeam.getMembers().size(),1);
+        assertEquals(fullTeam.getMembers().size(), 1);
     }
 
     @Test
@@ -105,10 +103,10 @@ public class TeamTest {
         fullTeam.addPlayer(newPlayers);
         float actual = fullTeam.getAverageAge();
 
-        assertEquals(expected,actual,1);
-        assertEquals(fullTeam.getMembers().size(),3);
+        assertEquals(expected, actual, 1);
+        assertEquals(fullTeam.getMembers().size(), 3);
         fullTeam.deletePlayer(newPlayers);
-        assertEquals(fullTeam.getMembers().size(),1);
+        assertEquals(fullTeam.getMembers().size(), 1);
     }
 
     @Before
