@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.repository.team.FileTeamRepository;
+import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +48,14 @@ public class FileRepository<T extends Serializable> implements Repository<T> {
     }
 
     @Override
-    public void save(T obj) throws Exception {
-
+    public void save(T obj) throws FileRepositoryException {
+        try {
+            List<T> list = fileHandler.deserializedFile();
+            list.add(obj);
+            fileHandler.save(list);
+        } catch (FileHandlerSaveException| FileReadException e){
+            throw new FileRepositoryException(String.format("An error during saving data of type %s in file on path: %s",this.getClass(),this.filePath),e);
+        }
     }
 
     @Override
