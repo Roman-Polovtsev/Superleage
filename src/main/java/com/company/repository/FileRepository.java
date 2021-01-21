@@ -1,5 +1,6 @@
 package com.company.repository;
 
+import com.company.domain.IdHolders;
 import com.company.repository.team.FileTeamRepository;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
@@ -11,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class FileRepository<T extends Serializable> implements Repository<T> {
+public class FileRepository<T extends Serializable & IdHolders> implements Repository<T> {
 
     transient private final Logger logger;
     transient private final FileHandler<T> fileHandler;
@@ -53,19 +54,26 @@ public class FileRepository<T extends Serializable> implements Repository<T> {
             List<T> list = fileHandler.deserializedFile();
             list.add(obj);
             fileHandler.save(list);
-        } catch (FileHandlerSaveException| FileReadException e){
-            throw new FileRepositoryException(String.format("An error during saving data of type %s in file on path: %s",this.getClass(),this.filePath),e);
+        } catch (FileHandlerSaveException | FileReadException e) {
+            throw new FileRepositoryException(String.format("An error during saving data of type %s in file on path: %s", this.getClass(), this.filePath), e);
         }
     }
 
     @Override
-    public void remove(T obj) throws Exception {
-
+    public void remove(T obj) throws FileRepositoryException {
+        try {
+            List<T> list = fileHandler.deserializedFile();
+            list.remove(obj);
+            fileHandler.save(list);
+        } catch (FileHandlerSaveException | FileReadException e) {
+            throw new FileRepositoryException(String.format("An error during removing data of type %s in file on path: %s", this.getClass(), this.filePath), e);
+        }
     }
 
     @Override
     public T findById(long objId) throws FileReadException {
-        return null;
+        List<T> list = fileHandler.deserializedFile();
+        return list.stream().filter((a) -> (a.getID() == objId)).findAny().orElseThrow();
     }
 
     @Override

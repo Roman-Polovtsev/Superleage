@@ -5,7 +5,6 @@ import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,15 +49,27 @@ public class FileRepositoryTest {
 
         Mockito.verify(fileHandler, Mockito.times(1)).save(Mockito.any());
         assertTrue(all.contains(teamNew));
-        assertEquals(3,all.size());
+        assertEquals(3, all.size());
     }
 
     @Test
-    public void remove() {
+    public void remove() throws FileReadException, Repository.FileRepositoryException, FileHandlerSaveException {
+        Mockito.when(fileHandler.deserializedFile()).thenReturn(teamList);
+
+        repository.remove(team);
+        List<Team> all = repository.getAll();
+
+        Mockito.verify(fileHandler, Mockito.times(1)).save(Mockito.any());
+        assertFalse(all.contains(team));
+        assertEquals(1, all.size());
     }
 
     @Test
-    public void findById() {
+    public void findById() throws FileReadException {
+        Mockito.when(fileHandler.deserializedFile()).thenReturn(teamList);
+        Team byId = repository.findById(team.getID());
+
+        assertEquals(team,byId);
     }
 
     @Test

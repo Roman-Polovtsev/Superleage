@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.Year;
 import java.util.*;
 
-public class Team implements Serializable {
+public class Team implements Serializable,IdHolders {
     private final Logger logger;
     private static final long serialVersionUID = 1L;
     private final long ID;
@@ -54,6 +54,7 @@ public class Team implements Serializable {
         return hall;
     }
 
+    @Override
     public long getID() {
         return ID;
     }
