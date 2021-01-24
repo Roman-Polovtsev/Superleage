@@ -1,8 +1,8 @@
 package com.company.domain.PlayerDecorator;
 
-import com.company.domain.Person;
+import java.io.Serializable;
 
-public interface AbstractPerson {
+public interface AbstractPerson extends Serializable {
 
     public String getName();
 

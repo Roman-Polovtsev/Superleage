@@ -1,13 +1,11 @@
 package com.company.repository.person;
 
-import com.company.domain.Person;
-import com.company.domain.Player;
+import com.company.domain.Deprecated.Person;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;

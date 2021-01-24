@@ -1,4 +1,8 @@
-package com.company.domain;
+package com.company.domain.Deprecated;
+
+import com.company.domain.Address;
+import com.company.domain.Result;
+import com.company.domain.Team;
 
 import java.time.LocalDateTime;
 

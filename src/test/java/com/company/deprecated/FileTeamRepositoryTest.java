@@ -1,7 +1,9 @@
-package com.company.repository.team;
+package com.company.deprecated;
 
 import com.company.domain.Team;
 import com.company.repository.FileHandler;
+import com.company.repository.team.FileTeamRepository;
+import com.company.repository.team.TeamRepository;
 import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;

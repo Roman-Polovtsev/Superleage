@@ -1,10 +1,11 @@
-package com.company.services;
+package com.company.deprecated;
 
 import com.company.domain.GameDecorator.*;
 import com.company.domain.PlayerDecorator.*;
 import com.company.domain.Result;
 import com.company.domain.Team;
 import com.company.repository.Games.GamesRepository;
+import com.company.services.GameService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -38,7 +39,7 @@ public class GameServiceTest {
         Team team2 = new Team("guest");
         Game game = new PlannedGame();
         Result result = new Result();
-        Referee referee = new Referee(new ConcretePerson());
+        Referee referee = new Referee(new DefinedPerson());
         Game expected = new FinishedGame(game,result,referee,new int[]{5,5});
 
         //Mockito.doReturn(game).when(repository).getById(id);

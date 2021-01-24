@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.domain.Deprecated;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

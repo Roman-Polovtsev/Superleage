@@ -1,9 +1,6 @@
 package com.company.repository;
 
-import com.company.util.FileDeletingException;
-import com.company.util.FileHandlerSaveException;
-import com.company.util.FileReadException;
-import com.company.util.FileSystem;
+import com.company.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +24,7 @@ public class FileHandler<T extends Serializable> {
     }
 
     public FileHandler(Logger logger, Path pathToFile ) {
-        this(logger,new Serializer(),pathToFile,new FileSystem.Fake());
+        this(logger,new Serializer(),pathToFile,new JavaFileSystem());
     }
 
     public FileHandler(Path pathToFile, FileSystem fileSystem, Serializer serializer) {

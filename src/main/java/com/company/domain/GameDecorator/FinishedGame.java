@@ -2,7 +2,7 @@ package com.company.domain.GameDecorator;
 
 import com.company.domain.Address;
 
-import com.company.domain.PlayerDecorator.ConcretePerson;
+import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.domain.PlayerDecorator.Referee;
 import com.company.domain.Result;
 import com.company.domain.Team;
@@ -12,12 +12,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class FinishedGame extends GameDecorator {
+    transient private static final long serialVersionUID = 13L;
     private final Result result;
     private final Referee referee;
     private final int [] refereeMarks;
 
     public FinishedGame(Game game) {
-        this(game, new Result(),new Referee(new ConcretePerson()),new int[]{0,0});
+        this(game, new Result(),new Referee(new DefinedPerson()),new int[]{0,0});
     }
 
     public FinishedGame(Game game, Result result, Referee referee, int[] refereeMarks) {

@@ -1,6 +1,6 @@
 package com.company.repository.person;
 
-import com.company.domain.Person;
+import com.company.domain.Deprecated.Person;
 import com.company.repository.team.FileTeamRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

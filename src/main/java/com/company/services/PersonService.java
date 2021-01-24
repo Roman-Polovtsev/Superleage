@@ -1,6 +1,6 @@
 package com.company.services;
 
-import com.company.domain.Person;
+import com.company.domain.Deprecated.Person;
 import com.company.repository.person.FilePersonRepository;
 import com.company.repository.person.PersonRepository;
 

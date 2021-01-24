@@ -1,31 +1,34 @@
 package com.company.repository;
 
-import org.junit.Test;
-import org.postgresql.ds.PGSimpleDataSource;
+import com.company.domain.PlayerDecorator.AbstractPerson;
+import com.company.domain.PlayerDecorator.DefinedPerson;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.Assert.*;
-
 public class DataBaseSampleTest {
-    DataBaseSample sample = new DataBaseSample("postgres","29031996roman");
+    DataBaseSample sample;
 
 
-    public void getConnection(){
-        try {
-            String url = "jdbc:postgresql://localhost/superlegue";
-            Connection connection = DriverManager.getConnection(url, "postgres", "29031996roman");
-        } catch (SQLException e) {
-            System.out.println("error " + e);
+    public static void main(String[] args) throws SQLException {
+        DataBaseSample sample = new DataBaseSample();
+        AbstractPerson person = new DefinedPerson("roman", 1996);
+        Connection connection = sample.getConnection();
+        // sample.createDB(connection);
+        // int persons = sample.insertRow(connection, "persons", person.getName(), person.getYearOfBirth());
+        //int id = sample.deleteRow(connection, "id", 2);
+        ResultSet persons1 = sample.readAllRows(connection, "persons");
+        System.out.println(persons1);
+        persons1.beforeFirst();
+        while (persons1.next()) {
+            System.out.println(persons1.getInt("yearofbirth"));
+            System.out.println(persons1.getString("name"));
         }
-    }
+        //System.out.println(persons1.getInt("yearofbirth"));
+        // System.out.println(id);
+        sample.closeConnection(connection);
 
-    public static void main(String[] args) {
-        DataBaseSample sample = new DataBaseSample("postgres","29031996roman");
-        sample.getConnection();
 
     }
 

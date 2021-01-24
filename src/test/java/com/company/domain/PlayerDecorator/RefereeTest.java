@@ -9,13 +9,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class RefereeTest {
-    static AbstractPerson person = new ConcretePerson("Ivan", 1995);
+    static AbstractPerson person = new DefinedPerson("Ivan", 1995);
     static AbstractPerson player = new Player(person, 190, "not stated", "not stated");
     static Referee referee = new Referee(person);
     static Team home = new Team("home");

@@ -1,12 +1,11 @@
 package com.company.domain;
 
 import java.util.Objects;
-
+//todo implement this as enum
 public class Result {
     private final byte homeTeam;
     private final byte guestTeam;
 
-    //making constructor
     public Result() {
         this((byte) 0, (byte) 0);
     }

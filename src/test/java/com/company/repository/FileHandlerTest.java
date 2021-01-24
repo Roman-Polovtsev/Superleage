@@ -1,6 +1,6 @@
 package com.company.repository;
 
-import com.company.domain.Player;
+import com.company.domain.Deprecated.Player;
 import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;

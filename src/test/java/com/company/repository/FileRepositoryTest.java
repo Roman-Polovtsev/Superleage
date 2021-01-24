@@ -69,7 +69,7 @@ public class FileRepositoryTest {
         Mockito.when(fileHandler.deserializedFile()).thenReturn(teamList);
         Team byId = repository.findById(team.getID());
 
-        assertEquals(team,byId);
+        assertEquals(team, byId);
     }
 
     @Test

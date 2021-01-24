@@ -1,14 +1,15 @@
 package com.company.domain.PlayerDecorator;
 
-public class ConcretePerson implements AbstractPerson{
+public class DefinedPerson implements AbstractPerson{
+    transient private static final long serialVersionUID = 17L;
     private final String name;
     private final int yearOfBirth;
 
-    public ConcretePerson() {
+    public DefinedPerson() {
         this("Ivan",1995);
     }
 
-    public ConcretePerson(String name, int yearOfBirth) {
+    public DefinedPerson(String name, int yearOfBirth) {
         this.name = name;
         this.yearOfBirth = yearOfBirth;
     }

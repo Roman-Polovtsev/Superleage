@@ -1,11 +1,11 @@
 package com.company.domain.PlayerDecorator;
 
 import com.company.domain.GameDecorator.FinishedGame;
-import com.company.domain.GameDecorator.Game;
 
 import java.util.*;
 
 public class Referee extends PersonDecorator {
+    transient private static final long serialVersionUID = 19L;
     private final Set<FinishedGame> games;
 
     public Referee(AbstractPerson abstractPerson) {
@@ -26,7 +26,7 @@ public class Referee extends PersonDecorator {
         games.remove(game);
     }
 
-    public void deleteAllGames(){
+    public void deleteAllGames() {
         games.clear();
     }
 

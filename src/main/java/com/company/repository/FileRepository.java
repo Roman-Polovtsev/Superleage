@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileRepository<T extends Serializable & IdHolders> implements Repository<T> {
@@ -34,6 +35,7 @@ public class FileRepository<T extends Serializable & IdHolders> implements Repos
         this.logger = logger;
         this.filePath = Paths.get(pathFile);
         this.fileHandler = new FileHandler<T>(this.filePath);
+
     }
 
     public FileRepository(Logger logger, Path pathRepository, Path pathFile, FileHandler<T> fileHandler) {
@@ -44,8 +46,8 @@ public class FileRepository<T extends Serializable & IdHolders> implements Repos
 
     //todo implement all repositories as template
     @Override
-    public void createRepository() {
-
+    public void createRepository() throws FileHandlerSaveException {
+        fileHandler.save(new ArrayList<>());
     }
 
     @Override

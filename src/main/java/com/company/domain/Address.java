@@ -3,7 +3,7 @@ package com.company.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Address implements Serializable {
+public class Address implements Serializable, IdHolders {
     private static final long serialVersionUID = 0L;
     private final long id;
     private final String city;
@@ -16,7 +16,11 @@ public class Address implements Serializable {
     }
 
     public Address(String city) {
-        this(1, city, "undefined", "undefined");
+        this(1, city);
+    }
+
+    public Address(long id, String city) {
+        this(id, city, "undefined", "undefined");
     }
 
     public Address(long id, String city, String street, String numberOfBuilding) {
@@ -43,7 +47,8 @@ public class Address implements Serializable {
         return buildingNumber;
     }
 
-    public long getId() {
+    @Override
+    public long getID() {
         return id;
     }
 

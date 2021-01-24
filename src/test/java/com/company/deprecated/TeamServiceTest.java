@@ -1,23 +1,23 @@
-package com.company.services;
+package com.company.deprecated;
 
-import com.company.domain.Captain;
-import com.company.domain.Player;
+import com.company.domain.Deprecated.Player;
 import com.company.domain.Team;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.team.TeamRepository;
+import com.company.services.TeamService;
 import com.company.util.FileReadException;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+//todo add this to common service
 public class TeamServiceTest {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -55,7 +55,7 @@ public class TeamServiceTest {
      //   logger.info("{}", player);
        // service.getPlayerRepository().save(player);
        // service.getPlayerRepository().findById(player.hashCode());
-        service.addPlayer(team, player);
+     //   service.addPlayer(team, player);
        // logger.debug("Checking team list after adding new player: {}", service.getTeamRepository().getAll());
         assertTrue(team.getMembers().contains(player));
     }
@@ -68,10 +68,10 @@ public class TeamServiceTest {
         Team first = new Team();
         Team second = new Team("highest");
         Team third = new Team("abc");
-        first.addPlayer(new Player(172));
-        first.addPlayer(new Player(165));
-        second.addPlayer(new Player(183));
-        third.addPlayer(Arrays.asList(new Player(230),new Player(320), new Player(200)));
+//        first.addPlayer(new Player(172));
+//        first.addPlayer(new Player(165));
+//        second.addPlayer(new Player(183));
+//        third.addPlayer(Arrays.asList(new Player(230),new Player(320), new Player(200)));
         when(teamRepository.getAll()).thenReturn(Arrays.asList(first, second, third));
 
         Team smallest = service.findSmallest();
@@ -111,10 +111,10 @@ public class TeamServiceTest {
         Team first = new Team();
         Team second = new Team("highest");
         Team third = new Team("abc");
-        first.addPlayer(new Player(172));
-        first.addPlayer(new Player(250));
-        second.addPlayer(new Player(183));
-        third.addPlayer(Arrays.asList(new Player(130),new Player(120), new Player(100)));
+//        first.addPlayer(new Player(172));
+//        first.addPlayer(new Player(250));
+//        second.addPlayer(new Player(183));
+//        third.addPlayer(Arrays.asList(new Player(130),new Player(120), new Player(100)));
         when(teamRepository.getAll()).thenReturn(Arrays.asList(first, second));
 
         Team highest = service.findHighest();

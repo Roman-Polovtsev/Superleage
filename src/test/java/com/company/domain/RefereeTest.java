@@ -1,5 +1,7 @@
 package com.company.domain;
 
+import com.company.domain.Deprecated.FinishedGame;
+import com.company.domain.Deprecated.Referee;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

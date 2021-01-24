@@ -1,6 +1,6 @@
 package com.company.repository.player;
 
-import com.company.domain.Player;
+import com.company.domain.PlayerDecorator.Player;
 import com.company.repository.FileHandler;
 import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;

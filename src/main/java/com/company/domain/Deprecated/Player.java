@@ -1,4 +1,4 @@
-package com.company.domain;
+package com.company.domain.Deprecated;
 
 import java.beans.Transient;
 import java.util.Objects;

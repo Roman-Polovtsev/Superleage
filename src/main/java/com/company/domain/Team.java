@@ -1,5 +1,7 @@
 package com.company.domain;
 
+import com.company.domain.PlayerDecorator.Captain;
+import com.company.domain.PlayerDecorator.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,8 +9,8 @@ import java.io.Serializable;
 import java.time.Year;
 import java.util.*;
 
-public class Team implements Serializable,IdHolders {
-    private final Logger logger;
+public class Team implements Serializable, IdHolders {
+    transient private final Logger logger;
     private static final long serialVersionUID = 1L;
     private final long ID;
     private final Hall hall;
@@ -17,7 +19,7 @@ public class Team implements Serializable,IdHolders {
     private final Set<Player> members;
 
     public Team() {
-        this("unnamed", serialVersionUID);
+        this("unnamed", 1);
     }
 
     public Team(String name, long ID) {
@@ -25,7 +27,7 @@ public class Team implements Serializable,IdHolders {
     }
 
     public Team(String name) {
-        this(LoggerFactory.getLogger(Team.class), new Hall(), name, serialVersionUID, null);
+        this(LoggerFactory.getLogger(Team.class), new Hall(), name, 1, new Captain());
     }
 
     public Team(long ID) {
@@ -38,7 +40,7 @@ public class Team implements Serializable,IdHolders {
         this.hall = hall;
         this.name = name;
         this.members = new HashSet<>();
-        members.add(captain);
+        members.add(captain.getPlayer());
         this.captain = captain;
     }
 
@@ -72,7 +74,7 @@ public class Team implements Serializable,IdHolders {
         members.remove(player);
     }
 
-    public void deletePlayer(List<Player> players){
+    public void deletePlayer(List<Player> players) {
         members.removeAll(players);
     }
 

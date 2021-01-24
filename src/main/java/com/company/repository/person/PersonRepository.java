@@ -1,6 +1,6 @@
 package com.company.repository.person;
 
-import com.company.domain.Person;
+import com.company.domain.Deprecated.Person;
 
 import java.util.List;
 

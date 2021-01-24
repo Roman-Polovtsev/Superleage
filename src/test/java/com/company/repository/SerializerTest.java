@@ -1,6 +1,6 @@
 package com.company.repository;
 
-import com.company.domain.Player;
+import com.company.domain.Deprecated.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

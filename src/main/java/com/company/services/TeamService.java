@@ -1,6 +1,6 @@
 package com.company.services;
 
-import com.company.domain.Player;
+import com.company.domain.PlayerDecorator.Player;
 import com.company.domain.Team;
 import com.company.repository.player.FilePlayerRepository;
 import com.company.repository.player.PlayerRepository;
@@ -75,7 +75,7 @@ public class TeamService {
 
     public String getCaptainContacts(Team team) throws TeamRepository.FileRepositoryException {
         Team team1 = teamRepository.findById(team.getID());
-        return team1.getCaptain().getEmail() + team1.getCaptain().getNumber();
+        return team1.getCaptain().getContacts();
     }
 
 
