@@ -4,6 +4,7 @@ import com.company.domain.PlayerDecorator.AbstractPerson;
 import com.company.domain.PlayerDecorator.Player;
 import com.company.util.FileReadException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PlayerRepository {
@@ -11,7 +12,7 @@ public interface PlayerRepository {
 
     void remove(Player player) throws Exception;
 
-    Player findById(long personId) throws FileReadException;
+    Player findById(long personId) throws FileReadException, SQLException;
 
-    List<Player> findAll() throws FileReadException;
+    List<Player> findAll() throws FileReadException, SQLException;
 }

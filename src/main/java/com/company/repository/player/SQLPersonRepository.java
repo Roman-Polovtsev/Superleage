@@ -35,11 +35,11 @@ public class SQLPersonRepository implements PersonRepository {
     }
 
     @Override
-    public void save(AbstractPerson person) throws Exception {
+    public void save(DefinedPerson person) throws Exception {
         Connection connection = dataBase.getConnection();
         String sql = "insert into persons (id,name,yearOfBirth) values (?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, (int) DefinedPerson.idCounter-1);
+        statement.setInt(1, (int) person.getID());
         statement.setString(2, person.getName());
         statement.setInt(3, person.getYearOfBirth());
         statement.execute();
