@@ -1,25 +1,26 @@
 package com.company.domain.PlayerDecorator;
 
-import java.io.Serializable;
+import com.company.domain.IdHolders;
+
 import java.util.Objects;
 
-public class Captain implements AbstractPerson, Serializable {
+public class Captain implements AbstractPerson, IdHolders {
     transient private static final long serialVersionUID = 15L;
+    private static long idCounter = 1;
+    private final long ID;
     private final Player player;
     private final String phoneNumber;
     private final String email;
 
-    public Captain(){
-        this(new Player(),"","");
-    }
-
     public Captain(Player player, String phoneNumber, String email) {
+        this.ID = idCounter;
         this.player = player;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        idCounter++;
     }
 
-    public Player getPlayer(){
+    public Player getCaptainAsPlayer(){
         return this.player;
     }
 
@@ -35,6 +36,11 @@ public class Captain implements AbstractPerson, Serializable {
     @Override
     public int getYearOfBirth() {
         return player.getYearOfBirth();
+    }
+
+    @Override
+    public long getID() {
+        return this.ID;
     }
 
     @Override
@@ -59,4 +65,5 @@ public class Captain implements AbstractPerson, Serializable {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }

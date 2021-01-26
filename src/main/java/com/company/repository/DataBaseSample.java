@@ -29,11 +29,20 @@ public class DataBaseSample {
         return connection;
     }
 
-    public void createDB (Connection connection) throws SQLException {
+    public void createDB (Connection connection, String sql) throws SQLException {
         Statement statement = connection.createStatement();
-        String sql = "create table persons (id serial , name VARCHAR(39), yearOfBirth int NOT NULL)";
+      //  String sql = "create table persons (id serial , name VARCHAR(39), yearOfBirth int NOT NULL)";
         statement.execute(sql);
         statement.close();
+    }
+
+    public void dropTable(Connection connection, String tableName) throws SQLException {
+        Statement statement1 = connection.createStatement();
+       // Statement statement = connection.prepareStatement();
+        statement1.executeUpdate(String.format("drop table if exists %s cascade",tableName));
+//        statement.setString(1,tableName);
+//        statement.execute();
+        statement1.close();
     }
 
     public int deleteRow (Connection connection, String column, int value ) throws SQLException {

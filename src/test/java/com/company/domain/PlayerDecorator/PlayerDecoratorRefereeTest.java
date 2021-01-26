@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class PlayerDecoratorRefereeTest {
     Referee referee = new Referee(new DefinedPerson("Ivan", 1995));
     FinishedGame game1 = new FinishedGame(new PlannedGame(), new Result(), referee, new int[]{2, 2});
-    FinishedGame game2 = new FinishedGame(new PlannedGame(new Team(1), new Team(2), 2), new Result(), referee, new int[]{4, 4});
+    FinishedGame game2 = new FinishedGame(new PlannedGame(new Team("1"), new Team("2")), new Result(), referee, new int[]{4, 4});
 
     @Before
     public void before() {

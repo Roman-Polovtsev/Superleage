@@ -1,14 +1,11 @@
 package com.company.deprecated;
 
-import com.company.domain.Deprecated.Player;
+import com.company.domain.PlayerDecorator.DefinedPerson;
+import com.company.domain.PlayerDecorator.Player;
 import com.company.repository.player.FilePlayerRepository;
 import com.company.repository.player.PlayerRepository;
 import org.junit.After;
 import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class FilePlayerRepositoryTest {
     PlayerRepository repository = new FilePlayerRepository("C:\\Users\\Роман\\IdeaProjects\\Superleage_new\\repositories");
@@ -42,7 +39,7 @@ public class FilePlayerRepositoryTest {
 
     @Test
     public void remove() throws Exception {
-        Player player = new Player("Petya");
+        Player player = new Player(new DefinedPerson("Petya"));
 //        repository.save(player);
 //
 //        repository.remove(player);
@@ -54,17 +51,17 @@ public class FilePlayerRepositoryTest {
 
     @Test
     public void findById() throws Exception {
-        Player player = new Player("vbcvb");
+        Player player = new Player(new DefinedPerson("vbcvb"));
 //        repository.save(player);
 //
 //        Player byId = repository.findById(player.hashCode());
 
-       // assertEquals(player, byId);
+        // assertEquals(player, byId);
     }
 
     @After
     public void tearDown() throws Exception {
-     //   for (Player player : repository.findAll()) repository.remove(player);
+        //   for (Player player : repository.findAll()) repository.remove(player);
 
 
     }

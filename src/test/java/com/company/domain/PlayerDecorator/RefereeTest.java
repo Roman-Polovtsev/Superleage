@@ -19,7 +19,7 @@ public class RefereeTest {
     static Referee referee = new Referee(person);
     static Team home = new Team("home");
     static Team guest = new Team("guest");
-    static FinishedGame game = new FinishedGame(new PlannedGame(home, guest, 1), new Result(), referee, new int[]{5, 5});
+    static FinishedGame game = new FinishedGame(new PlannedGame(home, guest), new Result(), referee, new int[]{5, 5});
     private final FinishedGame anotherGame = new FinishedGame(new PlannedGame(), new Result(), referee, new int[]{4, 4});
 
     @Before
@@ -34,7 +34,7 @@ public class RefereeTest {
 
     @Test
     public void creatingGame() {
-        FinishedGame testGame = new FinishedGame(new PlannedGame(home, guest, 10), new Result(), referee, new int[]{3, 3});
+        FinishedGame testGame = new FinishedGame(new PlannedGame(home, guest), new Result(), referee, new int[]{3, 3});
 
         Set<FinishedGame> games = referee.getGames();
         System.out.println(games);
@@ -58,7 +58,7 @@ public class RefereeTest {
 
     @Test
     public void addGameArray() {
-        FinishedGame finishedGame = new FinishedGame(new PlannedGame(new Team("a"), new Team("b"), 2));
+        FinishedGame finishedGame = new FinishedGame(new PlannedGame(new Team("a"), new Team("b")));
         referee.addGame(finishedGame, anotherGame);
 
         assertEquals(3, referee.getGames().size());

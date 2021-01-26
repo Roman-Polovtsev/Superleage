@@ -26,7 +26,7 @@ public class TeamTest {
     private final Player player1 = new Player(new DefinedPerson("",1994),190,"","");
     private final Player player2 = new Player(new DefinedPerson("",1996),195,"","");
     private final List<Player> newPlayers = Arrays.asList(player1, player2);
-    private final List<Player> allPlayers = Arrays.asList(player1, player2, captain.getPlayer());
+    private final List<Player> allPlayers = Arrays.asList(player1, player2, captain.getCaptainAsPlayer());
     private final Player player = new Player(new DefinedPerson("michael scott",1990));
 
 
@@ -34,8 +34,8 @@ public class TeamTest {
     public static void beforeSetup() {
         hall = new Hall(1,new Address(1, "spb", "nevsky", "23"));
         captain = new Captain(new Player(new DefinedPerson("Ivan", 1995), 200, "god", "opposite"),"","");
-        ID = 256;
-        fullTeam = new Team(logger, hall, name, ID, captain);
+        ID = Team.idCounter;
+        fullTeam = new Team(logger, hall, name, captain);
     }
 
 
@@ -59,7 +59,6 @@ public class TeamTest {
     @Test
     public void getID() {
         long actual = fullTeam.getID();
-
         assertEquals(ID, actual);
     }
 
@@ -86,7 +85,7 @@ public class TeamTest {
     @Test
     public void addCaptainAsPlayer(){
         System.out.println(fullTeam.getMembers());
-        fullTeam.addPlayer(captain.getPlayer());
+        fullTeam.addPlayer(captain.getCaptainAsPlayer());
         System.out.println(fullTeam.getMembers());
     }
 
@@ -94,9 +93,9 @@ public class TeamTest {
     public void deletePlayer() {
         Set<Player> members = fullTeam.getMembers();
         System.out.println(members);
-        fullTeam.deletePlayer(captain.getPlayer());
+        fullTeam.deletePlayer(captain.getCaptainAsPlayer());
         System.out.println(members);
-        assertFalse(members.contains(captain.getPlayer()));
+        assertFalse(members.contains(captain.getCaptainAsPlayer()));
 
         assertEquals(0,members.size());
     }
@@ -133,7 +132,7 @@ public class TeamTest {
         Set<Player> members = fullTeam.getMembers();
 
         assertNotNull(members);
-        assertTrue(members.contains(captain.getPlayer()));
+        assertTrue(members.contains(captain.getCaptainAsPlayer()));
     }
 
     @Test

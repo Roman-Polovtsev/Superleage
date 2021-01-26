@@ -10,8 +10,8 @@ import java.time.Year;
 import java.util.*;
 
 public class Team implements Serializable, IdHolders {
-    transient private final Logger logger;
     private static final long serialVersionUID = 1L;
+    public static long idCounter = 1;
     private final long ID;
     private final Hall hall;
     private final String name;
@@ -19,33 +19,21 @@ public class Team implements Serializable, IdHolders {
     private final Set<Player> members;
 
     public Team() {
-        this("unnamed", 1);
-    }
-
-    public Team(String name, long ID) {
-        this(LoggerFactory.getLogger(Team.class), new Hall(), name, ID, null);
+        this("unnamed");
     }
 
     public Team(String name) {
-        this(LoggerFactory.getLogger(Team.class), new Hall(), name, 1, new Captain());
+        this(LoggerFactory.getLogger(Team.class), new Hall(), name, new Captain(new Player(), "", ""));
     }
 
-    public Team(long ID) {
-        this(LoggerFactory.getLogger(Team.class), new Hall(), "unnamed", ID, null);
-    }
-
-    public Team(Logger logger, Hall hall, String name, long ID, Captain captain) {
-        this.logger = logger;
-        this.ID = ID;
+    public Team(Logger logger, Hall hall, String name, Captain captain) {
+        this.ID = idCounter;
         this.hall = hall;
         this.name = name;
         this.members = new HashSet<>();
-        members.add(captain.getPlayer());
+        members.add(captain.getCaptainAsPlayer());
         this.captain = captain;
-    }
-
-    public Team(Captain captain) {
-        this(LoggerFactory.getLogger(Team.class), new Hall(), "", 1, captain);
+        idCounter++;
     }
 
     public String getName() {

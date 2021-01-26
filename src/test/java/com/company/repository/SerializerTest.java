@@ -1,6 +1,7 @@
 package com.company.repository;
 
-import com.company.domain.Deprecated.Player;
+import com.company.domain.PlayerDecorator.DefinedPerson;
+import com.company.domain.PlayerDecorator.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,8 +12,8 @@ import static org.junit.Assert.*;
 
 public class SerializerTest {
     Serializer serializer = new Serializer();
-    Player player1 = new Player("vasya");
-    Player player2 = new Player("vasya");
+    Player player1 = new Player(new DefinedPerson("vasya"));
+    Player player2 = new Player(new DefinedPerson("vasya"));
     byte[] serialized1;
     byte[] serialized2;
 

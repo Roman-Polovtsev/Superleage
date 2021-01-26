@@ -33,15 +33,15 @@ public class FileRepositoryTest {
         filepath = Mockito.mock(Path.class);
         fileHandler = Mockito.mock(FileHandler.class);
         repository = new FileRepository(logger, repoFilePath, filepath, fileHandler);
-        team = new Team(112);
-        team1 = new Team(321);
+        team = new Team("112");
+        team1 = new Team("321");
         teamList = new ArrayList<>();
         teamList.addAll(Arrays.asList(team, team1));
     }
 
     @Test
     public void save() throws Repository.FileRepositoryException, FileReadException, FileHandlerSaveException {
-        Team teamNew = new Team(228);
+        Team teamNew = new Team("228");
         Mockito.when(fileHandler.deserializedFile()).thenReturn(teamList);
 
         repository.save(teamNew);

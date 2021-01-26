@@ -19,7 +19,7 @@ public class DBRepository<T extends Serializable & IdHolders> implements Reposit
     @Override
     public void createRepository() throws SQLException {
         Connection connection = database.getConnection();
-        database.createDB(connection);
+       // database.createDB(connection);
         database.closeConnection(connection);
     }
 
@@ -42,7 +42,7 @@ public class DBRepository<T extends Serializable & IdHolders> implements Reposit
     }
 
     @Override
-    public List<T> getAll() throws FileRepositoryException, SQLRepositoryException {
+    public List<T> getAll() throws  SQLRepositoryException {
         return null;
     }
 }

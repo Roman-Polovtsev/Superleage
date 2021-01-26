@@ -1,6 +1,6 @@
 package com.company.deprecated;
 
-import com.company.domain.Deprecated.Player;
+import com.company.domain.PlayerDecorator.*;
 import com.company.domain.Team;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.team.TeamRepository;
@@ -51,7 +51,7 @@ public class TeamServiceTest {
       //  logger.info("{}", team.getMembers());
         service.addTeam(team);
         //  logger.info("{}",team);
-        Player player = new Player("zazaza");
+        Player player = new Player(new DefinedPerson("zazaza"));
      //   logger.info("{}", player);
        // service.getPlayerRepository().save(player);
        // service.getPlayerRepository().findById(player.hashCode());

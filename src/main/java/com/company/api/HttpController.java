@@ -1,7 +1,5 @@
 package com.company.api;
 
-import com.company.services.PersonService;
-
 public class HttpController {
 
 

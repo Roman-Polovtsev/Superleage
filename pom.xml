@@ -33,7 +33,7 @@
                             com.company.services.*,com.company.repository.*,com.company.deprecated.*,com.company.domain.*
                         </exclude>
                     </excludes>
-<!--                    <skipTests>true</skipTests>-->
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>

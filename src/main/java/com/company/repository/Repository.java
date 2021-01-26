@@ -1,7 +1,5 @@
 package com.company.repository;
 
-import com.company.domain.Team;
-import com.company.repository.team.FileTeamRepository;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 
@@ -16,21 +14,19 @@ public interface Repository<T extends Serializable> {
 
     void remove(T obj) throws FileRepositoryException;
 
-    T findById ( long objId ) throws FileReadException;
+    T findById(long objId) throws FileReadException;
 
-    List<T> getAll() throws FileRepositoryException,SQLRepositoryException;
+    List<T> getAll() throws FileRepositoryException, SQLRepositoryException;
 
-     class FileRepositoryException extends Exception {
-        public FileRepositoryException() {
-        }
+    class FileRepositoryException extends Exception {
+
         public FileRepositoryException(String message, Throwable cause) {
             super(message, cause);
         }
     }
 
     class SQLRepositoryException extends Exception {
-        public SQLRepositoryException() {
-        }
+
         public SQLRepositoryException(String message, Throwable cause) {
             super(message, cause);
         }

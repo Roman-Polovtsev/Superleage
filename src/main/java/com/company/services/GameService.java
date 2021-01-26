@@ -9,7 +9,7 @@ public class GameService {
     GamesRepository repository = new FileGameRepository();
 
     public void createGame (Team team1, Team team2){
-        Game game = new PlannedGame(team1,team2,1);
+        Game game = new PlannedGame(team1,team2);
         repository.save(game);
     }
 

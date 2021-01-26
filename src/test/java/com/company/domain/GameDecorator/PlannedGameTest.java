@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class PlannedGameTest {
     Team home = new Team();
     Team guest = new Team("guest");
-    Game game = new PlannedGame(home,guest,1);
+    Game game = new PlannedGame(home,guest);
 
 
 

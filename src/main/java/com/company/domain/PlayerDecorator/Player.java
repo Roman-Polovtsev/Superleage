@@ -1,26 +1,31 @@
 package com.company.domain.PlayerDecorator;
 
+import com.company.domain.IdHolders;
 import java.util.Objects;
 
-public class Player extends PersonDecorator{
+public class Player extends PersonDecorator implements IdHolders {
     transient private static final long serialVersionUID = 17L;
+    public static long idCounter = 1;
+    private final long id;
     private final int height;
     private final String position;
     private final String level;
 
-    public Player(){
-        this(new DefinedPerson(),0,"","");
+    public Player() {
+        this(new DefinedPerson(), 0, "", "");
     }
 
     public Player(AbstractPerson abstractPerson) {
-        this(abstractPerson,190,"setter","master");
+        this(abstractPerson, 190, "setter", "master");
     }
 
     public Player(AbstractPerson abstractPerson, int height, String position, String level) {
         super(abstractPerson);
+        this.id = idCounter;
         this.height = height;
         this.position = position;
         this.level = level;
+        idCounter++;
     }
 
     @Override
@@ -43,6 +48,15 @@ public class Player extends PersonDecorator{
 
     public String getLevel() {
         return level;
+    }
+
+//    public AbstractPerson getPerson (){
+//        return super;
+//    }
+
+    @Override
+    public long getID() {
+        return this.id;
     }
 
     @Override
@@ -68,4 +82,5 @@ public class Player extends PersonDecorator{
                 ", level='" + level + '\'' +
                 '}';
     }
+
 }

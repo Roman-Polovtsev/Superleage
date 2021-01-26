@@ -79,7 +79,7 @@ public class TeamService {
     }
 
 
-    public Team findSmallest() throws FileReadException,TeamRepository.FileRepositoryException {
+    public Team findSmallest() throws FileReadException, TeamRepository.FileRepositoryException {
         List<Team> all = teamRepository.getAll();
         return all.stream().min(Comparator.comparing(Team::getAverageHeight)).orElseThrow();
     }

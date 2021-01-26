@@ -1,16 +1,21 @@
 package com.company.domain.PlayerDecorator;
 
 import com.company.domain.GameDecorator.FinishedGame;
+import com.company.domain.IdHolders;
 
 import java.util.*;
 
-public class Referee extends PersonDecorator {
+public class Referee extends PersonDecorator implements IdHolders {
     transient private static final long serialVersionUID = 19L;
+    private static long idCounter = 1;
+    private final long id;
     private final Set<FinishedGame> games;
 
     public Referee(AbstractPerson abstractPerson) {
         super(abstractPerson);
+        this.id = idCounter;
         this.games = new HashSet<>();
+        idCounter++;
     }
 
     public void addGame(FinishedGame game) {
@@ -55,4 +60,30 @@ public class Referee extends PersonDecorator {
     public Set<FinishedGame> getGames() {
         return games;
     }
+
+    @Override
+    public long getID() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Referee{" +
+                "games=" + games +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Referee referee = (Referee) o;
+        return Objects.equals(games, referee.games);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(games);
+    }
+
 }

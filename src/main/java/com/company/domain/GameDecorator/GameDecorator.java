@@ -6,7 +6,7 @@ import com.company.domain.Team;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class GameDecorator implements Game{
+public class GameDecorator implements Game {
     Game game;
 
     public GameDecorator(Game game) {
@@ -15,28 +15,28 @@ public class GameDecorator implements Game{
 
     @Override
     public long getID() {
-        return this.getID();
+        return game.getID();
     }
 
     @Override
     public Team getHome() {
-        return this.getHome();
+        return game.getHome();
     }
 
     @Override
     public Team getGuest() {
-        return this.getGuest();
+        return game.getGuest();
     }
 
     @Override
     public Address getGameAddress() {
-        return this.getGameAddress();
+        return game.getGameAddress();
     }
 
 
     @Override
     public LocalDateTime getGameTime() {
-        return this.getGameTime();
+        return game.getGameTime();
     }
 
     @Override

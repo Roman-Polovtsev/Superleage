@@ -1,6 +1,7 @@
 package com.company.domain.GameDecorator;
 
 import com.company.domain.Address;
+import com.company.domain.IdHolders;
 import com.company.domain.Team;
 
 import java.time.LocalDateTime;
@@ -9,46 +10,42 @@ import java.util.Objects;
 /**
  * This  class is game decorator
  */
-public class PlannedGame implements Game {
+public class PlannedGame implements Game, IdHolders {
     transient private static final long serialVersionUID = 12L;
+    private static final LocalDateTime defaultTime = LocalDateTime.of(2020, 1, 1, 0, 0);
+    private static long idCounter = 1;
     private final long ID;
     private final Team home;
     private final Team guest;
     private final Address gameAddress;
     private final LocalDateTime gameTime;
-    private static final LocalDateTime defaultTime = LocalDateTime.of(2020, 1, 1, 0, 0);
 
-    public PlannedGame(Team home, Team guest, Address gameAddress, LocalDateTime gameTime, long ID) {
+    public PlannedGame(Team home, Team guest, Address gameAddress, LocalDateTime gameTime) {
         this.home = home;
         this.guest = guest;
         this.gameAddress = gameAddress;
         this.gameTime = gameTime;
-        this.ID = ID;
-    }
-
-    public PlannedGame(Game game) {
-        this.ID = game.getID();
-        this.gameAddress = game.getGameAddress();
-        this.guest = game.getGuest();
-        this.home = game.getHome();
-        this.gameTime = game.getGameTime();
+        this.ID = idCounter;
+        idCounter++;
     }
 
     public PlannedGame() {
-        this(new Team(), new Team(), new Team().getHall().getAddress(), defaultTime, 1);
+        this(new Team(), new Team(), new Team().getHall().getAddress(), defaultTime);
     }
 
-    public PlannedGame(Team home, Team guest, long ID) {
-        this(home, guest, home.getHall().getAddress(), defaultTime, ID);
+    public PlannedGame(Team home, Team guest) {
+        this(home, guest, home.getHall().getAddress(), defaultTime);
     }
 
-    public PlannedGame(Game game, Address address) {
-        this.ID = game.getID();
-        this.gameAddress = address;
-        this.guest = game.getGuest();
+    public PlannedGame (Game game, Address address){
         this.home = game.getHome();
-        this.gameTime = game.getGameTime();
+        this.guest = game.getGuest();
+        this.gameTime =game.getGameTime();
+        this.gameAddress =address;
+        this.ID = game.getID();
     }
+
+
 
     @Override
     public long getID() {
@@ -78,7 +75,6 @@ public class PlannedGame implements Game {
     @Override
     public String toString() {
         return "PlannedGame{" +
-                // "game=" + game +
                 ", ID=" + ID +
                 ", home=" + home +
                 ", guest=" + guest +
@@ -93,7 +89,6 @@ public class PlannedGame implements Game {
         if (o == null || getClass() != o.getClass()) return false;
         PlannedGame that = (PlannedGame) o;
         return ID == that.ID &&
-                //Objects.equals(game, that.game) &&
                 Objects.equals(home, that.home) &&
                 Objects.equals(guest, that.guest) &&
                 Objects.equals(gameAddress, that.gameAddress) &&
@@ -102,6 +97,6 @@ public class PlannedGame implements Game {
 
     @Override
     public int hashCode() {
-        return Objects.hash(/*game,*/ ID, home, guest, gameAddress, gameTime);
+        return Objects.hash(ID, home, guest, gameAddress, gameTime);
     }
 }

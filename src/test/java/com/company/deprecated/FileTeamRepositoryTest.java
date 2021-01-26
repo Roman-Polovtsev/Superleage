@@ -41,8 +41,8 @@ public class FileTeamRepositoryTest {
         filepath = Mockito.mock(Path.class);
         fileHandler = Mockito.mock(FileHandler.class);
         repository = new FileTeamRepository(logger,repoFilePath,filepath,fileHandler);
-         team = new Team(112);
-         team1 = new Team(321);
+         team = new Team("112");
+         team1 = new Team("321");
          teamList = new ArrayList<>();
          teamList.addAll(Arrays.asList(team,team1));
     }
@@ -50,7 +50,7 @@ public class FileTeamRepositoryTest {
     @Test
     public void save() throws FileHandlerSaveException, FileReadException, TeamRepository.FileRepositoryException {
         Team team = new Team();
-        Team team1 = new Team(123);
+        Team team1 = new Team("123");
         repository.save(team);
         repository.save(team1);
 
@@ -63,7 +63,7 @@ public class FileTeamRepositoryTest {
             (expected = TeamRepository.FileRepositoryException.class)
     public void saveEx() throws FileHandlerSaveException, FileReadException, TeamRepository.FileRepositoryException {
         Team team = new Team();
-        Team team1 = new Team(123);
+        Team team1 = new Team("123");
         repository.save(team);
         repository.save(team1);
 
@@ -74,8 +74,8 @@ public class FileTeamRepositoryTest {
 
     @Test
     public void remove() throws FileHandlerSaveException, FileDeletingException, FileReadException ,TeamRepository.FileRepositoryException{
-        Team team = new Team(123);
-        Team team1 = new Team(12);
+        Team team = new Team("123");
+        Team team1 = new Team("12");
         repository.save(team);
         repository.save(team1);
 
@@ -89,8 +89,8 @@ public class FileTeamRepositoryTest {
 
     @Test
     public void addSameObj() throws FileHandlerSaveException, FileReadException,TeamRepository.FileRepositoryException {
-        Team team = new Team(112);
-        Team team1 = new Team(112);
+        Team team = new Team("112");
+        Team team1 = new Team("112");
         repository.save(team);
         repository.save(team1);
 

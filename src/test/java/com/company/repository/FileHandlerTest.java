@@ -1,6 +1,6 @@
 package com.company.repository;
 
-import com.company.domain.Deprecated.Player;
+import com.company.domain.PlayerDecorator.*;
 import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
@@ -35,7 +35,7 @@ public class FileHandlerTest {
 
     @Test
     public void save() throws FileHandlerSaveException, IOException {
-        Player player = new Player("neo");
+        Player player = new Player(new DefinedPerson("neo"));
 
         List<Player> entities = Collections.singletonList(player);
         fileHandler.save(entities);
@@ -47,7 +47,7 @@ public class FileHandlerTest {
     @Test
             (expected = FileHandlerSaveException.class)
     public void saveException() throws FileHandlerSaveException, IOException {
-        Player player = new Player("neo");
+        Player player = new Player(new DefinedPerson("neo"));
 
         List<Player> entities = Collections.singletonList(player);
         byte[] expected = serializer.serialize(entities);
@@ -58,7 +58,7 @@ public class FileHandlerTest {
 
     @Test
     public void deserializedFile() throws IOException, FileReadException {
-        List<Player> players = Arrays.asList(new Player("neo"), new Player("vasya"));
+        List<Player> players = Arrays.asList(new Player(new DefinedPerson("neo")), new Player(new DefinedPerson("vasya")));
         when(fileSystem.readAllBytes(pathToFile)).thenReturn(serializer.serialize(players));
         List<Player> actual = fileHandler.deserializedFile();
 
