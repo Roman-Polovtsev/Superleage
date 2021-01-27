@@ -4,20 +4,18 @@ import com.company.domain.IdHolders;
 
 import java.util.Objects;
 
-public class Captain implements AbstractPerson, IdHolders {
+public class Captain extends Player {
     transient private static final long serialVersionUID = 15L;
-    private static long idCounter = 1;
     private final long ID;
     private final Player player;
     private final String phoneNumber;
     private final String email;
 
-    public Captain(Player player, String phoneNumber, String email) {
-        this.ID = idCounter;
+    public Captain(Player player, String phoneNumber, String email,long id) {
+        this.ID = id;
         this.player = player;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        idCounter++;
     }
 
     public Player getCaptainAsPlayer(){

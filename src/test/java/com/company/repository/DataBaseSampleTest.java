@@ -13,7 +13,7 @@ public class DataBaseSampleTest {
 
     public static void main(String[] args) throws SQLException {
         DataBaseSample sample = new DataBaseSample();
-        AbstractPerson person = new DefinedPerson("roman", 1996);
+        AbstractPerson person = new DefinedPerson("roman", 1996,1);
         Connection connection = sample.getConnection();
         // sample.createDB(connection);
         // int persons = sample.insertRow(connection, "persons", person.getName(), person.getYearOfBirth());

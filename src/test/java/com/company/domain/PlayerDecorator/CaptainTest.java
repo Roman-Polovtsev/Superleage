@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CaptainTest {
-    Captain captain = new Captain(new Player(new DefinedPerson()),"88005553535","hello.com");
+    Captain captain = new Captain(new Player(new DefinedPerson()),"88005553535","hello.com",1);
 
     @Test
     public void getContacts() {

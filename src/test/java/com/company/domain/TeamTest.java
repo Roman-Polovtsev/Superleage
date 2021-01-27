@@ -23,18 +23,18 @@ public class TeamTest {
     private static Hall hall;
     private static long ID;
     private static Captain captain;
-    private final Player player1 = new Player(new DefinedPerson("",1994),190,"","");
-    private final Player player2 = new Player(new DefinedPerson("",1996),195,"","");
+    private final Player player1 = new Player(new DefinedPerson("",1994,1),190,"","",1);
+    private final Player player2 = new Player(new DefinedPerson("",1996,2),195,"","",2);
     private final List<Player> newPlayers = Arrays.asList(player1, player2);
     private final List<Player> allPlayers = Arrays.asList(player1, player2, captain.getCaptainAsPlayer());
-    private final Player player = new Player(new DefinedPerson("michael scott",1990));
+    private final Player player = new Player(new DefinedPerson("michael scott",1990,3));
 
 
     @BeforeClass
     public static void beforeSetup() {
         hall = new Hall(1,new Address(1, "spb", "nevsky", "23"));
-        captain = new Captain(new Player(new DefinedPerson("Ivan", 1995), 200, "god", "opposite"),"","");
-        ID = Team.idCounter;
+        captain = new Captain(new Player(new DefinedPerson("Ivan", 1995,4), 200, "god", "opposite",4),"","",1);
+        ID = 1;
         fullTeam = new Team(logger, hall, name, captain);
     }
 

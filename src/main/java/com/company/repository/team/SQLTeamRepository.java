@@ -1,0 +1,54 @@
+package com.company.repository.team;
+
+import com.company.domain.Team;
+import com.company.repository.DataBaseSample;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+
+public class SQLTeamRepository implements TeamRepository{
+    DataBaseSample dataBase;
+
+    public SQLTeamRepository() {
+        dataBase = new DataBaseSample();
+    }
+
+    @Override
+    public void createRepository() throws SQLException {
+        Connection connection = dataBase.getConnection();
+        String sql = "create table teams (id serial primary key, name varchar(20), hall_id int, captain_id int)";
+        dataBase.createDB(connection,"teams",sql);
+        dataBase.closeConnection(connection);
+    }
+
+    @Override
+    public void save(Team team) throws Exception {
+        Connection connection = dataBase.getConnection();
+        String sql = "insert into teams values (?,?,?,?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1,(int)team.getID());
+        statement.setString(2,team.getName());
+        statement.setNull(3,4);
+        statement.setNull(4,4);
+        statement.executeUpdate();
+        statement.close();
+        dataBase.closeConnection(connection);
+    }
+
+    @Override
+    public void remove(Team team) throws Exception {
+
+    }
+
+    @Override
+    public Team findById(long teamId) throws FileRepositoryException {
+        return null;
+    }
+
+    @Override
+    public List<Team> getAll() throws FileRepositoryException {
+        return null;
+    }
+}

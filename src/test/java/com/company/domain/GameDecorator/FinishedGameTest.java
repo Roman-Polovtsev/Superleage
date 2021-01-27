@@ -9,7 +9,7 @@ import org.junit.Test;
 public class FinishedGameTest {
     Team home = new Team("home");
     Team guest = new Team("guest");
-    Referee referee = new Referee(new DefinedPerson("Dredd",2000));
+    Referee referee = new Referee(new DefinedPerson("Dredd",2000,1));
     PlannedGame gamePlanned = new PlannedGame(home,guest);
     FinishedGame game = new FinishedGame(gamePlanned,new Result(),referee,new int[]{5,5});
 

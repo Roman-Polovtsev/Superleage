@@ -30,6 +30,7 @@ public class DefinedPerson implements AbstractPerson, IdHolders {
     public long getID() {
         return this.ID;
     }
+
     @Override
     public String getName() {
         return this.name;
@@ -52,15 +53,14 @@ public class DefinedPerson implements AbstractPerson, IdHolders {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DefinedPerson that = (DefinedPerson) o;
-        return yearOfBirth == that.yearOfBirth &&
-                Objects.equals(name, that.name);
+        DefinedPerson person = (DefinedPerson) o;
+        return ID == person.ID &&
+                yearOfBirth == person.yearOfBirth &&
+                Objects.equals(name, person.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, yearOfBirth);
+        return Objects.hash(ID, name, yearOfBirth);
     }
-
-
 }

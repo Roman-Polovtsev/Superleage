@@ -17,4 +17,9 @@ public class PersonDecorator implements AbstractPerson {
         return abstractPerson.getYearOfBirth();
     }
 
+    @Override
+    public long getID(){
+        return  abstractPerson.getID();
+    }
+
 }

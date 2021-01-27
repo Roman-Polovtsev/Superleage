@@ -2,8 +2,10 @@ package com.company.services;
 
 import com.company.domain.Address;
 import com.company.domain.GameDecorator.Game;
+import com.company.domain.PlayerDecorator.Captain;
 import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.domain.PlayerDecorator.Player;
+import com.company.domain.Team;
 import com.company.repository.Repository;
 import com.company.repository.player.PersonRepository;
 import com.company.repository.player.PlayerRepository;
@@ -19,10 +21,6 @@ public class CommonService {
     public final PersonRepository personRepository;
     public final IDService<DefinedPerson> personIDService;
     public final IDService<Player> playerIDService;
-//    Repository<Team> teamRepository;
-//    Repository<Game> gameRepository;
-//    Repository<Referee> refereeRepository;
-//    Repository<Address> addressRepository;
 
     public CommonService(PlayerRepository playerRepository, PersonRepository personRepository) {
         this.playerRepository = playerRepository;
@@ -39,23 +37,10 @@ public class CommonService {
         playerIDService = new IDService<>();
     }
 
-//    public CommonService(Repository<Team> teamRepository, Repository<Game> gameRepository, Repository<Referee> refereeRepository, Repository<Address> addressRepository) {
-//        this.teamRepository = teamRepository;
-//        this.gameRepository = gameRepository;
-//        this.refereeRepository = refereeRepository;
-//        this.addressRepository = addressRepository;
-//    }
-//
-//    public CommonService(Repository<Team> teamRepository, Repository<Game> gameRepository, Repository<Referee> refereeRepository) {
-//        this.teamRepository = teamRepository;
-//        this.gameRepository = gameRepository;
-//        this.refereeRepository = refereeRepository;
-//    }
-//
-//    public CommonService(Repository<Game> gameRepository, Repository<Address> addressRepository) {
-//        this.gameRepository = gameRepository;
-//        this.addressRepository = addressRepository;
-//    }
+    public void addNewTeam(String teamName, Player player, String number, String email) {
+        Captain captain = new Captain(player, number, email,1);
+        Team team = new Team(null, null, teamName, captain);
+    }
 
     public void addNewPlayer(String name, int yearOfBirth, int height, String position, String level) throws Exception {
         DefinedPerson person = new DefinedPerson(name, yearOfBirth, personIDService.newObjectID());
@@ -74,6 +59,7 @@ public class CommonService {
 
     public void removePlayer(Player player) throws Exception {
         playerRepository.remove(player);
+        personRepository.remove(new DefinedPerson(player.getName(), player.getYearOfBirth(), player.personID()));
     }
 
 
@@ -106,5 +92,9 @@ public class CommonService {
         Player player = service.findPlayer(1);
         service.removePlayer(player);
         System.out.println(service.getAllPlayers());
+        DefinedPerson person1 = new DefinedPerson("a", 1, 1);
+        DefinedPerson person2 = new DefinedPerson("a", 1, 1);
+        System.out.println(person1.equals(person2));
+        System.out.println(service.personRepository.findAll());
     }
 }

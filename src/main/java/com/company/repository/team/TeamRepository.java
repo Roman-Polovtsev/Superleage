@@ -4,11 +4,12 @@ import com.company.domain.Team;
 import com.company.repository.Repository;
 import com.company.util.FileReadException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
 public interface TeamRepository {
-    void createRepository();
+    void createRepository() throws SQLException;
 
     void save(Team team) throws Exception;
 

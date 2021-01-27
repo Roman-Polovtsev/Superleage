@@ -11,7 +11,6 @@ import java.util.*;
 
 public class Team implements Serializable, IdHolders {
     private static final long serialVersionUID = 1L;
-    public static long idCounter = 1;
     private final long ID;
     private final Hall hall;
     private final String name;
@@ -23,17 +22,16 @@ public class Team implements Serializable, IdHolders {
     }
 
     public Team(String name) {
-        this(LoggerFactory.getLogger(Team.class), new Hall(), name, new Captain(new Player(), "", ""));
+        this(LoggerFactory.getLogger(Team.class), new Hall(), name, new Captain(new Player(), "", "",1));
     }
 
     public Team(Logger logger, Hall hall, String name, Captain captain) {
-        this.ID = idCounter;
+        this.ID = 0;
         this.hall = hall;
         this.name = name;
         this.members = new HashSet<>();
         members.add(captain.getCaptainAsPlayer());
         this.captain = captain;
-        idCounter++;
     }
 
     public String getName() {

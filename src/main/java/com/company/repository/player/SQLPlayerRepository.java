@@ -4,7 +4,6 @@ import com.company.domain.PlayerDecorator.AbstractPerson;
 import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.domain.PlayerDecorator.Player;
 import com.company.repository.DataBaseSample;
-import com.company.services.IDService;
 import com.company.util.FileReadException;
 
 import java.sql.Connection;
@@ -32,8 +31,9 @@ public class SQLPlayerRepository implements PlayerRepository {
 
     public void createTable() throws SQLException {
         Connection connection = dataBase.getConnection();
+        connection.setAutoCommit(false);
         String sql = "create table players (id serial primary key, height int,position varchar(20), level varchar(20), person_id int REFERENCES persons(id) on delete cascade)";
-        dataBase.createDB(connection, sql);
+        dataBase.createDB(connection, "players", sql);
         dataBase.closeConnection(connection);
     }
 
@@ -42,11 +42,11 @@ public class SQLPlayerRepository implements PlayerRepository {
         Connection connection = dataBase.getConnection();
         String sql = "insert into players (id, height, position, level, person_id) values (?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, (int)player.getID());
+        statement.setInt(1, (int) player.getID());
         statement.setInt(2, player.getHeight());
         statement.setString(3, player.getPosition());
         statement.setString(4, player.getLevel());
-        statement.setInt(5, (int) );
+        statement.setInt(5, (int) player.personID());
         statement.executeUpdate();
         statement.close();
         connection.close();
@@ -78,8 +78,8 @@ public class SQLPlayerRepository implements PlayerRepository {
         int yearOfBirth = resultSet.getInt("yearOfBirth");
         String position = resultSet.getString("position");
         String level = resultSet.getString("level");
-        AbstractPerson person = new DefinedPerson(name, yearOfBirth,person_id);
-        Player player = new Player(person, height, position, level,id);
+        AbstractPerson person = new DefinedPerson(name, yearOfBirth, person_id);
+        Player player = new Player(person, height, position, level, id);
         resultSet.close();
         statement.close();
         connection.close();
@@ -102,8 +102,8 @@ public class SQLPlayerRepository implements PlayerRepository {
             int yearOfBirth = resultSet.getInt("yearOfBirth");
             String position = resultSet.getString("position");
             String level = resultSet.getString("level");
-            AbstractPerson person = new DefinedPerson(name, yearOfBirth,person_id);
-            Player player = new Player(person, height, position, level,id);
+            AbstractPerson person = new DefinedPerson(name, yearOfBirth, person_id);
+            Player player = new Player(person, height, position, level, id);
             players.add(player);
         }
         resultSet.close();

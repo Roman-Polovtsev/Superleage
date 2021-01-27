@@ -53,6 +53,9 @@ public class Player extends PersonDecorator implements IdHolders {
 //    public AbstractPerson getPerson (){
 //        return super;
 //    }
+    public long personID(){
+        return super.getID();
+    }
 
     @Override
     public long getID() {

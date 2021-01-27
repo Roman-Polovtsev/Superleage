@@ -9,4 +9,6 @@ public interface AbstractPerson extends Serializable {
     String getName();
 
     int getYearOfBirth();
+
+    long getID();
 }
