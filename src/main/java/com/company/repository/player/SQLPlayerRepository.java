@@ -15,27 +15,16 @@ import java.util.List;
 
 public class SQLPlayerRepository implements PlayerRepository {
     private final DataBaseSample dataBase;
+    private final String tableNameQuery = "players";
+    private final String createTableQuery = "create table players (id serial primary key, height int,position varchar(20), level varchar(20), person_id int, " +
+            "CONSTRAINT fk_person_id FOREIGN KEY (person_id) REFERENCES persons(id) on delete cascade)";
 
     public SQLPlayerRepository() throws SQLException {
         dataBase = new DataBaseSample();
-        dropTable();
-        createTable();
+        dataBase.dropTable(tableNameQuery);
+        dataBase.createDB(tableNameQuery,createTableQuery);
     }
 
-    public void dropTable() throws SQLException {
-        Connection connection = dataBase.getConnection();
-        dataBase.dropTable(connection, "players");
-        connection.close();
-    }
-
-
-    public void createTable() throws SQLException {
-        Connection connection = dataBase.getConnection();
-        connection.setAutoCommit(false);
-        String sql = "create table players (id serial primary key, height int,position varchar(20), level varchar(20), person_id int REFERENCES persons(id) on delete cascade)";
-        dataBase.createDB(connection, "players", sql);
-        dataBase.closeConnection(connection);
-    }
 
     @Override
     public void save(Player player) throws Exception {

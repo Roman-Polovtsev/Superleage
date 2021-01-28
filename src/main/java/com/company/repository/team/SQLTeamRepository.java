@@ -11,17 +11,14 @@ import java.util.List;
 public class SQLTeamRepository implements TeamRepository{
     DataBaseSample dataBase;
 
-    public SQLTeamRepository() {
+    public SQLTeamRepository() throws SQLException {
         dataBase = new DataBaseSample();
+        String tableNameQuery = "teams";
+        dataBase.dropTable(tableNameQuery);
+        String createTableQuery =  "create table teams (id serial primary key, name varchar(20), hall_id int, captain_id int)";
+        dataBase.createDB(tableNameQuery, createTableQuery);
     }
 
-    @Override
-    public void createRepository() throws SQLException {
-        Connection connection = dataBase.getConnection();
-        String sql = "create table teams (id serial primary key, name varchar(20), hall_id int, captain_id int)";
-        dataBase.createDB(connection,"teams",sql);
-        dataBase.closeConnection(connection);
-    }
 
     @Override
     public void save(Team team) throws Exception {

@@ -2,7 +2,6 @@ package com.company.repository.player;
 
 import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.repository.DataBaseSample;
-import com.company.util.FileReadException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,22 +16,10 @@ public class SQLPersonRepository implements PersonRepository {
 
     public SQLPersonRepository() throws SQLException {
         dataBase = new DataBaseSample();
-        dropTable();
-        createTable();
-    }
-
-    public void createTable() throws SQLException {
-        Connection connection = dataBase.getConnection();
-        connection.setAutoCommit(false);
-        String sql = "create table persons (id serial primary key,name varchar(30), yearOfBirth  int)";
-        dataBase.createDB(connection, "persons", sql);
-        dataBase.closeConnection(connection);
-    }
-
-    public void dropTable() throws SQLException {
-        Connection connection = dataBase.getConnection();
-        dataBase.dropTable(connection, "persons");
-        connection.close();
+        String tableNameQuery = "persons";
+        dataBase.dropTable(tableNameQuery);
+        String createTableQuery = "create table persons (id serial primary key,name varchar(30), yearOfBirth  int)";
+        dataBase.createDB(tableNameQuery, createTableQuery);
     }
 
     @Override
@@ -60,7 +47,7 @@ public class SQLPersonRepository implements PersonRepository {
     }
 
     @Override
-    public DefinedPerson findById(long personId) throws FileReadException, SQLException {
+    public DefinedPerson findById(long personId) throws SQLException {
         Connection connection = dataBase.getConnection();
         String sql = "select * from persons where id = ?";
         PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -78,7 +65,7 @@ public class SQLPersonRepository implements PersonRepository {
     }
 
     @Override
-    public List<DefinedPerson> findAll() throws FileReadException, SQLException {
+    public List<DefinedPerson> findAll() throws SQLException {
         List<DefinedPerson> persons = new ArrayList<>();
         Connection connection = dataBase.getConnection();
         String sql = "select * from persons ";

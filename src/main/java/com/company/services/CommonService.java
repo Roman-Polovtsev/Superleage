@@ -38,7 +38,7 @@ public class CommonService {
     }
 
     public void addNewTeam(String teamName, Player player, String number, String email) {
-        Captain captain = new Captain(player, number, email,1);
+        Captain captain = new Captain(player, number, email, 1);
         Team team = new Team(null, null, teamName, captain);
     }
 
