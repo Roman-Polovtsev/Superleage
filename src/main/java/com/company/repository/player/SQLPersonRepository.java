@@ -1,6 +1,7 @@
 package com.company.repository.player;
 
 import com.company.domain.PlayerDecorator.DefinedPerson;
+import com.company.repository.DataBaseException;
 import com.company.repository.DataBaseSample;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class SQLPersonRepository implements PersonRepository {
     private final DataBaseSample dataBase;
 
 
-    public SQLPersonRepository() throws SQLException {
+    public SQLPersonRepository() throws DataBaseException {
         dataBase = new DataBaseSample();
         String tableNameQuery = "persons";
         dataBase.dropTable(tableNameQuery);
@@ -23,65 +24,82 @@ public class SQLPersonRepository implements PersonRepository {
     }
 
     @Override
-    public void save(DefinedPerson person) throws Exception {
+    public void save(DefinedPerson person) throws DataBaseException {
         Connection connection = dataBase.getConnection();
         String sql = "insert into persons (id,name,yearOfBirth) values (?,?,?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, (int) person.getID());
-        statement.setString(2, person.getName());
-        statement.setInt(3, person.getYearOfBirth());
-        statement.execute();
-        statement.close();
-        connection.close();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (int) person.getID());
+            statement.setString(2, person.getName());
+            statement.setInt(3, person.getYearOfBirth());
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            throw new DataBaseException(String.format("Exception during saving person to DB: %s \nwith query %s", person, sql), e);
+        }
+        dataBase.closeConnection(connection);
     }
 
     @Override
-    public void remove(DefinedPerson person) throws Exception {
+    public void remove(DefinedPerson person) throws DataBaseException {
         Connection connection = dataBase.getConnection();
         String sql = "delete from persons where id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, (int) person.getID());
-        System.out.println(statement.executeUpdate());
-        statement.close();
-        connection.close();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, (int) person.getID());
+            System.out.println(statement.executeUpdate());
+            statement.close();
+        } catch (SQLException e) {
+            throw new DataBaseException(String.format("Exception during deleting person to DB: %s \nwith query %s", person, sql), e);
+        }
+        dataBase.closeConnection(connection);
     }
 
     @Override
-    public DefinedPerson findById(long personId) throws SQLException {
+    public DefinedPerson findById(long personId) throws DataBaseException {
         Connection connection = dataBase.getConnection();
+        DefinedPerson person = null;
         String sql = "select * from persons where id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        statement.setInt(1, (int) personId);
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.first();
-        long id = resultSet.getLong("id");
-        String name = resultSet.getString("name");
-        int yearOfBirth = resultSet.getInt("yearOfBirth");
-        DefinedPerson person = new DefinedPerson(name, yearOfBirth, id);
-        resultSet.close();
-        statement.close();
-        connection.close();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, (int) personId);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.first();
+            long id = resultSet.getLong("id");
+            String name = resultSet.getString("name");
+            int yearOfBirth = resultSet.getInt("yearOfBirth");
+            person = new DefinedPerson(name, yearOfBirth, id);
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            throw new DataBaseException(String.format("Exception during searching person in DB: %s \nwith query %s", person, sql), e);
+        }
+        dataBase.closeConnection(connection);
         return person;
     }
 
     @Override
-    public List<DefinedPerson> findAll() throws SQLException {
+    public List<DefinedPerson> findAll() throws DataBaseException {
         List<DefinedPerson> persons = new ArrayList<>();
         Connection connection = dataBase.getConnection();
         String sql = "select * from persons ";
-        PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.beforeFirst();
-        while (resultSet.next()) {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            int yearOfBirth = resultSet.getInt("yearOfBirth");
-            DefinedPerson person = new DefinedPerson(name, yearOfBirth, id);
-            persons.add(person);
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.beforeFirst();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                int yearOfBirth = resultSet.getInt("yearOfBirth");
+                DefinedPerson person = new DefinedPerson(name, yearOfBirth, id);
+                persons.add(person);
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            throw new DataBaseException(String.format("Exception during getting all persons from DB with query %s", sql), e);
         }
-        resultSet.close();
-        statement.close();
-        connection.close();
+        dataBase.closeConnection(connection);
         return persons;
     }
 }

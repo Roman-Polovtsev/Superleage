@@ -6,6 +6,7 @@ import com.company.domain.PlayerDecorator.Captain;
 import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.domain.PlayerDecorator.Player;
 import com.company.domain.Team;
+import com.company.repository.DataBaseException;
 import com.company.repository.Repository;
 import com.company.repository.player.PersonRepository;
 import com.company.repository.player.PlayerRepository;
@@ -49,11 +50,11 @@ public class CommonService {
         playerRepository.save(player);
     }
 
-    public Player findPlayer(long id) throws SQLException, FileReadException {
+    public Player findPlayer(long id) throws SQLException, FileReadException, DataBaseException {
         return playerRepository.findById(id);
     }
 
-    public List<Player> getAllPlayers() throws SQLException, FileReadException {
+    public List<Player> getAllPlayers() throws SQLException, FileReadException, DataBaseException {
         return playerRepository.findAll();
     }
 

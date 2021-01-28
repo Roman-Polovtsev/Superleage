@@ -1,19 +1,17 @@
 package com.company.repository.player;
 
-import com.company.domain.PlayerDecorator.AbstractPerson;
 import com.company.domain.PlayerDecorator.DefinedPerson;
-import com.company.domain.PlayerDecorator.Player;
+import com.company.repository.DataBaseException;
 import com.company.util.FileReadException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface PersonRepository {
-    void save(DefinedPerson person) throws Exception;
+    void save(DefinedPerson person) throws DataBaseException;
 
-    void remove(DefinedPerson player) throws Exception;
+    void remove(DefinedPerson player) throws DataBaseException;
 
-    DefinedPerson findById(long personId) throws FileReadException, SQLException;
+    DefinedPerson findById(long personId) throws FileReadException, DataBaseException;
 
-    List<DefinedPerson> findAll() throws FileReadException, SQLException;
+    List<DefinedPerson> findAll() throws FileReadException, DataBaseException;
 }

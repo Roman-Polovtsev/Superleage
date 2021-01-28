@@ -1,6 +1,7 @@
 package com.company.repository.Address;
 
 import com.company.domain.Address;
+import com.company.repository.DataBaseException;
 import com.company.repository.DataBaseSample;
 
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.sql.SQLException;
 public class SQLAddressRepository implements AddressRepository {
     private final DataBaseSample dataBase;
 
-    public SQLAddressRepository() throws SQLException {
+    public SQLAddressRepository() throws DataBaseException {
         dataBase = new DataBaseSample();
         String tableNameQuery = "addresses";
         dataBase.dropTable(tableNameQuery);
