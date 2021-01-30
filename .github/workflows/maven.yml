@@ -21,6 +21,7 @@ jobs:
       with:
         java-version: 1.11
     - name: Packaging with skipping Tests
-      run: mvn -B package --file pom.xml -DskipTests
+      run: mvn -B package --file pom.xml
+#       -DskipTests
 #     - name: Build with Maven
 #       run: mvn -B test --file pom.xml
