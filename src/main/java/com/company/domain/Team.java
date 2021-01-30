@@ -22,7 +22,7 @@ public class Team implements Serializable, IdHolders {
     }
 
     public Team(String name) {
-        this(LoggerFactory.getLogger(Team.class), new Hall(), name, new Captain(new Player(), "", "",1));
+        this(LoggerFactory.getLogger(Team.class), new Hall(), name, new Captain(new Player(), "", "", 1));
     }
 
     public Team(Logger logger, Hall hall, String name, Captain captain) {
@@ -42,7 +42,6 @@ public class Team implements Serializable, IdHolders {
         return hall;
     }
 
-    @Override
     public long getID() {
         return ID;
     }
@@ -56,8 +55,8 @@ public class Team implements Serializable, IdHolders {
         members.addAll(playerList);
     }
 
-    public void deletePlayer(Player... player) {
-        members.remove(player);
+    public boolean deletePlayer(Player player) {
+        return members.remove(player);
     }
 
     public void deletePlayer(List<Player> players) {

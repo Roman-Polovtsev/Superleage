@@ -1,9 +1,8 @@
 package com.company.domain.PlayerDecorator;
 
-import com.company.domain.IdHolders;
 import java.util.Objects;
 
-public class Player extends PersonDecorator implements IdHolders {
+public class Player extends PersonDecorator {
     transient private static final long serialVersionUID = 17L;
     //public static long idCounter = 1;
     private final long id;
@@ -12,11 +11,11 @@ public class Player extends PersonDecorator implements IdHolders {
     private final String level;
 
     public Player() {
-        this(new DefinedPerson(), 0, "", "",0);
+        this(new DefinedPerson(), 0, "", "", 0);
     }
 
     public Player(AbstractPerson abstractPerson) {
-        this(abstractPerson, 190, "setter", "master",0);
+        this(abstractPerson, 190, "setter", "master", 0);
     }
 
     public Player(AbstractPerson abstractPerson, int height, String position, String level, long id) {
@@ -50,10 +49,10 @@ public class Player extends PersonDecorator implements IdHolders {
         return level;
     }
 
-//    public AbstractPerson getPerson (){
+    //    public AbstractPerson getPerson (){
 //        return super;
 //    }
-    public long personID(){
+    public long personID() {
         return super.getID();
     }
 
@@ -79,7 +78,7 @@ public class Player extends PersonDecorator implements IdHolders {
 
     @Override
     public String toString() {
-        return "Player{" +" id: " + id + ", name " +
+        return "Player{" + " id: " + id + ", name " +
                 getName() + " year of Birth: "
                 + getYearOfBirth() +
                 "height=" + height +

@@ -10,7 +10,7 @@ public class Result {
         this((byte) 0, (byte) 0);
     }
 
-    public Result(Number homeTeam, Number guestTeam) {
+    public Result(int homeTeam, int guestTeam) {
         this.homeTeam = (byte)homeTeam;
         this.guestTeam = (byte)guestTeam;
     }

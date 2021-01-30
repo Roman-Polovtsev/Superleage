@@ -4,6 +4,7 @@ import com.company.domain.Address;
 import com.company.domain.GameDecorator.Game;
 import com.company.domain.GameDecorator.PlannedGame;
 import com.company.domain.Team;
+import com.company.repository.DataBaseException;
 import com.company.repository.FileRepository;
 import com.company.repository.Repository;
 import com.company.util.FileHandlerSaveException;
@@ -20,7 +21,7 @@ public class CommonServiceTest {
     CommonService service = new CommonService(gameRepository, addressRepository);
 
     @Before
-    public void before() throws FileHandlerSaveException, SQLException {
+    public void before() throws Repository.FileRepositoryException, DataBaseException {
         gameRepository.createRepository();
         addressRepository.createRepository();
     }

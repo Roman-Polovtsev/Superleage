@@ -14,8 +14,8 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class RefereeTest {
-    static AbstractPerson person = new DefinedPerson("Ivan", 1995,1);
-    static AbstractPerson player = new Player(person, 190, "not stated", "not stated",person.getID());
+    static AbstractPerson person = new DefinedPerson("Ivan", 1995, 1);
+    static AbstractPerson player = new Player(person, 190, "not stated", "not stated", person.getID());
     static Referee referee = new Referee(person);
     static Team home = new Team("home");
     static Team guest = new Team("guest");

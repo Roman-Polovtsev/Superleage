@@ -1,11 +1,10 @@
 package com.company.domain.PlayerDecorator;
 
 import com.company.domain.GameDecorator.FinishedGame;
-import com.company.domain.IdHolders;
 
 import java.util.*;
 
-public class Referee extends PersonDecorator implements IdHolders {
+public class Referee extends PersonDecorator {
     transient private static final long serialVersionUID = 19L;
     private static long idCounter = 1;
     private final long id;
@@ -78,12 +77,12 @@ public class Referee extends PersonDecorator implements IdHolders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Referee referee = (Referee) o;
-        return Objects.equals(games, referee.games);
+        return id == referee.id &&
+                Objects.equals(games, referee.games);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(games);
+        return Objects.hash(id, games);
     }
-
 }

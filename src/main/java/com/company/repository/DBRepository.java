@@ -1,33 +1,30 @@
 package com.company.repository;
 
-import com.company.domain.IdHolders;
-import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
-public class DBRepository<T extends Serializable & IdHolders> implements Repository<T>{
-    private  final DataBaseSample database;
+public class DBRepository<T extends Serializable> implements Repository<T> {
+    private final DataBaseSample database;
 
     public DBRepository(DataBaseSample database) {
         this.database = database;
     }
 
     @Override
-    public void createRepository() throws SQLException {
+    public void createRepository() throws DataBaseException {
         Connection connection = database.getConnection();
-       // database.createDB(connection);
+        // database.createDB(connection);
         database.closeConnection(connection);
     }
 
     @Override
     public void save(T obj) throws FileRepositoryException {
         //Connection connection = database.getConnection();
-       // database.
-       // database.closeConnection(connection);
+        // database.
+        // database.closeConnection(connection);
 
     }
 
@@ -37,12 +34,12 @@ public class DBRepository<T extends Serializable & IdHolders> implements Reposit
     }
 
     @Override
-    public T findById(long objId) throws FileReadException {
+    public T findById(long objId)  {
         return null;
     }
 
     @Override
-    public List<T> getAll() throws  SQLRepositoryException {
+    public List<T> getAll() throws SQLRepositoryException {
         return null;
     }
 }

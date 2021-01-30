@@ -5,6 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class JavaFileSystem implements FileSystem {
+    public JavaFileSystem() {
+    }
+
     @Override
     public void write(Path path, byte[] message) throws IOException {
         Files.write(path, message);

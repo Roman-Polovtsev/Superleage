@@ -15,6 +15,9 @@ public class FinishedGameTest {
 
     @Test
     public void getGameResult() {
+        Result gameResult = game.getGameResult();
+
+
     }
 
     @Test

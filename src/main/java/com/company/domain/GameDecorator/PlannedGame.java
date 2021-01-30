@@ -1,7 +1,6 @@
 package com.company.domain.GameDecorator;
 
 import com.company.domain.Address;
-import com.company.domain.IdHolders;
 import com.company.domain.Team;
 
 import java.time.LocalDateTime;
@@ -10,7 +9,7 @@ import java.util.Objects;
 /**
  * This  class is game decorator
  */
-public class PlannedGame implements Game, IdHolders {
+public class PlannedGame implements Game {
     transient private static final long serialVersionUID = 12L;
     private static final LocalDateTime defaultTime = LocalDateTime.of(2020, 1, 1, 0, 0);
     private static long idCounter = 1;
@@ -37,14 +36,13 @@ public class PlannedGame implements Game, IdHolders {
         this(home, guest, home.getHall().getAddress(), defaultTime);
     }
 
-    public PlannedGame (Game game, Address address){
+    public PlannedGame(Game game, Address address) {
         this.home = game.getHome();
         this.guest = game.getGuest();
-        this.gameTime =game.getGameTime();
-        this.gameAddress =address;
+        this.gameTime = game.getGameTime();
+        this.gameAddress = address;
         this.ID = game.getID();
     }
-
 
 
     @Override

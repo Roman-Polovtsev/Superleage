@@ -1,10 +1,8 @@
 package com.company.domain.PlayerDecorator;
 
-import com.company.domain.IdHolders;
-
 import java.util.Objects;
 
-public class DefinedPerson implements AbstractPerson, IdHolders {
+public class DefinedPerson implements AbstractPerson {
     transient private static final long serialVersionUID = 17L;
     //transient public static long idCounter = 1;
     private final long ID;
@@ -15,15 +13,15 @@ public class DefinedPerson implements AbstractPerson, IdHolders {
         this("Ivan", 1995, 0);
     }
 
-    public DefinedPerson(String  name){
-        this(name,1900, 0);
+    public DefinedPerson(String name) {
+        this(name, 1900, 0);
     }
 
-    public DefinedPerson(String name, int yearOfBirth,long id) {
+    public DefinedPerson(String name, int yearOfBirth, long id) {
         this.ID = id;
         this.name = name;
         this.yearOfBirth = yearOfBirth;
-      //  idCounter++;
+        //  idCounter++;
     }
 
     @Override

@@ -23,8 +23,8 @@ public class FileHandler<T extends Serializable> {
         this(LoggerFactory.getLogger(FileHandler.class), pathToFile);
     }
 
-    public FileHandler(Logger logger, Path pathToFile ) {
-        this(logger,new Serializer(),pathToFile,new JavaFileSystem());
+    public FileHandler(Logger logger, Path pathToFile) {
+        this(logger, new Serializer(), pathToFile, new JavaFileSystem());
     }
 
     public FileHandler(Path pathToFile, FileSystem fileSystem, Serializer serializer) {
@@ -49,9 +49,8 @@ public class FileHandler<T extends Serializable> {
 
     @SuppressWarnings("unchecked")
     public List<T> deserializedFile() throws FileReadException {
-        List<T> list = null;
         try {
-            return list = (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
+            return (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
         } catch (IOException | ClassNotFoundException e) {
             throw new FileReadException(String.format("List of errors in FIleHandler during deserializing file: %s with file system: %s", this.pathToFile, this.fileSystem), e);// todo : implement this
         }

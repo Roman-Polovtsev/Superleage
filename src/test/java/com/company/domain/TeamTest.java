@@ -5,7 +5,6 @@ import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.domain.PlayerDecorator.Player;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,27 +16,34 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class TeamTest {
-    private static Team fullTeam;
-    private static final Logger logger = LoggerFactory.getLogger(TeamTest.class);
-    private static final String name = "full complected team";
-    private static Hall hall;
-    private static long ID;
-    private static Captain captain;
-    private final Player player1 = new Player(new DefinedPerson("",1994,1),190,"","",1);
-    private final Player player2 = new Player(new DefinedPerson("",1996,2),195,"","",2);
+    private Team fullTeam;
+    private final Logger logger = LoggerFactory.getLogger(TeamTest.class);
+    private final String name = "full complected team";
+    private Hall hall;
+    private Captain captain;
+    private final Player player1 = new Player(new DefinedPerson("", 1994, 1), 190, "", "", 1);
+    private final Player player2 = new Player(new DefinedPerson("", 1996, 2), 195, "", "", 2);
     private final List<Player> newPlayers = Arrays.asList(player1, player2);
-    private final List<Player> allPlayers = Arrays.asList(player1, player2, captain.getCaptainAsPlayer());
-    private final Player player = new Player(new DefinedPerson("michael scott",1990,3));
+    private final Player player = new Player(new DefinedPerson("michael scott", 1990, 3));
 
 
-    @BeforeClass
-    public static void beforeSetup() {
-        hall = new Hall(1,new Address(1, "spb", "nevsky", "23"));
-        captain = new Captain(new Player(new DefinedPerson("Ivan", 1995,4), 200, "god", "opposite",4),"","",1);
-        ID = 1;
+    @Before
+    @Test
+    public void getMembersTest() {
+        hall = new Hall(1, new Address(1, "spb", "nevsky", "23"));
+        captain = new Captain(new Player(new DefinedPerson("Ivan", 1995, 4), 200, "god", "opposite", 4), "", "", 1);
         fullTeam = new Team(logger, hall, name, captain);
+        Set<Player> members = fullTeam.getMembers();
+
+        assertNotNull(members);
+        assertTrue(members.contains(captain.getCaptainAsPlayer()));
     }
 
+    @After
+    public void clear() {
+        fullTeam.deletePlayer(newPlayers);
+        fullTeam.deletePlayer(player);
+    }
 
     @Test
     public void getName() {
@@ -56,11 +62,6 @@ public class TeamTest {
         assertEquals(hall, actual);
     }
 
-    @Test
-    public void getID() {
-        long actual = fullTeam.getID();
-        assertEquals(ID, actual);
-    }
 
     @Test
     public void addPlayer() {
@@ -79,11 +80,11 @@ public class TeamTest {
 
         assertTrue(members.containsAll(newPlayers));
         System.out.println(members);
-        assertEquals(3,members.size());
+        assertEquals(3, members.size());
     }
 
     @Test
-    public void addCaptainAsPlayer(){
+    public void addCaptainAsPlayer() {
         System.out.println(fullTeam.getMembers());
         fullTeam.addPlayer(captain.getCaptainAsPlayer());
         System.out.println(fullTeam.getMembers());
@@ -92,12 +93,10 @@ public class TeamTest {
     @Test
     public void deletePlayer() {
         Set<Player> members = fullTeam.getMembers();
-        System.out.println(members);
         fullTeam.deletePlayer(captain.getCaptainAsPlayer());
-        System.out.println(members);
-        assertFalse(members.contains(captain.getCaptainAsPlayer()));
 
-        assertEquals(0,members.size());
+        assertFalse(members.contains(captain.getCaptainAsPlayer()));
+        assertEquals(0, members.size());
     }
 
     @Test
@@ -126,14 +125,6 @@ public class TeamTest {
         assertEquals(fullTeam.getMembers().size(), 1);
     }
 
-    @Before
-    @Test
-    public void getMembersTest() {
-        Set<Player> members = fullTeam.getMembers();
-
-        assertNotNull(members);
-        assertTrue(members.contains(captain.getCaptainAsPlayer()));
-    }
 
     @Test
     public void getCaptain() {
@@ -142,9 +133,5 @@ public class TeamTest {
         assertEquals(captain, actual);
     }
 
-    @After
-    public void clear() {
-        fullTeam.deletePlayer(newPlayers);
-        fullTeam.deletePlayer(player);
-    }
+
 }

@@ -1,7 +1,6 @@
 package com.company.domain.GameDecorator;
 
 import com.company.domain.Address;
-import com.company.domain.IdHolders;
 import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.domain.PlayerDecorator.Referee;
 import com.company.domain.Result;
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class FinishedGame extends GameDecorator implements IdHolders {
+public class FinishedGame extends GameDecorator {
     transient private static final long serialVersionUID = 13L;
     private static long idCounter = 1;
     private final long id;
@@ -74,7 +73,7 @@ public class FinishedGame extends GameDecorator implements IdHolders {
     public String toString() {
         return "FinishedGame{" +
                 "result=" + result +
-                ", referee=" + referee +
+                ", referee=" + referee.getName() +
                 ", refereeMarks=" + Arrays.toString(refereeMarks) +
                 ", game=" + game +
                 '}';
@@ -86,14 +85,14 @@ public class FinishedGame extends GameDecorator implements IdHolders {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         FinishedGame that = (FinishedGame) o;
-        return Objects.equals(result, that.result) &&
-                Objects.equals(referee, that.referee) &&
+        return id == that.id &&
+                Objects.equals(result, that.result) &&
                 Arrays.equals(refereeMarks, that.refereeMarks);
     }
 
     @Override
     public int hashCode() {
-        int result1 = Objects.hash(super.hashCode(), result, referee);
+        int result1 = Objects.hash(super.hashCode(), id, result);
         result1 = 31 * result1 + Arrays.hashCode(refereeMarks);
         return result1;
     }

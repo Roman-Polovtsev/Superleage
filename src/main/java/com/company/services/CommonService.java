@@ -12,9 +12,7 @@ import com.company.repository.player.PersonRepository;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.player.SQLPersonRepository;
 import com.company.repository.player.SQLPlayerRepository;
-import com.company.util.FileReadException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class CommonService {
@@ -43,22 +41,22 @@ public class CommonService {
         Team team = new Team(null, null, teamName, captain);
     }
 
-    public void addNewPlayer(String name, int yearOfBirth, int height, String position, String level) throws Exception {
+    public void addNewPlayer(String name, int yearOfBirth, int height, String position, String level) throws DataBaseException, Repository.FileRepositoryException {
         DefinedPerson person = new DefinedPerson(name, yearOfBirth, personIDService.newObjectID());
         Player player = new Player(person, height, position, level, playerIDService.newObjectID());
         personRepository.save(person);
         playerRepository.save(player);
     }
 
-    public Player findPlayer(long id) throws SQLException, FileReadException, DataBaseException {
+    public Player findPlayer(long id) throws Repository.FileRepositoryException, DataBaseException {
         return playerRepository.findById(id);
     }
 
-    public List<Player> getAllPlayers() throws SQLException, FileReadException, DataBaseException {
+    public List<Player> getAllPlayers() throws Repository.FileRepositoryException, DataBaseException {
         return playerRepository.findAll();
     }
 
-    public void removePlayer(Player player) throws Exception {
+    public void removePlayer(Player player) throws Repository.FileRepositoryException, DataBaseException {
         playerRepository.remove(player);
         personRepository.remove(new DefinedPerson(player.getName(), player.getYearOfBirth(), player.personID()));
     }

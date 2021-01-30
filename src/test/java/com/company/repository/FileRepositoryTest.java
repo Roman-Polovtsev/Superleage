@@ -65,7 +65,7 @@ public class FileRepositoryTest {
     }
 
     @Test
-    public void findById() throws FileReadException {
+    public void findById() throws Repository.FileRepositoryException, FileReadException {
         Mockito.when(fileHandler.deserializedFile()).thenReturn(teamList);
         Team byId = repository.findById(team.getID());
 

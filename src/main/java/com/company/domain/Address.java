@@ -51,7 +51,6 @@ public class Address implements Serializable, IdHolders {
     public long getID() {
         return id;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,4 +66,5 @@ public class Address implements Serializable, IdHolders {
     public int hashCode() {
         return Objects.hash(id, city, street, buildingNumber);
     }
+
 }

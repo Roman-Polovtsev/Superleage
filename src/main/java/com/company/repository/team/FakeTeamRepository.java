@@ -4,12 +4,9 @@ import com.company.domain.Team;
 
 import java.util.List;
 
-public class FakeTeamRepository implements TeamRepository{
+public class FakeTeamRepository implements TeamRepository {
     List<Team> teams;
 
-    @Override
-    public void createRepository() {
-    }
 
     @Override
     public void save(Team team) {

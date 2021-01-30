@@ -46,8 +46,12 @@ public class FileRepository<T extends Serializable & IdHolders> implements Repos
 
     //todo implement all repositories as template
     @Override
-    public void createRepository() throws FileHandlerSaveException {
-        fileHandler.save(new ArrayList<>());
+    public void createRepository() throws FileRepositoryException {
+        try {
+            fileHandler.save(new ArrayList<>());
+        } catch (FileHandlerSaveException e) {
+            throw new FileRepositoryException(String.format("An error during creating repository of type %s in file on path: %s", this.getClass(), this.filePath), e);
+        }
     }
 
     @Override
@@ -73,9 +77,13 @@ public class FileRepository<T extends Serializable & IdHolders> implements Repos
     }
 
     @Override
-    public T findById(long objId) throws FileReadException {
-        List<T> list = fileHandler.deserializedFile();
-        return list.stream().filter((a) -> (a.getID() == objId)).findAny().orElseThrow();
+    public T findById(long objId) throws FileRepositoryException {
+        try {
+            List<T> list = fileHandler.deserializedFile();
+            return list.stream().filter((a) -> (a.getID() == objId)).findAny().orElseThrow();
+        } catch (FileReadException e) {
+            throw new FileRepositoryException(String.format("An error during searching data of type %s by id = %s in file on path: %s", this.getClass(), objId, this.filePath), e);
+        }
     }
 
     @Override

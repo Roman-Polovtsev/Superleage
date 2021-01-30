@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class EnableGameTime implements Serializable,IdHolders {
+public class EnableGameTime implements Serializable {
     transient private final Logger logger;
     private static final long serialVersionUID = 1L;
     private final long id;
@@ -20,18 +20,18 @@ public class EnableGameTime implements Serializable,IdHolders {
     private final List<DayOfWeek> daysOfWeek;
 
     public EnableGameTime() {
-        this(LoggerFactory.getLogger(EnableGameTime.class),1, LocalTime.MIDNIGHT, LocalTime.of(23, 59), new ArrayList<>());
+        this(LoggerFactory.getLogger(EnableGameTime.class), 1, LocalTime.MIDNIGHT, LocalTime.of(23, 59), new ArrayList<>());
     }
 
-    public EnableGameTime(long id,LocalTime begin, LocalTime end) {
-        this(LoggerFactory.getLogger(EnableGameTime.class),id, begin, end, new ArrayList<>());
+    public EnableGameTime(long id, LocalTime begin, LocalTime end) {
+        this(LoggerFactory.getLogger(EnableGameTime.class), id, begin, end, new ArrayList<>());
     }
 
     public EnableGameTime(long id, List<DayOfWeek> daysOfWeek) {
-        this(LoggerFactory.getLogger(EnableGameTime.class),id, LocalTime.MIDNIGHT, LocalTime.of(23, 59), daysOfWeek);
+        this(LoggerFactory.getLogger(EnableGameTime.class), id, LocalTime.MIDNIGHT, LocalTime.of(23, 59), daysOfWeek);
     }
 
-    public EnableGameTime(Logger logger,long id, LocalTime begin, LocalTime end, List<DayOfWeek> daysOfWeek) {
+    public EnableGameTime(Logger logger, long id, LocalTime begin, LocalTime end, List<DayOfWeek> daysOfWeek) {
         this.logger = logger;
         this.id = id;
         this.begin = begin;
@@ -39,7 +39,6 @@ public class EnableGameTime implements Serializable,IdHolders {
         this.daysOfWeek = daysOfWeek;
     }
 
-    @Override
     public long getID() {
         return id;
     }

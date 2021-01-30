@@ -1,6 +1,7 @@
 package com.company.deprecated;
 
-import com.company.domain.PlayerDecorator.*;
+import com.company.domain.PlayerDecorator.DefinedPerson;
+import com.company.domain.PlayerDecorator.Player;
 import com.company.domain.Team;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.team.TeamRepository;
@@ -23,42 +24,41 @@ public class TeamServiceTest {
 
     TeamService service = new TeamService();
 
-    @Test
-    public void addTeamTest() throws Exception {
+//    @Test
+//    public void addTeamTest() throws Exception {
+//
+//        service.getTeamRepository().save(new Team("first team"));
+//        logger.debug("Team repository before adding Team: {}", service.getTeamRepository().getAll());
+//        Team team = new Team("alfa");
+//        service.addTeam(team);
+//        //   logger.debug("here after adding team {}", team.getName());
+//        logger.debug("Team repository after adding Team: {}", service.getTeamRepository().getAll());
+//        service.getTeamRepository().remove(team);
+//    }
 
-        service.getTeamRepository().createRepository();
-        service.getTeamRepository().save(new Team("first team"));
-        logger.debug("Team repository before adding Team: {}", service.getTeamRepository().getAll());
-        Team team = new Team("alfa");
-        service.addTeam(team);
-        //   logger.debug("here after adding team {}", team.getName());
-        logger.debug("Team repository after adding Team: {}", service.getTeamRepository().getAll());
-        service.getTeamRepository().remove(team);
-    }
+//    @Test
+//    public void findHighestTest() throws Exception {
+//        service.addTeam(new Team());
+//        assertEquals(new Team(), new TeamService().findHighest());
+//    }
 
-    @Test
-    public void findHighestTest() throws Exception {
-        service.addTeam(new Team());
-        assertEquals(new Team(), new TeamService().findHighest());
-    }
-
-    @Test
-    public void addPlayerTest() throws Exception {
-        TeamRepository teams = Mockito.mock(TeamRepository.class);
-        PlayerRepository players = Mockito.mock(PlayerRepository.class);
-        TeamService service = new TeamService(teams,players);
-        Team team = new Team("z");
-      //  logger.info("{}", team.getMembers());
-        service.addTeam(team);
-        //  logger.info("{}",team);
-        Player player = new Player(new DefinedPerson("zazaza"));
-     //   logger.info("{}", player);
-       // service.getPlayerRepository().save(player);
-       // service.getPlayerRepository().findById(player.hashCode());
-     //   service.addPlayer(team, player);
-       // logger.debug("Checking team list after adding new player: {}", service.getTeamRepository().getAll());
-        assertTrue(team.getMembers().contains(player));
-    }
+//    @Test
+//    public void addPlayerTest() throws Exception {
+//        TeamRepository teams = Mockito.mock(TeamRepository.class);
+//        PlayerRepository players = Mockito.mock(PlayerRepository.class);
+//        TeamService service = new TeamService(teams, players);
+//        Team team = new Team("z");
+//        //  logger.info("{}", team.getMembers());
+//        service.addTeam(team);
+//        //  logger.info("{}",team);
+//        Player player = new Player(new DefinedPerson("zazaza"));
+//        //   logger.info("{}", player);
+//        // service.getPlayerRepository().save(player);
+//        // service.getPlayerRepository().findById(player.hashCode());
+//        //   service.addPlayer(team, player);
+//        // logger.debug("Checking team list after adding new player: {}", service.getTeamRepository().getAll());
+//        assertTrue(team.getMembers().contains(player));
+//    }
 
     @Test
     public void findSmallest() throws FileReadException, TeamRepository.FileRepositoryException {

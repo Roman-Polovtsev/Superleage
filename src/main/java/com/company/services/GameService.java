@@ -1,12 +1,18 @@
 package com.company.services;
 
 import com.company.domain.GameDecorator.*;
+import com.company.domain.PlayerDecorator.Referee;
+import com.company.domain.Result;
 import com.company.domain.Team;
 import com.company.repository.Games.FileGameRepository;
 import com.company.repository.Games.GamesRepository;
 
 public class GameService {
-    GamesRepository repository = new FileGameRepository();
+    GamesRepository repository;
+    public GameService(GamesRepository repository) {
+        this.repository = repository;
+    }
+
 
     public void createGame (Team team1, Team team2){
         Game game = new PlannedGame(team1,team2);

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Hall implements Serializable, IdHolders {
+public class Hall implements Serializable {
     transient private final Logger logger;
     transient private static final long serialVersionUID = 2L;
     private final long id;
@@ -17,18 +17,19 @@ public class Hall implements Serializable, IdHolders {
         this(LoggerFactory.getLogger(Hall.class), 1, new Address(), new EnableGameTime());
     }
 
-    public Hall(long id,Address address) {
-        this(LoggerFactory.getLogger(Hall.class),id, address, new EnableGameTime());
+    public Hall(long id, Address address) {
+        this(LoggerFactory.getLogger(Hall.class), id, address, new EnableGameTime());
     }
 
     public Hall(EnableGameTime gameTime) {
-        this(LoggerFactory.getLogger(Hall.class),1, new Address(), gameTime);
-    }
-    public Hall(long id, Address address, EnableGameTime gameTime) {
-        this(LoggerFactory.getLogger(Hall.class),id,address,gameTime);
+        this(LoggerFactory.getLogger(Hall.class), 1, new Address(), gameTime);
     }
 
-    public Hall(Logger logger,long id, Address address, EnableGameTime gameTime) {
+    public Hall(long id, Address address, EnableGameTime gameTime) {
+        this(LoggerFactory.getLogger(Hall.class), id, address, gameTime);
+    }
+
+    public Hall(Logger logger, long id, Address address, EnableGameTime gameTime) {
         this.logger = logger;
         this.id = id;
         this.address = address;
@@ -52,7 +53,6 @@ public class Hall implements Serializable, IdHolders {
         return "Hall :" + "\n\tAddress: " + address + "\n\tGameTime: " + gameTime;
     }
 
-    @Override
     public long getID() {
         return id;
     }

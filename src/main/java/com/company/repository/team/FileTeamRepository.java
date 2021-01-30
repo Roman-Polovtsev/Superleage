@@ -2,7 +2,6 @@ package com.company.repository.team;
 
 import com.company.domain.Team;
 import com.company.repository.FileHandler;
-import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 import org.slf4j.Logger;
@@ -18,7 +17,6 @@ import java.util.List;
 public class FileTeamRepository implements TeamRepository {
     public final Logger logger;
     transient private final FileHandler<Team> fileHandler;
-    private final Path repoFilePath;
     private final Path filePath;
 
     public FileTeamRepository() {
@@ -26,48 +24,31 @@ public class FileTeamRepository implements TeamRepository {
     }
 
     public FileTeamRepository(Logger logger) {
-        this(logger, "C:\\Users\\Роман\\IdeaProjects\\Superleague_new\\repository", "C:\\Users\\Роман\\IdeaProjects\\Superleague_new\\repository\\teams.txt");
+        this(logger, "C:\\Users\\Роман\\IdeaProjects\\Superleague_new\\repository\\teams.txt");
     }
 
-    public FileTeamRepository(String pathRepository) {
-        this(LoggerFactory.getLogger(FileTeamRepository.class), pathRepository, pathRepository + "\\teams.txt");
+    public FileTeamRepository(String filePath) {
+        this(LoggerFactory.getLogger(FileTeamRepository.class), filePath);
     }
 
-    public FileTeamRepository(Logger logger, String pathRepository, String pathFile) {
+    public FileTeamRepository(Logger logger, String pathFile) {
         this.logger = logger;
         this.filePath = Paths.get(pathFile);
-        this.repoFilePath = Paths.get(pathRepository);
-        this.fileHandler = new FileHandler<Team>(this.filePath);
+        this.fileHandler = new FileHandler<Team>(filePath);
     }
 
-    public FileTeamRepository(Logger logger, Path pathRepository, Path pathFile, FileHandler<Team> fileHandler) {
+    public FileTeamRepository(Logger logger, Path pathFile, FileHandler<Team> fileHandler) {
         this.logger = logger;
         this.filePath = pathFile;
-        this.repoFilePath = pathRepository;
         this.fileHandler = fileHandler;
     }
 
-    public Path getfilePath() {
-        return filePath;
-    }
-
-    public FileHandler<Team> getFileHandler() {
-        return fileHandler;
-    }
-
-    public Path getRepoFilePath() {
-        return repoFilePath;
-    }
-
-    @Override
-    public void createRepository() {
-        //  fileHandler.fileCreating(repoFilePath, filePath);
-    }
 
     @Override
     public void save(Team team) throws FileRepositoryException {
+        List<Team> teamList;
         try {
-            List<Team> teamList = fileHandler.deserializedFile();
+            teamList = fileHandler.deserializedFile();
             if (teamList == null)
                 teamList = new ArrayList<>();
             if (teamList.contains(team))
@@ -75,7 +56,7 @@ public class FileTeamRepository implements TeamRepository {
             else
                 teamList.add(team);
             fileHandler.save(teamList);
-        }catch (FileHandlerSaveException| FileReadException e){
+        } catch (FileHandlerSaveException | FileReadException e) {
             throw new FileRepositoryException(String.format("An error occured during getting list of teams, file handler: %s\npath to file: %s", this.fileHandler, this.filePath), e);
         }
     }
@@ -88,16 +69,11 @@ public class FileTeamRepository implements TeamRepository {
             if (teamList.contains(team)) {
                 teamList.remove(team);
                 logger.info("Deleted team from List\nNow team list looks like: {}", teamList);
-                if (teamList.isEmpty()) {
-                    fileHandler.deletingFile();
-                    logger.info("Deleted file because of its emptiness");
-                } else {
-                    fileHandler.save(teamList);
-                    logger.info("deleted team and serialize anew");
-                }
+                fileHandler.save(teamList);
+                logger.info("deleted team and serialize anew");
             } else
                 logger.info("Nothing to delete, such Team doesn`t exist");
-        }catch (FileHandlerSaveException| FileDeletingException| FileReadException e){
+        } catch (FileHandlerSaveException | FileReadException e) {
             throw new FileRepositoryException(String.format("An error occured during getting list of teams, file handler: %s\npath to file: %s", this.fileHandler, this.filePath), e);
         }
     }
@@ -112,7 +88,7 @@ public class FileTeamRepository implements TeamRepository {
                 return teamList.stream().filter((team) -> team.getID() == teamId).
                         findFirst().orElseThrow();
             }
-        } catch (FileReadException e){
+        } catch (FileReadException e) {
             throw new FileRepositoryException(String.format("An error occured during getting list of teams, file handler: %s\npath to file: %s", this.fileHandler, this.filePath), e);
         }
     }

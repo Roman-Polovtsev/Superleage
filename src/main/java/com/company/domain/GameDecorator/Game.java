@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 public interface Game extends Serializable, IdHolders {
 
-    @Override
     long getID();
 
     Team getHome();
