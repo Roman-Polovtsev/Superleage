@@ -1,19 +1,18 @@
 package com.company.domain;
 
 import java.util.Objects;
-
+//todo implement this as enum
 public class Result {
     private final byte homeTeam;
     private final byte guestTeam;
 
-    //making constructor
     public Result() {
         this((byte) 0, (byte) 0);
     }
 
-    public Result(byte homeTeam, byte guestTeam) {
-        this.homeTeam = homeTeam;
-        this.guestTeam = guestTeam;
+    public Result(int homeTeam, int guestTeam) {
+        this.homeTeam = (byte)homeTeam;
+        this.guestTeam = (byte)guestTeam;
     }
 
     public Result incrementGuestPoint() {

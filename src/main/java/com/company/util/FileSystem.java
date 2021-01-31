@@ -7,7 +7,9 @@ public interface FileSystem {
 
     void write(Path path, byte[] message) throws IOException;
 
-    byte[] readAllBytes (Path path) throws IOException;
+    byte[] readAllBytes(Path path) throws IOException;
+
+    void delete(Path path) throws IOException;
 
 
     class Fake implements FileSystem {
@@ -19,6 +21,11 @@ public interface FileSystem {
         @Override
         public byte[] readAllBytes(Path path) {
             return new byte[0];
+        }
+
+        @Override
+        public void delete(Path path) {
+            //do nothing
         }
     }
 }

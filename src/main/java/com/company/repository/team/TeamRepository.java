@@ -6,14 +6,23 @@ import java.util.List;
 
 
 public interface TeamRepository {
-    void createRepository();
 
-    void save(Team team);
+    void save(Team team) throws Exception;
 
-    void remove(Team team);
+    void remove(Team team) throws Exception;
 
-    Team findById ( long teamId );
+    Team findById(long teamId) throws FileRepositoryException;
 
-    List<Team> getAll();
+    List<Team> getAll() throws TeamRepository.FileRepositoryException;
+
+    class FileRepositoryException extends Exception {
+        public FileRepositoryException() {
+        }
+
+        public FileRepositoryException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
 
 }

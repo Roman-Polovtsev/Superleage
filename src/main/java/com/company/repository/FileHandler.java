@@ -1,101 +1,68 @@
 package com.company.repository;
 
-import com.company.util.FileReadException;
-import com.company.util.FileSystem;
+import com.company.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FileHandler<T extends Serializable> {
     private final Logger logger;
     private final Serializer serializer;
     private final Path pathToFile;
-    private final Path pathToDirectory;
     private final FileSystem fileSystem;
 
     public FileHandler() {
-        this(LoggerFactory.getLogger(FileHandler.class), null, null);
+        this(LoggerFactory.getLogger(FileHandler.class), null);
     }
 
-    public FileHandler(Path pathToFile, Path pathToDirectory) {
-        this(LoggerFactory.getLogger(FileHandler.class), pathToFile, pathToDirectory);
+    public FileHandler(Path pathToFile) {
+        this(LoggerFactory.getLogger(FileHandler.class), pathToFile);
     }
 
-    public FileHandler(Logger logger, Path pathToFile, Path pathToDirectory) {
-        this.logger = logger;
-        this.pathToFile = pathToFile;
-        this.pathToDirectory = pathToDirectory;
-        this.serializer = new Serializer();
-        this.fileSystem = new FileSystem.Fake();
+    public FileHandler(Logger logger, Path pathToFile) {
+        this(logger, new Serializer(), pathToFile, new JavaFileSystem());
     }
 
     public FileHandler(Path pathToFile, FileSystem fileSystem, Serializer serializer) {
-        this(LoggerFactory.getLogger(FileHandler.class), serializer, pathToFile, null, fileSystem);
+        this(LoggerFactory.getLogger(FileHandler.class), serializer, pathToFile, fileSystem);
     }
 
-    public FileHandler(Logger logger, Serializer serializer, Path pathToFile, Path pathToDirectory, FileSystem fileSystem) {
+    public FileHandler(Logger logger, Serializer serializer, Path pathToFile, FileSystem fileSystem) {
         this.logger = logger;
         this.serializer = serializer;
         this.pathToFile = pathToFile;
-        this.pathToDirectory = pathToDirectory;
         this.fileSystem = fileSystem;
     }
 
-    public void save(List<T> objects) {
+    public void save(List<T> objects) throws FileHandlerSaveException {
         try {
             fileSystem.write(pathToFile, serializer.serialize(objects));
             logger.info("write to file updated list");
-        } catch (IOException a) {
-            logger.error("IOException during writing to file {} creation, {}", pathToFile, a);
+        } catch (IOException e) {
+            throw new FileHandlerSaveException(String.format("FileHandlerSaveException during writing to file creation %s", this.pathToFile), e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> deserializedFile() { //todo: throws FileReadException {
-        List<T> list = null;
+    public List<T> deserializedFile() throws FileReadException {
         try {
-            return list = (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
+            return (List<T>) serializer.deserialize(fileSystem.readAllBytes(pathToFile));
         } catch (IOException | ClassNotFoundException e) {
-          //  throw new FileReadException("List of errors in FIleHandler "+ this, e); todo : implement this
-            logger.error("List of errors in FIleHandler "+ this, e);
+            throw new FileReadException(String.format("List of errors in FIleHandler during deserializing file: %s with file system: %s", this.pathToFile, this.fileSystem), e);// todo : implement this
         }
-        return Collections.emptyList();
     }
 
-    public void deletingFile(Path directory, Path file) {
-        if (!Files.exists(directory)) {
-            logger.error("There`s no such directory");
-            throw new IllegalArgumentException();
-        } else {
-            try {
-                Files.deleteIfExists(file);
-            } catch (IOException f) {
-                logger.error("IOex during file deleting", f);
-            }
-        }
-        logger.info("File succesfully deleted");
-    }
 
-    public void deletingFile() {
-        if (!Files.exists(pathToDirectory)) {
-            logger.error("There`s no such directory");
-            throw new IllegalArgumentException();
-        } else {
-            try {
-                Files.deleteIfExists(pathToFile);
-            } catch (IOException f) {
-                logger.error("IOex during file deleting", f);
-            }
+    public void deletingFile() throws FileDeletingException {
+        try {
+            fileSystem.delete(pathToFile);
+        } catch (IOException e) {
+            throw new FileDeletingException(String.format("Exception during deleting file on path: %s, with file system as: %s", this.pathToFile, this.fileSystem), e);
         }
-        logger.info("File succesfully deleted");
     }
 
     @Override
@@ -103,7 +70,6 @@ public class FileHandler<T extends Serializable> {
         return "FileHandler{" +
                 "serializer=" + serializer +
                 ", pathToFile=" + pathToFile +
-                ", pathToDirectory=" + pathToDirectory +
                 ", fileSystem=" + fileSystem +
                 '}';
     }
