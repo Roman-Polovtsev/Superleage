@@ -1,15 +1,13 @@
 package com.company.repository;
 
-import com.company.util.FileReadException;
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.List;
 
 public class DBRepository<T extends Serializable> implements Repository<T> {
-    private final DataBaseSample database;
+    private final DataBase database;
 
-    public DBRepository(DataBaseSample database) {
+    public DBRepository(DataBase database) {
         this.database = database;
     }
 

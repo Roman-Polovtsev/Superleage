@@ -1,25 +1,25 @@
 package com.company.domain.PlayerDecorator;
 
-public class PersonDecorator implements AbstractPerson {
-    private final AbstractPerson abstractPerson;
+public class PersonDecorator implements Person {
+    private final Person person;
 
-    public PersonDecorator(AbstractPerson abstractPerson) {
-        this.abstractPerson = abstractPerson;
+    public PersonDecorator(Person person) {
+        this.person = person;
     }
 
     @Override
     public String getName() {
-        return abstractPerson.getName();
+        return person.getName();
     }
 
     @Override
     public int getYearOfBirth() {
-        return abstractPerson.getYearOfBirth();
+        return person.getYearOfBirth();
     }
 
     @Override
     public long getID(){
-        return  abstractPerson.getID();
+        return  person.getID();
     }
 
 }

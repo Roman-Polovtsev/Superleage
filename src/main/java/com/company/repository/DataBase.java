@@ -5,16 +5,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DataBaseSample {
+public class DataBase {
     private final String url;
     private final String user;
     private final String password;
 
-    public DataBaseSample() {
+    public DataBase() {
         this("jdbc:postgresql://localhost/superlegue?allowMultiQueries=true", "postgres", "29031996roman");
     }
 
-    public DataBaseSample(String url, String user, String password) {
+    public DataBase(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;
@@ -33,6 +33,7 @@ public class DataBaseSample {
     }
 
     public void createDB(String tableName, String sql) throws DataBaseException {
+
         Connection connection = getConnection();
         try {
             connection.setAutoCommit(false);

@@ -10,8 +10,8 @@ public class Referee extends PersonDecorator {
     private final long id;
     private final Set<FinishedGame> games;
 
-    public Referee(AbstractPerson abstractPerson) {
-        super(abstractPerson);
+    public Referee(Person person) {
+        super(person);
         this.id = idCounter;
         this.games = new HashSet<>();
         idCounter++;

@@ -2,13 +2,14 @@ package com.company.repository.Hall;
 
 import com.company.domain.EnableGameTime;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
+import com.company.repository.DataBase;
 
+//todo
 public class SqlGameTimeRepository implements GameTimeRepository {
-    private final DataBaseSample dataBase;
+    private final DataBase dataBase;
 
     public SqlGameTimeRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
+        dataBase = new DataBase();
         String tableNameQuery = "gameTimes";
         dataBase.dropTable(tableNameQuery);
         String createTableQuery = "create table gameTimes (gameTime_id serial primary key, startTime Time, endTime Time)";

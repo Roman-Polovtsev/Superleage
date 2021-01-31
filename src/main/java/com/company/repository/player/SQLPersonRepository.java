@@ -2,7 +2,7 @@ package com.company.repository.player;
 
 import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
+import com.company.repository.DataBase;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLPersonRepository implements PersonRepository {
-    private final DataBaseSample dataBase;
+    private final DataBase dataBase;
 
 
     public SQLPersonRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
+        dataBase = new DataBase();
         String tableNameQuery = "persons";
         dataBase.dropTable(tableNameQuery);
         String createTableQuery = "create table persons (id serial primary key,name varchar(30), yearOfBirth  int)";
