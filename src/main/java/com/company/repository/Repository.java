@@ -15,14 +15,12 @@ public interface Repository<T extends Serializable> {
     List<T> getAll() throws FileRepositoryException, SQLRepositoryException;
 
     class FileRepositoryException extends Exception {
-
         public FileRepositoryException(String message, Throwable cause) {
             super(message, cause);
         }
     }
 
     class SQLRepositoryException extends Exception {
-
         public SQLRepositoryException(String message, Throwable cause) {
             super(message, cause);
         }

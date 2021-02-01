@@ -1,7 +1,7 @@
 package com.company.repository.Hall;
 
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
+import com.company.repository.DataBase;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,16 +9,17 @@ import java.sql.SQLException;
 import java.time.DayOfWeek;
 
 public class SqlDaysRepository {
-    DataBaseSample dataBase;
+    DataBase dataBase;
 
     public SqlDaysRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
+        dataBase = new DataBase();
         String tableNameQuery = "daysOfWeek";
         dataBase.dropTable(tableNameQuery);
         String createTableQuery = "create table daysOfWeek (day_id serial primary key, name varchar (15))";
         dataBase.createDB(tableNameQuery, createTableQuery);
         addDays();
-        new SqlDaysGameTimeRelation();
+        SqlDaysGameTimeRelation daysGameTimeRelation = new SqlDaysGameTimeRelation();
+        daysGameTimeRelation.initDb();
     }
 
     private void addDays() throws DataBaseException {

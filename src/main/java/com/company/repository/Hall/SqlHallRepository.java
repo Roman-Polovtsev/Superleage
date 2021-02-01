@@ -2,13 +2,13 @@ package com.company.repository.Hall;
 
 import com.company.domain.Hall;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
+import com.company.repository.DataBase;
 
 public class SqlHallRepository implements HallRepository {
-    private final DataBaseSample dataBase;
+    private final DataBase dataBase;
 
     public SqlHallRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
+        dataBase = new DataBase();
         String tableName = "halls";
         dataBase.dropTable(tableName);
         String createTableQuery = "create table halls (hall_id serial primary key, address_id int, gameTime_id int, CONSTRAINT" +

@@ -1,10 +1,10 @@
 package com.company.repository.player;
 
-import com.company.domain.PlayerDecorator.AbstractPerson;
+import com.company.domain.PlayerDecorator.Person;
 import com.company.domain.PlayerDecorator.DefinedPerson;
 import com.company.domain.PlayerDecorator.Player;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
+import com.company.repository.DataBase;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLPlayerRepository implements PlayerRepository {
-    private final DataBaseSample dataBase;
+    private final DataBase dataBase;
 
     public SQLPlayerRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
+        dataBase = new DataBase();
         String tableNameQuery = "players";
         dataBase.dropTable(tableNameQuery);
         String createTableQuery = "create table players (id serial primary key, height int,position varchar(20), level varchar(20), person_id int, " +
@@ -70,15 +70,7 @@ public class SQLPlayerRepository implements PlayerRepository {
             statement.setInt(1, (int) playerID);
             ResultSet resultSet = statement.executeQuery();
             resultSet.first();
-            long id = resultSet.getLong("id");
-            long person_id = resultSet.getLong("person_id");
-            String name = resultSet.getString("name");
-            int height = resultSet.getInt("height");
-            int yearOfBirth = resultSet.getInt("yearOfBirth");
-            String position = resultSet.getString("position");
-            String level = resultSet.getString("level");
-            AbstractPerson person = new DefinedPerson(name, yearOfBirth, person_id);
-            player = new Player(person, height, position, level, id);
+            player = getPlayer(resultSet);
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
@@ -98,15 +90,7 @@ public class SQLPlayerRepository implements PlayerRepository {
             ResultSet resultSet = statement.executeQuery();
             resultSet.beforeFirst();
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                long person_id = resultSet.getLong("person_id");
-                String name = resultSet.getString("name");
-                int height = resultSet.getInt("height");
-                int yearOfBirth = resultSet.getInt("yearOfBirth");
-                String position = resultSet.getString("position");
-                String level = resultSet.getString("level");
-                AbstractPerson person = new DefinedPerson(name, yearOfBirth, person_id);
-                Player player = new Player(person, height, position, level, id);
+                Player player = getPlayer(resultSet);
                 players.add(player);
             }
             resultSet.close();
@@ -116,5 +100,17 @@ public class SQLPlayerRepository implements PlayerRepository {
         }
         dataBase.closeConnection(connection);
         return players;
+    }
+
+    private Player getPlayer(final ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong("id");
+        long person_id = resultSet.getLong("person_id");
+        String name = resultSet.getString("name");
+        int height = resultSet.getInt("height");
+        int yearOfBirth = resultSet.getInt("yearOfBirth");
+        String anyPosition = resultSet.getString("position");
+        String level = resultSet.getString("level");
+        Person person = new DefinedPerson(name, yearOfBirth, person_id);
+        return new Player(person, height, anyPosition, level, id);
     }
 }
