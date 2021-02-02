@@ -1,7 +1,7 @@
-package com.company.domain.PlayerDecorator;
+package com.company.domain.playerDecorator;
 
-import com.company.domain.GameDecorator.FinishedGame;
-import com.company.domain.GameDecorator.PlannedGame;
+import com.company.domain.gameDecorator.FinishedGame;
+import com.company.domain.gameDecorator.PlannedGame;
 import com.company.domain.Result;
 import com.company.domain.Team;
 import org.junit.Before;

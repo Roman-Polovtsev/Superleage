@@ -1,7 +1,7 @@
 package com.company.repository;
 
-import com.company.domain.PlayerDecorator.DefinedPerson;
-import com.company.domain.PlayerDecorator.Player;
+import com.company.domain.playerDecorator.DefinedPerson;
+import com.company.domain.playerDecorator.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,8 +1,8 @@
 package com.company.repository.team;
 
 import com.company.domain.Team;
-import com.company.repository.DataBaseException;
 import com.company.repository.DataBase;
+import com.company.repository.DataBaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,8 +31,7 @@ public class SQLTeamRepository implements TeamRepository {
         statement.setNull(3, 4);
         statement.setNull(4, 4);
         statement.executeUpdate();
-        statement.close();
-        dataBase.closeConnection(connection);
+        connection.close();
     }
 
     @Override

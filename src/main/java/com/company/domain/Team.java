@@ -1,7 +1,7 @@
 package com.company.domain;
 
-import com.company.domain.PlayerDecorator.Captain;
-import com.company.domain.PlayerDecorator.Player;
+import com.company.domain.playerDecorator.Captain;
+import com.company.domain.playerDecorator.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

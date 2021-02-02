@@ -1,11 +1,11 @@
 package com.company.services;
 
 import com.company.domain.Address;
-import com.company.domain.GameDecorator.Game;
-import com.company.domain.PlayerDecorator.Captain;
-import com.company.domain.PlayerDecorator.DefinedPerson;
-import com.company.domain.PlayerDecorator.Player;
 import com.company.domain.Team;
+import com.company.domain.gameDecorator.Game;
+import com.company.domain.playerDecorator.Captain;
+import com.company.domain.playerDecorator.DefinedPerson;
+import com.company.domain.playerDecorator.Player;
 import com.company.repository.DataBaseException;
 import com.company.repository.Repository;
 import com.company.repository.player.PersonRepository;

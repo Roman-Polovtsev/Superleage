@@ -1,18 +1,16 @@
 package com.company.services;
 
 import com.company.domain.Address;
-import com.company.domain.GameDecorator.Game;
-import com.company.domain.GameDecorator.PlannedGame;
+import com.company.domain.gameDecorator.Game;
+import com.company.domain.gameDecorator.PlannedGame;
 import com.company.domain.Team;
 import com.company.repository.DataBaseException;
 import com.company.repository.FileRepository;
 import com.company.repository.Repository;
-import com.company.util.FileHandlerSaveException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 

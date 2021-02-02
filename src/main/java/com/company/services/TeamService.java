@@ -1,6 +1,6 @@
 package com.company.services;
 
-import com.company.domain.PlayerDecorator.Player;
+import com.company.domain.playerDecorator.Player;
 import com.company.domain.Team;
 import com.company.repository.player.FilePlayerRepository;
 import com.company.repository.player.PlayerRepository;

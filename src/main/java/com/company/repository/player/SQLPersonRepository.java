@@ -1,6 +1,6 @@
 package com.company.repository.player;
 
-import com.company.domain.PlayerDecorator.DefinedPerson;
+import com.company.domain.playerDecorator.DefinedPerson;
 import com.company.repository.DataBaseException;
 import com.company.repository.DataBase;
 
@@ -33,11 +33,10 @@ public class SQLPersonRepository implements PersonRepository {
             statement.setString(2, person.getName());
             statement.setInt(3, person.getYearOfBirth());
             statement.execute();
-            statement.close();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during saving person to DB: %s \nwith query %s", person, sql), e);
         }
-        dataBase.closeConnection(connection);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class SQLPersonRepository implements PersonRepository {
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during deleting person to DB: %s \nwith query %s", person, sql), e);
         }
-        dataBase.closeConnection(connection);
+        
     }
 
     @Override
@@ -74,7 +73,7 @@ public class SQLPersonRepository implements PersonRepository {
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during searching person in DB: %s \nwith query %s", person, sql), e);
         }
-        dataBase.closeConnection(connection);
+        
         return person;
     }
 
@@ -99,7 +98,7 @@ public class SQLPersonRepository implements PersonRepository {
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during getting all persons from DB with query %s", sql), e);
         }
-        dataBase.closeConnection(connection);
+        
         return persons;
     }
 }

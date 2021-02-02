@@ -1,4 +1,4 @@
-package com.company.repository.Address;
+package com.company.repository.Hall;
 
 import com.company.domain.Address;
 

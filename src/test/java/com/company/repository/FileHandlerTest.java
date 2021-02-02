@@ -1,6 +1,6 @@
 package com.company.repository;
 
-import com.company.domain.PlayerDecorator.*;
+import com.company.domain.playerDecorator.*;
 import com.company.util.FileDeletingException;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
@@ -74,6 +74,8 @@ public class FileHandlerTest {
 
         fileHandler.deserializedFile();
 
+        fail();
+
     }
 
     @Test
@@ -85,12 +87,12 @@ public class FileHandlerTest {
 
     }
 
-    @Test
-            (expected = FileDeletingException.class)
+    @Test(expected = FileDeletingException.class)
     public void deletingFileTestException() throws FileDeletingException, IOException {
         doThrow(new IOException()).when(fileSystem).delete(pathToFile);
 
         fileHandler.deletingFile();
         // verify(fileSystem, times(1)).delete(pathToFile);
+        fail();
     }
 }

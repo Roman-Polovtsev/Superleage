@@ -1,4 +1,4 @@
-package com.company.domain.PlayerDecorator;
+package com.company.domain.playerDecorator;
 
 import java.io.Serializable;
 

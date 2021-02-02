@@ -1,10 +1,7 @@
-package com.company.domain.GameDecorator;
+package com.company.domain.gameDecorator;
 
 import com.company.domain.Team;
 import org.junit.Test;
-import org.w3c.dom.ls.LSOutput;
-
-import static org.junit.Assert.*;
 
 public class PlannedGameTest {
     Team home = new Team();

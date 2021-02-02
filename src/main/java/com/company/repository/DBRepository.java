@@ -15,14 +15,14 @@ public class DBRepository<T extends Serializable> implements Repository<T> {
     public void createRepository() throws DataBaseException {
         Connection connection = database.getConnection();
         // database.createDB(connection);
-        database.closeConnection(connection);
+
     }
 
     @Override
     public void save(T obj) throws FileRepositoryException {
         //Connection connection = database.getConnection();
         // database.
-        // database.closeConnection(connection);
+        // 
 
     }
 
@@ -32,7 +32,7 @@ public class DBRepository<T extends Serializable> implements Repository<T> {
     }
 
     @Override
-    public T findById(long objId)  {
+    public T findById(long objId) {
         return null;
     }
 

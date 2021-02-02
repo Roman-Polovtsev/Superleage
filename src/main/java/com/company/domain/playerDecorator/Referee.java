@@ -1,6 +1,6 @@
-package com.company.domain.PlayerDecorator;
+package com.company.domain.playerDecorator;
 
-import com.company.domain.GameDecorator.FinishedGame;
+import com.company.domain.gameDecorator.FinishedGame;
 
 import java.util.*;
 

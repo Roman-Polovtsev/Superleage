@@ -1,4 +1,4 @@
-package com.company.domain.PlayerDecorator;
+package com.company.domain.playerDecorator;
 
 public class PersonDecorator implements Person {
     private final Person person;

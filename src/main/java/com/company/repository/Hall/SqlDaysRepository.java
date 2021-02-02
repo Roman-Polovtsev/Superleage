@@ -35,10 +35,10 @@ public class SqlDaysRepository {
             }
             preparedStatement.executeBatch();
             connection.commit();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException("exception during saving days of week", e);
         }
-        dataBase.closeConnection(connection);
     }
 
 }

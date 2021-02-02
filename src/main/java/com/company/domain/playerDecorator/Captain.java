@@ -1,6 +1,4 @@
-package com.company.domain.PlayerDecorator;
-
-import com.company.domain.IdHolders;
+package com.company.domain.playerDecorator;
 
 import java.util.Objects;
 
