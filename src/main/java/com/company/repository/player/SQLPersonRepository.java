@@ -1,8 +1,9 @@
 package com.company.repository.player;
 
 import com.company.domain.playerDecorator.DefinedPerson;
-import com.company.repository.DataBaseException;
 import com.company.repository.DataBase;
+import com.company.repository.DataBaseException;
+import com.company.util.PoolConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,14 +14,29 @@ import java.util.List;
 
 public class SQLPersonRepository implements PersonRepository {
     private final DataBase dataBase;
-
+    private final String tableName;
+    private final String createTableQuery;
+    public static final String DEFAULT_TABLE_NAME = "persons";
+    public static final String DEFAULT_CREATE_QUERY = "create table persons (id serial primary key,name varchar(30), yearOfBirth  int)";
 
     public SQLPersonRepository() throws DataBaseException {
-        dataBase = new DataBase();
-        String tableNameQuery = "persons";
-        dataBase.dropTable(tableNameQuery);
-        String createTableQuery = "create table persons (id serial primary key,name varchar(30), yearOfBirth  int)";
-        dataBase.createDB(tableNameQuery, createTableQuery);
+        this(new DataBase(new PoolConnector()));
+    }
+
+    public SQLPersonRepository(DataBase dataBase) throws DataBaseException {
+        this(dataBase,DEFAULT_TABLE_NAME,DEFAULT_CREATE_QUERY);
+    }
+
+    public SQLPersonRepository(DataBase dataBase, String tableName, String createTableQuery) throws DataBaseException {
+        this.dataBase = dataBase;
+        this.tableName = tableName;
+        this.createTableQuery = createTableQuery;
+        init();
+    }
+
+    private void init() throws DataBaseException {
+        dataBase.dropTable(tableName);
+        dataBase.createDB(tableName, createTableQuery);
     }
 
     @Override
@@ -51,7 +67,7 @@ public class SQLPersonRepository implements PersonRepository {
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during deleting person to DB: %s \nwith query %s", person, sql), e);
         }
-        
+
     }
 
     @Override
@@ -73,7 +89,7 @@ public class SQLPersonRepository implements PersonRepository {
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during searching person in DB: %s \nwith query %s", person, sql), e);
         }
-        
+
         return person;
     }
 
@@ -98,7 +114,7 @@ public class SQLPersonRepository implements PersonRepository {
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during getting all persons from DB with query %s", sql), e);
         }
-        
+
         return persons;
     }
 }

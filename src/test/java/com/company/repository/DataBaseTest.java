@@ -57,7 +57,6 @@ public class DataBaseTest {
         Mockito.when(connection.createStatement()).thenReturn(statement);
         Mockito.doNothing().when(connection).close();
 
-
         dataBase.dropTable(tableName);
 
         Mockito.verify(connection, Mockito.times(1)).createStatement();
