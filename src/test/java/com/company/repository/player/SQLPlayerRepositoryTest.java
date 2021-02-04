@@ -9,11 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-
-import static org.mockito.Mockito.when;
 
 public class SQLPlayerRepositoryTest {
     SQLPlayerRepository repository;
@@ -22,7 +18,7 @@ public class SQLPlayerRepositoryTest {
     Player player = new Player(new DefinedPerson(), 190, "", "", 2);
 
     @Before
-    public void before () throws DataBaseException {
+    public void before() throws DataBaseException {
         repository = new SQLPlayerRepository();
     }
 

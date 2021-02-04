@@ -1,18 +1,24 @@
 package com.company.services;
 
 import com.company.domain.Address;
+import com.company.domain.EnableGameTime;
 import com.company.domain.Team;
 import com.company.domain.gameDecorator.Game;
 import com.company.domain.playerDecorator.Captain;
 import com.company.domain.playerDecorator.DefinedPerson;
 import com.company.domain.playerDecorator.Player;
 import com.company.repository.DataBaseException;
+import com.company.repository.Hall.GameTimeRepository;
+import com.company.repository.Hall.SqlDaysRepository;
+import com.company.repository.Hall.SqlGameTimeRepository;
 import com.company.repository.Repository;
 import com.company.repository.player.PersonRepository;
 import com.company.repository.player.PlayerRepository;
 import com.company.repository.player.SQLPersonRepository;
 import com.company.repository.player.SQLPlayerRepository;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
 public class CommonService {
@@ -79,21 +85,36 @@ public class CommonService {
 //                collect(Collectors.toList());
 //    }
 
+    public void addGameDays(LocalTime begin, LocalTime end, DayOfWeek day) throws DataBaseException {
+        GameTimeRepository gameTimeRepository = new SqlGameTimeRepository();
+        SqlDaysRepository daysRepository = SqlDaysRepository.getInstance();
+        EnableGameTime gameTime = new EnableGameTime(1, begin, end, day);
+        gameTimeRepository.save(gameTime);
+        EnableGameTime byId = gameTimeRepository.getById(1);
+        System.out.println(byId);
+        System.out.println(byId.equals(gameTime));
+    }
+
+
+
     public static void main(String[] args) throws Exception {
         SQLPersonRepository personRepository = new SQLPersonRepository();
         SQLPlayerRepository playerRepository = new SQLPlayerRepository();
         CommonService service = new CommonService(playerRepository, personRepository);
-        service.addNewPlayer("ivan", 1995, 190, "opposite", "kms");
-        service.addNewPlayer("lera", 1997, 160, "доигровщик", "");
-        // System.out.println(service.findPlayer(1));
-        //System.out.println(service.findPlayer(2));
-        System.out.println(service.getAllPlayers());
-        Player player = service.findPlayer(1);
-        service.removePlayer(player);
-        System.out.println(service.getAllPlayers());
-        DefinedPerson person1 = new DefinedPerson("a", 1, 1);
-        DefinedPerson person2 = new DefinedPerson("a", 1, 1);
-        System.out.println(person1.equals(person2));
-        System.out.println(service.personRepository.findAll());
+        LocalTime begin = LocalTime.MIDNIGHT;
+        LocalTime end = LocalTime.of(12,0);
+        service.addGameDays(begin,end,DayOfWeek.MONDAY);
+//        service.addNewPlayer("ivan", 1995, 190, "opposite", "kms");
+//        service.addNewPlayer("lera", 1997, 160, "доигровщик", "");
+//        // System.out.println(service.findPlayer(1));
+//        //System.out.println(service.findPlayer(2));
+//        System.out.println(service.getAllPlayers());
+//        Player player = service.findPlayer(1);
+//        service.removePlayer(player);
+//        System.out.println(service.getAllPlayers());
+//        DefinedPerson person1 = new DefinedPerson("a", 1, 1);
+//        DefinedPerson person2 = new DefinedPerson("a", 1, 1);
+//        System.out.println(person1.equals(person2));
+//        System.out.println(service.personRepository.findAll());
     }
 }

@@ -2,9 +2,7 @@ package com.company.domain;
 
 import org.junit.Test;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,23 +11,23 @@ import static org.junit.Assert.*;
 public class EnableGameTimeTest {
 
     @Test
-    public void getDaysOfWeekTest() {
-        List<DayOfWeek> days = Collections.singletonList(DayOfWeek.TUESDAY);
-        String s =days.toString();
-        EnableGameTime enableGameTime = new EnableGameTime(1,days);
+    public void getDayOfWeekTest() {
+        DayOfWeek expected = DayOfWeek.TUESDAY;
+        List<DayOfWeek> days = Collections.singletonList(expected);
+        EnableGameTime enableGameTime = new EnableGameTime(1, days.get(0));
 
-        String daysOfWeek = "[" + enableGameTime.getDaysOfWeek().trim() + "]";
-        String daysOfWeek1 = enableGameTime.getDaysOfWeek();
+        DayOfWeek actual = enableGameTime.getDayOfWeek();
 
-        assertEquals(s,daysOfWeek);
-
+        assertEquals(expected,actual);
     }
+
     @Test
     public void getDaysOfWeekTestThrows() {
-        List<DayOfWeek> days = Collections.emptyList();
+        DayOfWeek expected = DayOfWeek.MONDAY;
 
-        EnableGameTime enableGameTime = new EnableGameTime(1,days);
+        EnableGameTime enableGameTime = new EnableGameTime();
+        DayOfWeek actual = enableGameTime.getDayOfWeek();
 
-        assertThrows(NullPointerException.class, enableGameTime::getDaysOfWeek);
+        assertEquals(expected,actual);
     }
 }

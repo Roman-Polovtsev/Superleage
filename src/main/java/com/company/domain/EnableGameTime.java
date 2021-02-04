@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class EnableGameTime implements Serializable {
     transient private final Logger logger;
@@ -17,26 +14,31 @@ public class EnableGameTime implements Serializable {
     private final long id;
     private final LocalTime begin;
     private final LocalTime end;
-    private final List<DayOfWeek> daysOfWeek;
+    private final DayOfWeek dayOfWeek;
 
     public EnableGameTime() {
-        this(LoggerFactory.getLogger(EnableGameTime.class), 1, LocalTime.MIDNIGHT, LocalTime.of(23, 59), new ArrayList<>());
+        this(LoggerFactory.getLogger(EnableGameTime.class), 1, LocalTime.MIDNIGHT, LocalTime.of(23, 59), DayOfWeek.MONDAY);
     }
 
     public EnableGameTime(long id, LocalTime begin, LocalTime end) {
-        this(LoggerFactory.getLogger(EnableGameTime.class), id, begin, end, new ArrayList<>());
+        this(LoggerFactory.getLogger(EnableGameTime.class), id, begin, end, DayOfWeek.MONDAY);
     }
 
-    public EnableGameTime(long id, List<DayOfWeek> daysOfWeek) {
-        this(LoggerFactory.getLogger(EnableGameTime.class), id, LocalTime.MIDNIGHT, LocalTime.of(23, 59), daysOfWeek);
+    public EnableGameTime(long id, LocalTime begin, LocalTime end, DayOfWeek day) {
+        this(LoggerFactory.getLogger(EnableGameTime.class), id, begin, end, day);
     }
 
-    public EnableGameTime(Logger logger, long id, LocalTime begin, LocalTime end, List<DayOfWeek> daysOfWeek) {
+    public EnableGameTime(long id, DayOfWeek dayOfWeek) {
+        this(LoggerFactory.getLogger(EnableGameTime.class), id, LocalTime.MIDNIGHT, LocalTime.of(23, 59), dayOfWeek);
+    }
+
+    public EnableGameTime(Logger logger, long id, LocalTime begin, LocalTime end, DayOfWeek daysOfWeek) {
         this.logger = logger;
         this.id = id;
         this.begin = begin;
         this.end = end;
-        this.daysOfWeek = daysOfWeek;
+        this.dayOfWeek = daysOfWeek;
+        logger.info("created new Game Time object");
     }
 
     public long getID() {
@@ -45,11 +47,7 @@ public class EnableGameTime implements Serializable {
 
     @Override
     public String toString() {
-        return "Игровое время по дням недели: " + this.getDays() + " c " + begin.toString() + " до " + end.toString();
-    }
-
-    public void addDayOfWeek(DayOfWeek dayOfWeek) {
-        daysOfWeek.add(dayOfWeek);
+        return "Игровое время: " + this.getDayOfWeek() + " c " + begin.toString() + " до " + end.toString();
     }
 
     public LocalTime getEnd() {
@@ -60,26 +58,30 @@ public class EnableGameTime implements Serializable {
         return begin;
     }
 
-    public List<DayOfWeek> getDays() {
-        return daysOfWeek;
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public String getDaysOfWeek() throws NullPointerException {
-        if (daysOfWeek.isEmpty()) {
-            throw new NullPointerException("No days " + this);
-        } else {
-            StringBuilder days = new StringBuilder();
-            AtomicInteger cntDays = new AtomicInteger(0);
-            daysOfWeek.forEach((day) -> {
-                if (cntDays.get() < daysOfWeek.size() - 1)
-                    days.append(" ").append(day.toString()).append(",");
-                else
-                    days.append(" ").append(day.toString());
-                cntDays.incrementAndGet();
-            });
-            return days.toString();
-        }
-    }
+//    public List<DayOfWeek> getDays() {
+//        return daysOfWeek;
+//    }
+//
+//    public String getDaysOfWeek() throws NullPointerException {
+//        if (daysOfWeek.isEmpty()) {
+//            throw new NullPointerException("No days " + this);
+//        } else {
+//            StringBuilder days = new StringBuilder();
+//            AtomicInteger cntDays = new AtomicInteger(0);
+//            daysOfWeek.forEach((day) -> {
+//                if (cntDays.get() < daysOfWeek.size() - 1)
+//                    days.append(" ").append(day.toString()).append(",");
+//                else
+//                    days.append(" ").append(day.toString());
+//                cntDays.incrementAndGet();
+//            });
+//            return days.toString();
+//        }
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -87,14 +89,13 @@ public class EnableGameTime implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         EnableGameTime that = (EnableGameTime) o;
         return id == that.id &&
-                Objects.equals(logger, that.logger) &&
                 Objects.equals(begin, that.begin) &&
                 Objects.equals(end, that.end) &&
-                Objects.equals(daysOfWeek, that.daysOfWeek);
+                dayOfWeek == that.dayOfWeek;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(logger, id, begin, end, daysOfWeek);
+        return Objects.hash(id, begin, end, dayOfWeek);
     }
 }
