@@ -62,8 +62,8 @@ public class SQLPersonRepository implements PersonRepository {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (int) person.getID());
-            System.out.println(statement.executeUpdate());
-            statement.close();
+            statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during deleting person to DB: %s \nwith query %s", person, sql), e);
         }
@@ -79,13 +79,9 @@ public class SQLPersonRepository implements PersonRepository {
             PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, (int) personId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.first();
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            int yearOfBirth = resultSet.getInt("yearOfBirth");
-            person = new DefinedPerson(name, yearOfBirth, id);
-            resultSet.close();
-            statement.close();
+            resultSet.next();
+            person = getPerson(resultSet);
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during searching person in DB: %s \nwith query %s", person, sql), e);
         }
@@ -103,18 +99,20 @@ public class SQLPersonRepository implements PersonRepository {
             ResultSet resultSet = statement.executeQuery();
             resultSet.beforeFirst();
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                int yearOfBirth = resultSet.getInt("yearOfBirth");
-                DefinedPerson person = new DefinedPerson(name, yearOfBirth, id);
+                DefinedPerson person = getPerson(resultSet);
                 persons.add(person);
             }
-            resultSet.close();
-            statement.close();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during getting all persons from DB with query %s", sql), e);
         }
-
         return persons;
+    }
+
+    private DefinedPerson getPerson(ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong("id");
+        String name = resultSet.getString("name");
+        int yearOfBirth = resultSet.getInt("yearOfBirth");
+        return new DefinedPerson(name, yearOfBirth, id);
     }
 }
