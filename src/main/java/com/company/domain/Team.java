@@ -1,7 +1,7 @@
 package com.company.domain;
 
-import com.company.domain.PlayerDecorator.Captain;
-import com.company.domain.PlayerDecorator.Player;
+import com.company.domain.playerDecorator.Captain;
+import com.company.domain.playerDecorator.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +47,7 @@ public class Team implements Serializable, IdHolders {
     }
 
     public void addPlayer(Player... players) {
-        List<Player> players1 = Arrays.asList(players);
-        members.addAll(players1);
+        members.addAll(Arrays.asList(players));
     }
 
     public void addPlayer(List<Player> playerList) {
@@ -64,12 +63,13 @@ public class Team implements Serializable, IdHolders {
     }
 
     public float getAverageHeight() {
-        if (members.isEmpty()) {
-            return 0;
-        } else {
-            int sumHeight = members.stream().mapToInt(Player::getHeight).sum();
-            return (float) sumHeight / ((float) members.size());
-        }
+        return (float) members.stream().mapToInt(Player::getHeight).average().orElse(0d);
+//        if (members.isEmpty()) {
+//            return 0;
+//        } else {
+//            int sumHeight = ;
+//            return (float) sumHeight / ((float) members.size());
+//        }
     }
 
     public float getAverageAge() {

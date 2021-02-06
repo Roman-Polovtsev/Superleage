@@ -1,16 +1,14 @@
-package com.company.repository.Address;
+package com.company.repository.Hall;
 
 import com.company.domain.Address;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
-
-import java.sql.SQLException;
+import com.company.repository.DataBase;
 
 public class SQLAddressRepository implements AddressRepository {
-    private final DataBaseSample dataBase;
+    private final DataBase dataBase;
 
     public SQLAddressRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
+        dataBase = new DataBase();
         String tableNameQuery = "addresses";
         dataBase.dropTable(tableNameQuery);
         String createTableQuery = "create table addresses (id serial primary key,city varchar(30), street varchar (20), building varchar(10))";

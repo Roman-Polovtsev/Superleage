@@ -1,8 +1,8 @@
 package com.company.repository.team;
 
 import com.company.domain.Team;
+import com.company.repository.DataBase;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SQLTeamRepository implements TeamRepository {
-    DataBaseSample dataBase;
+    DataBase dataBase;
 
     public SQLTeamRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
+        dataBase = new DataBase();
         String tableNameQuery = "teams";
         dataBase.dropTable(tableNameQuery);
         String createTableQuery = "create table teams (id serial primary key, name varchar(20), hall_id int, captain_id int)";
@@ -31,8 +31,7 @@ public class SQLTeamRepository implements TeamRepository {
         statement.setNull(3, 4);
         statement.setNull(4, 4);
         statement.executeUpdate();
-        statement.close();
-        dataBase.closeConnection(connection);
+        connection.close();
     }
 
     @Override

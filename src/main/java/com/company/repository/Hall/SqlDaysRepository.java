@@ -1,7 +1,7 @@
 package com.company.repository.Hall;
 
+import com.company.repository.DataBase;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,21 +9,42 @@ import java.sql.SQLException;
 import java.time.DayOfWeek;
 
 public class SqlDaysRepository {
-    DataBaseSample dataBase;
+    private static volatile SqlDaysRepository instance;
+    private final DataBase dataBase;
+    private static final String tableNameQuery = "daysOfWeek";
+    private static final String createTableQuery = "create table daysOfWeek (day_id serial primary key, name varchar (15))";
 
-    public SqlDaysRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
-        String tableNameQuery = "daysOfWeek";
+    private SqlDaysRepository() throws DataBaseException {
+        this(new DataBase());
+        //  SqlDaysGameTimeRelation daysGameTimeRelation = new SqlDaysGameTimeRelation();
+        // daysGameTimeRelation.initDb();
+    }
+
+    private SqlDaysRepository(DataBase dataBase) throws DataBaseException {
+        this.dataBase = dataBase;
+        init();
+    }
+
+    public static synchronized SqlDaysRepository getInstance() throws DataBaseException {
+        if (instance == null) {
+            synchronized (SqlDaysRepository.class) {
+                if (instance == null) {
+                    instance = new SqlDaysRepository();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private void init() throws DataBaseException {
         dataBase.dropTable(tableNameQuery);
-        String createTableQuery = "create table daysOfWeek (day_id serial primary key, name varchar (15))";
         dataBase.createDB(tableNameQuery, createTableQuery);
         addDays();
-        new SqlDaysGameTimeRelation();
     }
 
     private void addDays() throws DataBaseException {
         Connection connection = dataBase.getConnection();
-        String sql = "insert into daysOfweek (day_id,name) values(?,?)";
+        String sql = "insert into daysOfWeek (day_id,name) values(?,?)";
         try {
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -34,10 +55,10 @@ public class SqlDaysRepository {
             }
             preparedStatement.executeBatch();
             connection.commit();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException("exception during saving days of week", e);
         }
-        dataBase.closeConnection(connection);
     }
 
 }

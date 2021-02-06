@@ -1,15 +1,13 @@
 package com.company.repository;
 
-import com.company.util.FileReadException;
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.List;
 
 public class DBRepository<T extends Serializable> implements Repository<T> {
-    private final DataBaseSample database;
+    private final DataBase database;
 
-    public DBRepository(DataBaseSample database) {
+    public DBRepository(DataBase database) {
         this.database = database;
     }
 
@@ -17,14 +15,14 @@ public class DBRepository<T extends Serializable> implements Repository<T> {
     public void createRepository() throws DataBaseException {
         Connection connection = database.getConnection();
         // database.createDB(connection);
-        database.closeConnection(connection);
+
     }
 
     @Override
     public void save(T obj) throws FileRepositoryException {
         //Connection connection = database.getConnection();
         // database.
-        // database.closeConnection(connection);
+        // 
 
     }
 
@@ -34,7 +32,7 @@ public class DBRepository<T extends Serializable> implements Repository<T> {
     }
 
     @Override
-    public T findById(long objId)  {
+    public T findById(long objId) {
         return null;
     }
 

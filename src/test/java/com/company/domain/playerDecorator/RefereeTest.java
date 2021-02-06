@@ -1,8 +1,8 @@
-package com.company.domain.PlayerDecorator;
+package com.company.domain.playerDecorator;
 
 
-import com.company.domain.GameDecorator.FinishedGame;
-import com.company.domain.GameDecorator.PlannedGame;
+import com.company.domain.gameDecorator.FinishedGame;
+import com.company.domain.gameDecorator.PlannedGame;
 import com.company.domain.Result;
 import com.company.domain.Team;
 import org.junit.After;
@@ -14,8 +14,8 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class RefereeTest {
-    static AbstractPerson person = new DefinedPerson("Ivan", 1995, 1);
-    static AbstractPerson player = new Player(person, 190, "not stated", "not stated", person.getID());
+    static Person person = new DefinedPerson("Ivan", 1995, 1);
+    static Person player = new Player(person, 190, "not stated", "not stated", person.getID());
     static Referee referee = new Referee(person);
     static Team home = new Team("home");
     static Team guest = new Team("guest");

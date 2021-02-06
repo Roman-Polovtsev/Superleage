@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Hall implements Serializable {
@@ -11,37 +13,33 @@ public class Hall implements Serializable {
     transient private static final long serialVersionUID = 2L;
     private final long id;
     private final Address address;
-    private final EnableGameTime gameTime;
+    private final List<EnableGameTime> gameTimeList;
 
     public Hall() {
-        this(LoggerFactory.getLogger(Hall.class), 1, new Address(), new EnableGameTime());
+        this(LoggerFactory.getLogger(Hall.class), 1, new Address(), new ArrayList<>());
     }
 
     public Hall(long id, Address address) {
-        this(LoggerFactory.getLogger(Hall.class), id, address, new EnableGameTime());
+        this(LoggerFactory.getLogger(Hall.class), id, address, new ArrayList<>());
     }
 
-    public Hall(EnableGameTime gameTime) {
-        this(LoggerFactory.getLogger(Hall.class), 1, new Address(), gameTime);
+    public Hall(long id, Address address, List<EnableGameTime> gameTimeList) {
+        this(LoggerFactory.getLogger(Hall.class), id, address, gameTimeList);
     }
 
-    public Hall(long id, Address address, EnableGameTime gameTime) {
-        this(LoggerFactory.getLogger(Hall.class), id, address, gameTime);
-    }
-
-    public Hall(Logger logger, long id, Address address, EnableGameTime gameTime) {
+    public Hall(Logger logger, long id, Address address, List<EnableGameTime> gameTimeList) {
         this.logger = logger;
         this.id = id;
         this.address = address;
-        this.gameTime = gameTime;
+        this.gameTimeList = gameTimeList;
     }
 
     public Address getAddress() {
         return address;
     }
 
-    public EnableGameTime getGameTime() {
-        return gameTime;
+    public List<EnableGameTime> getGameTime() {
+        return gameTimeList;
     }
 
     public void print() {
@@ -50,7 +48,7 @@ public class Hall implements Serializable {
 
     @Override
     public String toString() {
-        return "Hall :" + "\n\tAddress: " + address + "\n\tGameTime: " + gameTime;
+        return "Hall :" + "\n\tAddress: " + address + "\n\tGameTime: " + gameTimeList;
     }
 
     public long getID() {
@@ -63,13 +61,12 @@ public class Hall implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Hall hall = (Hall) o;
         return id == hall.id &&
-                Objects.equals(logger, hall.logger) &&
                 Objects.equals(address, hall.address) &&
-                Objects.equals(gameTime, hall.gameTime);
+                Objects.equals(gameTimeList, hall.gameTimeList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(logger, id, address, gameTime);
+        return Objects.hash(id, address, gameTimeList);
     }
 }

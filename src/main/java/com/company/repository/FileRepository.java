@@ -35,7 +35,6 @@ public class FileRepository<T extends Serializable & IdHolders> implements Repos
         this.logger = logger;
         this.filePath = Paths.get(pathFile);
         this.fileHandler = new FileHandler<T>(this.filePath);
-
     }
 
     public FileRepository(Logger logger, Path pathRepository, Path pathFile, FileHandler<T> fileHandler) {

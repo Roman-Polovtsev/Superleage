@@ -1,8 +1,9 @@
 package com.company.repository.player;
 
-import com.company.domain.PlayerDecorator.DefinedPerson;
+import com.company.domain.playerDecorator.DefinedPerson;
+import com.company.repository.DataBase;
 import com.company.repository.DataBaseException;
-import com.company.repository.DataBaseSample;
+import com.company.util.PoolConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,15 +13,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLPersonRepository implements PersonRepository {
-    private final DataBaseSample dataBase;
-
+    private final DataBase dataBase;
+    private final String tableName;
+    private final String createTableQuery;
+    public static final String DEFAULT_TABLE_NAME = "persons";
+    public static final String DEFAULT_CREATE_QUERY = "create table persons (id serial primary key,name varchar(30), yearOfBirth  int)";
 
     public SQLPersonRepository() throws DataBaseException {
-        dataBase = new DataBaseSample();
-        String tableNameQuery = "persons";
-        dataBase.dropTable(tableNameQuery);
-        String createTableQuery = "create table persons (id serial primary key,name varchar(30), yearOfBirth  int)";
-        dataBase.createDB(tableNameQuery, createTableQuery);
+        this(new DataBase(new PoolConnector()));
+    }
+
+    public SQLPersonRepository(DataBase dataBase) throws DataBaseException {
+        this(dataBase,DEFAULT_TABLE_NAME,DEFAULT_CREATE_QUERY);
+    }
+
+    public SQLPersonRepository(DataBase dataBase, String tableName, String createTableQuery) throws DataBaseException {
+        this.dataBase = dataBase;
+        this.tableName = tableName;
+        this.createTableQuery = createTableQuery;
+        init();
+    }
+
+    private void init() throws DataBaseException {
+        dataBase.dropTable(tableName);
+        dataBase.createDB(tableName, createTableQuery);
     }
 
     @Override
@@ -33,11 +49,10 @@ public class SQLPersonRepository implements PersonRepository {
             statement.setString(2, person.getName());
             statement.setInt(3, person.getYearOfBirth());
             statement.execute();
-            statement.close();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during saving person to DB: %s \nwith query %s", person, sql), e);
         }
-        dataBase.closeConnection(connection);
     }
 
     @Override
@@ -47,12 +62,12 @@ public class SQLPersonRepository implements PersonRepository {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (int) person.getID());
-            System.out.println(statement.executeUpdate());
-            statement.close();
+            statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during deleting person to DB: %s \nwith query %s", person, sql), e);
         }
-        dataBase.closeConnection(connection);
+
     }
 
     @Override
@@ -64,17 +79,13 @@ public class SQLPersonRepository implements PersonRepository {
             PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, (int) personId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.first();
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            int yearOfBirth = resultSet.getInt("yearOfBirth");
-            person = new DefinedPerson(name, yearOfBirth, id);
-            resultSet.close();
-            statement.close();
+            resultSet.next();
+            person = getPerson(resultSet);
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during searching person in DB: %s \nwith query %s", person, sql), e);
         }
-        dataBase.closeConnection(connection);
+
         return person;
     }
 
@@ -88,18 +99,20 @@ public class SQLPersonRepository implements PersonRepository {
             ResultSet resultSet = statement.executeQuery();
             resultSet.beforeFirst();
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                int yearOfBirth = resultSet.getInt("yearOfBirth");
-                DefinedPerson person = new DefinedPerson(name, yearOfBirth, id);
+                DefinedPerson person = getPerson(resultSet);
                 persons.add(person);
             }
-            resultSet.close();
-            statement.close();
+            connection.close();
         } catch (SQLException e) {
             throw new DataBaseException(String.format("Exception during getting all persons from DB with query %s", sql), e);
         }
-        dataBase.closeConnection(connection);
         return persons;
+    }
+
+    private DefinedPerson getPerson(ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong("id");
+        String name = resultSet.getString("name");
+        int yearOfBirth = resultSet.getInt("yearOfBirth");
+        return new DefinedPerson(name, yearOfBirth, id);
     }
 }

@@ -1,27 +1,26 @@
-package com.company.domain.PlayerDecorator;
+package com.company.domain.playerDecorator;
 
 import java.util.Objects;
 
-public class DefinedPerson implements AbstractPerson {
+public class DefinedPerson implements Person {
+    private static final int DEFAULT_YEAR = 1995;
     transient private static final long serialVersionUID = 17L;
-    //transient public static long idCounter = 1;
     private final long ID;
     private final String name;
     private final int yearOfBirth;
 
     public DefinedPerson() {
-        this("Ivan", 1995, 0);
+        this("Ivan", DEFAULT_YEAR, 0);
     }
 
     public DefinedPerson(String name) {
-        this(name, 1900, 0);
+        this(name, DEFAULT_YEAR, 0);
     }
 
     public DefinedPerson(String name, int yearOfBirth, long id) {
         this.ID = id;
         this.name = name;
         this.yearOfBirth = yearOfBirth;
-        //  idCounter++;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.company.repository.player;
 
-import com.company.domain.PlayerDecorator.DefinedPerson;
+import com.company.domain.playerDecorator.DefinedPerson;
 import com.company.repository.DataBaseException;
 import com.company.util.FileReadException;
 

@@ -1,7 +1,7 @@
-package com.company.domain.GameDecorator;
+package com.company.domain.gameDecorator;
 
-import com.company.domain.PlayerDecorator.DefinedPerson;
-import com.company.domain.PlayerDecorator.Referee;
+import com.company.domain.playerDecorator.DefinedPerson;
+import com.company.domain.playerDecorator.Referee;
 import com.company.domain.Result;
 import com.company.domain.Team;
 import org.junit.Test;

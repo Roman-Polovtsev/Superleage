@@ -1,4 +1,4 @@
-package com.company.domain.GameDecorator;
+package com.company.domain.gameDecorator;
 
 import com.company.domain.Address;
 import com.company.domain.IdHolders;

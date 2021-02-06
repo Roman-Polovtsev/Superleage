@@ -1,6 +1,6 @@
 package com.company.repository.player;
 
-import com.company.domain.PlayerDecorator.Player;
+import com.company.domain.playerDecorator.Player;
 import com.company.repository.DataBaseException;
 import com.company.repository.Repository;
 

@@ -1,6 +1,6 @@
-package com.company.domain.PlayerDecorator;
+package com.company.domain.playerDecorator;
 
-import com.company.domain.GameDecorator.FinishedGame;
+import com.company.domain.gameDecorator.FinishedGame;
 
 import java.util.*;
 
@@ -10,8 +10,8 @@ public class Referee extends PersonDecorator {
     private final long id;
     private final Set<FinishedGame> games;
 
-    public Referee(AbstractPerson abstractPerson) {
-        super(abstractPerson);
+    public Referee(Person person) {
+        super(person);
         this.id = idCounter;
         this.games = new HashSet<>();
         idCounter++;
