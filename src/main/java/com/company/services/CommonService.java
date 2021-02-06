@@ -14,8 +14,6 @@ import com.company.repository.Hall.SqlGameTimeRepository;
 import com.company.repository.Repository;
 import com.company.repository.player.PersonRepository;
 import com.company.repository.player.PlayerRepository;
-import com.company.repository.player.SQLPersonRepository;
-import com.company.repository.player.SQLPlayerRepository;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -96,25 +94,4 @@ public class CommonService {
     }
 
 
-
-    public static void main(String[] args) throws Exception {
-        SQLPersonRepository personRepository = new SQLPersonRepository();
-        SQLPlayerRepository playerRepository = new SQLPlayerRepository();
-        CommonService service = new CommonService(playerRepository, personRepository);
-        LocalTime begin = LocalTime.MIDNIGHT;
-        LocalTime end = LocalTime.of(12,0);
-        service.addGameDays(begin,end,DayOfWeek.MONDAY);
-//        service.addNewPlayer("ivan", 1995, 190, "opposite", "kms");
-//        service.addNewPlayer("lera", 1997, 160, "доигровщик", "");
-//        // System.out.println(service.findPlayer(1));
-//        //System.out.println(service.findPlayer(2));
-//        System.out.println(service.getAllPlayers());
-//        Player player = service.findPlayer(1);
-//        service.removePlayer(player);
-//        System.out.println(service.getAllPlayers());
-//        DefinedPerson person1 = new DefinedPerson("a", 1, 1);
-//        DefinedPerson person2 = new DefinedPerson("a", 1, 1);
-//        System.out.println(person1.equals(person2));
-//        System.out.println(service.personRepository.findAll());
-    }
 }
