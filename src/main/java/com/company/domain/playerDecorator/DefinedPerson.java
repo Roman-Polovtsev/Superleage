@@ -1,25 +1,40 @@
 package com.company.domain.playerDecorator;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "persons")
 public class DefinedPerson implements Person {
+    @Transient
     private static final int DEFAULT_YEAR = 1995;
+    @Transient
     transient private static final long serialVersionUID = 17L;
-    private final long ID;
-    private final String name;
-    private final int yearOfBirth;
+    @Id
+    @GeneratedValue
+    private long ID;
+    @Column(name = "person_name")
+    private String name;
+    @Column(name = "year_of_birth")
+    private int yearOfBirth;
 
-    public DefinedPerson() {
-        this("Ivan", DEFAULT_YEAR, 0);
-    }
-
-    public DefinedPerson(String name) {
-        this(name, DEFAULT_YEAR, 0);
-    }
+    public DefinedPerson() {}
 
     public DefinedPerson(String name, int yearOfBirth, long id) {
         this.ID = id;
         this.name = name;
+        this.yearOfBirth = yearOfBirth;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 
