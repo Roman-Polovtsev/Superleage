@@ -123,7 +123,6 @@ public class SQLPersonRepositoryTest {
         Mockito.doNothing().when(resultSet).beforeFirst();
         Mockito.when(resultSet.next()).thenReturn(true, true, false);
         Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
-
         Mockito.when(resultSet.getLong("id")).thenReturn(person.getID());
         Mockito.when(resultSet.getString("name")).thenReturn(person.getName());
         Mockito.when(resultSet.getInt("yearOfBirth")).thenReturn(person.getYearOfBirth());

@@ -4,6 +4,7 @@ import com.company.domain.Team;
 import com.company.util.FileHandlerSaveException;
 import com.company.util.FileReadException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-
+@Ignore
 public class FileRepositoryTest {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     FileHandler<Team> fileHandler;

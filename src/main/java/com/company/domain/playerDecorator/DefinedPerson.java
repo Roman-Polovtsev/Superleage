@@ -11,7 +11,7 @@ public class DefinedPerson implements Person {
     @Transient
     transient private static final long serialVersionUID = 17L;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long ID;
     @Column(name = "person_name")
     private String name;
